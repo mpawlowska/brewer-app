@@ -1,6 +1,6 @@
 module.exports = [
      {
-        details: {      // wartości będą wpisywane przez usera
+    details: {      // wartości będą wpisywane przez usera
             name: 'McDusia',
             style: 'lager',
             date: '04.06.2016',
@@ -12,16 +12,32 @@ module.exports = [
             type: 'zacieranie'
         },
         recipe: {
-            fermenting_components: [
-                {barley: '20g'},   // klucz i wartość będą wpisywane przez usera
-                {malt: '10g'}
+            fermenting_components: [     // wartości będą wpisywane przez usera (dowolna liczba składników
+                {
+                    name: 'barley',
+                    quantity: '20g'
+                },
+                {
+                    name: 'malt',
+                    quantity: '10g'
+                }
+
             ],
             hop: [
-                {americano: '10g'},   // klucz i wartość będą wpisywane przez usera
-                {italiano: '20g'}
+                {
+                    name: 'americano',
+                    quantity: '20g'
+                },
+                {
+                    name: 'italiano',
+                    quantity: '10g'
+                }
             ],
             yeast: [
-                {fermentum_mobile: '3ml'} // klucz i wartość będą wpisywane przez usera
+                {
+                    name: 'fermentum_mobile',
+                    quantity: '23ml'
+                }
             ],
         },
         rating: {
@@ -49,19 +65,35 @@ module.exports = [
             alcohol: '5%',
             type: 'zacieranie'
         },
-        recipe: {
-            fermenting_components: [
-                {barley: '20g'},   // klucz i wartość będą wpisywane przez usera
-                {malt: '10g'}
-            ],
-            hop: [
-                {americano: '10g'},   // klucz i wartość będą wpisywane przez usera
-                {italiano: '20g'}
-            ],
-            yeast: [
-                {fermentum_mobile: '3ml'} // klucz i wartość będą wpisywane przez usera
-            ]
-        },
+         recipe: {
+             fermenting_components: [     // wartości będą wpisywane przez usera (dowolna liczba składników
+                 {
+                     name: 'barley',
+                     quantity: '20g'
+                 },
+                 {
+                     name: 'malt',
+                     quantity: '10g'
+                 }
+
+             ],
+             hop: [
+                 {
+                     name: 'americano',
+                     quantity: '20g'
+                 },
+                 {
+                     name: 'italiano',
+                     quantity: '10g'
+                 }
+             ],
+             yeast: [
+                 {
+                     name: 'fermentum_mobile',
+                     quantity: '23ml'
+                 }
+             ],
+         },
         rating: {
             general_rating: 4.5,    // wartości będą wpisywane przez usera
             costam1: 4.5,
@@ -88,16 +120,32 @@ module.exports = [
             type: 'zacieranie'
         },
         recipe: {
-            fermenting_components: [
-                {barley: '20g'},   // klucz i wartość będą wpisywane przez usera
-                {malt: '10g'}
+            fermenting_components: [     // wartości będą wpisywane przez usera (dowolna liczba składników
+                {
+                    name: 'barley',
+                    quantity: '20g'
+                },
+                {
+                    name: 'malt',
+                    quantity: '10g'
+                }
+
             ],
             hop: [
-                {americano: '10g'},   // klucz i wartość będą wpisywane przez usera
-                {italiano: '20g'}
+                {
+                    name: 'americano',
+                    quantity: '20g'
+                },
+                {
+                    name: 'italiano',
+                    quantity: '10g'
+                }
             ],
             yeast: [
-                {fermentum_mobile: '3ml'} // klucz i wartość będą wpisywane przez usera
+                {
+                    name: 'fermentum_mobile',
+                    quantity: '23ml'
+                }
             ],
         },
         rating: {
@@ -126,16 +174,32 @@ module.exports = [
             type: 'zacieranie'
         },
         recipe: {
-            fermenting_components: [
-                {barley: '20g'},   // klucz i wartość będą wpisywane przez usera
-                {malt: '10g'}
+            fermenting_components: [     // wartości będą wpisywane przez usera (dowolna liczba składników
+                {
+                    name: 'barley',
+                    quantity: '20g'
+                },
+                {
+                    name: 'malt',
+                    quantity: '10g'
+                }
+
             ],
             hop: [
-                {americano: '10g'},   // klucz i wartość będą wpisywane przez usera
-                {italiano: '20g'}
+                {
+                    name: 'americano',
+                    quantity: '20g'
+                },
+                {
+                    name: 'italiano',
+                    quantity: '10g'
+                }
             ],
             yeast: [
-                {fermentum_mobile: '3ml'} // klucz i wartość będą wpisywane przez usera
+                {
+                    name: 'fermentum_mobile',
+                    quantity: '23ml'
+                }
             ],
         },
         rating: {
@@ -164,16 +228,32 @@ module.exports = [
             type: 'zacieranie'
         },
         recipe: {
-            fermenting_components: [
-                {barley: '20g'},   // klucz i wartość będą wpisywane przez usera
-                {malt: '10g'}
+            fermenting_components: [     // wartości będą wpisywane przez usera (dowolna liczba składników
+                {
+                    name: 'barley',
+                    quantity: '20g'
+                },
+                {
+                    name: 'malt',
+                    quantity: '10g'
+                }
+
             ],
             hop: [
-                {americano: '10g'},   // klucz i wartość będą wpisywane przez usera
-                {italiano: '20g'}
+                {
+                    name: 'americano',
+                    quantity: '20g'
+                },
+                {
+                    name: 'italiano',
+                    quantity: '10g'
+                }
             ],
             yeast: [
-                {fermentum_mobile: '3ml'} // klucz i wartość będą wpisywane przez usera
+                {
+                    name: 'fermentum_mobile',
+                    quantity: '23ml'
+                }
             ],
         },
         rating: {
@@ -202,16 +282,32 @@ module.exports = [
             type: 'zacieranie'
         },
         recipe: {
-            fermenting_components: [
-                {barley: '20g'},   // klucz i wartość będą wpisywane przez usera
-                {malt: '10g'}
+            fermenting_components: [     // wartości będą wpisywane przez usera (dowolna liczba składników
+                {
+                    name: 'barley',
+                    quantity: '20g'
+                },
+                {
+                    name: 'malt',
+                    quantity: '10g'
+                }
+
             ],
             hop: [
-                {americano: '10g'},   // klucz i wartość będą wpisywane przez usera
-                {italiano: '20g'}
+                {
+                    name: 'americano',
+                    quantity: '20g'
+                },
+                {
+                    name: 'italiano',
+                    quantity: '10g'
+                }
             ],
             yeast: [
-                {fermentum_mobile: '3ml'} // klucz i wartość będą wpisywane przez usera
+                {
+                    name: 'fermentum_mobile',
+                    quantity: '23ml'
+                }
             ],
         },
         rating: {
@@ -240,16 +336,32 @@ module.exports = [
             type: 'zacieranie'
         },
         recipe: {
-            fermenting_components: [
-                {barley: '20g'},   // klucz i wartość będą wpisywane przez usera
-                {malt: '10g'}
+            fermenting_components: [     // wartości będą wpisywane przez usera (dowolna liczba składników
+                {
+                    name: 'barley',
+                    quantity: '20g'
+                },
+                {
+                    name: 'malt',
+                    quantity: '10g'
+                }
+
             ],
             hop: [
-                {americano: '10g'},   // klucz i wartość będą wpisywane przez usera
-                {italiano: '20g'}
+                {
+                    name: 'americano',
+                    quantity: '20g'
+                },
+                {
+                    name: 'italiano',
+                    quantity: '10g'
+                }
             ],
             yeast: [
-                {fermentum_mobile: '3ml'} // klucz i wartość będą wpisywane przez usera
+                {
+                    name: 'fermentum_mobile',
+                    quantity: '23ml'
+                }
             ],
         },
         rating: {
@@ -278,16 +390,32 @@ module.exports = [
             type: 'zacieranie'
         },
         recipe: {
-            fermenting_components: [
-                {barley: '20g'},   // klucz i wartość będą wpisywane przez usera
-                {malt: '10g'}
+            fermenting_components: [     // wartości będą wpisywane przez usera (dowolna liczba składników
+                {
+                    name: 'barley',
+                    quantity: '20g'
+                },
+                {
+                    name: 'malt',
+                    quantity: '10g'
+                }
+
             ],
             hop: [
-                {americano: '10g'},   // klucz i wartość będą wpisywane przez usera
-                {italiano: '20g'}
+                {
+                    name: 'americano',
+                    quantity: '20g'
+                },
+                {
+                    name: 'italiano',
+                    quantity: '10g'
+                }
             ],
             yeast: [
-                {fermentum_mobile: '3ml'} // klucz i wartość będą wpisywane przez usera
+                {
+                    name: 'fermentum_mobile',
+                    quantity: '23ml'
+                }
             ],
         },
         rating: {
