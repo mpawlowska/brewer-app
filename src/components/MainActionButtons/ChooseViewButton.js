@@ -3,7 +3,7 @@ import {
     Route,
     Link
 } from 'react-router-dom';
-import { Dropdown } from 'semantic-ui-react';
+import { Dropdown, Divider } from 'semantic-ui-react';
 
 const options = [
     { key: 1, text: 'Szczegóły', value: 'details' },
@@ -38,6 +38,7 @@ export default class ChooseViewButton extends React.Component {
                         Karty
                         </Dropdown.Item>
                     </Link>
+                    <Divider />
                     <Link to="/list">
                         <Dropdown.Item style={{width: '100px', color: 'black'}}>
                         Lista
