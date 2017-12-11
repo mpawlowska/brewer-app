@@ -28,7 +28,7 @@ export default class App extends React.Component {
                         <Route
                             exact path="/cards"
                             render={(routeProps) => (
-                                <MainDetailsView {...routeProps} batches={batches}/>
+                                <MainDetailsView {...routeProps}/>
                             )}
                         />
                         <Route
