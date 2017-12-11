@@ -1,0 +1,426 @@
+{
+    "batch1": {
+        "details": {
+            "name": "McDusia",
+            "style": "lager",
+            "date": "04.06.2016",
+            "volume": "20l",
+            "IBU": "35",
+            "SRM": "5",
+            "density": "24 BLG",
+            "alcohol": "5%",
+            "type": "zacieranie"
+        },
+        "recipe": {
+            "fermenting_components": [
+                {
+                    "name": "barley",
+                    "quantity": "20g"
+                },
+                {
+                    "name": "malt",
+                    "quantity": "10g"
+                }
+            ],
+            "hop": [
+                {
+                    "name": "americano",
+                    "quantity": "20g"
+                },
+                {
+                    "name": "italiano",
+                    "quantity": "10g"
+                }
+            ],
+            "yeast": [
+                {
+                    "name": "fermentum_mobile",
+                    "quantity": "23ml"
+                }
+            ]
+        },
+        "rating": {
+            "general_rating": "4.5",
+            "costam1": "4.5",
+            "costam2": "3"
+        },
+        "comments": {
+            "date1": "blabla",
+            "date2": "blablabla"
+        },
+        "files": {
+            "main_image": "http://blog.muscle-zone.pl/wp-content/uploads/2017/05/piwooo-e1494607581502.jpg"
+        }
+    },
+    "batch2": {
+        "details": {
+            "name": "PawWłoski",
+            "style": "IPA",
+            "date": "03.06.2016",
+            "volume": "40l",
+            "IBU": "35",
+            "SRM": "6",
+            "density": "24 BLG",
+            "alcohol": "5%",
+            "type": "zacieranie"
+        },
+        "recipe": {
+            "fermenting_components": [
+                {
+                    "name": "barley",
+                    "quantity": "20g"
+                },
+                {
+                    "name": "malt",
+                    "quantity": "10g"
+                }
+            ],
+            "hop": [
+                {
+                    "name": "americano",
+                    "quantity": "20g"
+                },
+                {
+                    "name": "italiano",
+                    "quantity": "10g"
+                }
+            ],
+            "yeast": [
+                {
+                    "name": "fermentum_mobile",
+                    "quantity": "23ml"
+                }
+            ]
+        },
+        "rating": {
+            "general_rating": "4.5",
+            "costam1": "4.5",
+            "costam2": "3"
+        },
+        "comments": {
+            "date1": "tiruriru",
+            "date2": "tatata"
+        },
+        "files": {
+            "main_image": "http://cdn13.se.smcloud.net/t/photos/253702/uwaga-piwo-podrozeje.jpg"
+        }
+    },
+   "batch3": {
+        "details": {
+            "name": "Piwko3",
+            "style": "IPA",
+            "date": "04.06.2016",
+            "volume": "20l",
+            "IBU": "35",
+            "SRM": "5",
+            "density": "24 BLG",
+            "alcohol": "5%",
+            "type": "zacieranie"
+        },
+        "recipe": {
+            "fermenting_components": [
+                {
+                    "name": "barley",
+                    "quantity": "20g"
+                },
+                {
+                    "name": "malt",
+                    "quantity": "10g"
+                }
+            ],
+            "hop": [
+                {
+                    "name": "americano",
+                    "quantity": "20g"
+                },
+                {
+                    "name": "italiano",
+                    "quantity": "10g"
+                }
+            ],
+            "yeast": [
+                {
+                    "name": "fermentum_mobile",
+                    "quantity": "23ml"
+                }
+            ]
+        },
+        "rating": {
+            "general_rating":"4.5",
+            "costam1": "4.5",
+            "costam2": "3"
+        },
+        "comments": {
+            "date1": "blabla",
+            "date2": "blablabla"
+        },
+        "files": {
+            "main_image": "http://gfx.chillizet.pl/var/zetchilli/storage/images/food/newsy/dlaczego-piwo-koncernowe-nie-smakuje-to-zadna-tajemnica-1351/19972-1-pol-PL/Dlaczego-piwo-koncernowe-nie-smakuje-To-zadna-tajemnica_article.jpg"
+        }
+    },
+   "batch4": {
+        "details": {
+            "name": "Piwko4",
+            "style": "lager",
+            "date": "04.06.2016",
+            "volume": "20l",
+            "IBU": "35",
+            "SRM": "5",
+            "density": "24 BLG",
+            "alcohol": "5%",
+            "type": "zacieranie"
+        },
+        "recipe": {
+            "fermenting_components": [
+                {
+                    "name": "barley",
+                    "quantity": "20g"
+                },
+                {
+                    "name": "malt",
+                    "quantity": "10g"
+                }
+            ],
+            "hop": [
+                {
+                    "name": "americano",
+                    "quantity": "20g"
+                },
+                {
+                    "name": "italiano",
+                    "quantity": "10g"
+                }
+            ],
+            "yeast": [
+                {
+                    "name": "fermentum_mobile",
+                    "quantity": "23ml"
+                }
+            ]
+        },
+        "rating": {
+            "general_rating": "4.5",
+            "costam1": "4.5",
+            "costam2": "3"
+        },
+        "comments": {
+            "date1": "blabla",
+            "date2": "blablabla"
+        },
+        "files": {
+            "main_image": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Dark_beer_and_light_beer.jpg/220px-Dark_beer_and_light_beer.jpg"
+        }
+    },
+   "batch5": {
+        "details": {
+            "name": "Piwko5",
+            "style": "lager",
+            "date": "04.06.2016",
+            "volume": "20l",
+            "IBU": "35",
+            "SRM": "5",
+            "density": "24 BLG",
+            "alcohol": "5%",
+            "type": "zacieranie"
+        },
+        "recipe": {
+            "fermenting_components": [
+                {
+                    "name": "barley",
+                    "quantity": "20g"
+                },
+                {
+                    "name": "malt",
+                    "quantity": "10g"
+                }
+            ],
+            "hop": [
+                {
+                    "name": "americano",
+                    "quantity": "20g"
+                },
+                {
+                    "name": "italiano",
+                    "quantity": "10g"
+                }
+            ],
+            "yeast": [
+                {
+                    "name": "fermentum_mobile",
+                    "quantity": "23ml"
+                }
+            ]
+        },
+        "rating": {
+            "general_rating": "4.5",
+            "costam1": "4.5",
+            "costam2": "3"
+        },
+        "comments": {
+            "date1": "blabla",
+            "date2": "blablabla"
+        },
+        "files": {
+            "main_image": "http://gfx.chillizet.pl/var/zetchilli/storage/images/food/newsy/dlaczego-piwo-koncernowe-nie-smakuje-to-zadna-tajemnica-1351/19972-1-pol-PL/Dlaczego-piwo-koncernowe-nie-smakuje-To-zadna-tajemnica_article.jpg"
+        }
+    },
+   "batch6": {
+        "details": {
+            "name": "Piwko6",
+            "style": "lager",
+            "date": "04.06.2016",
+            "volume": "20l",
+            "IBU": "35",
+            "SRM": "5",
+            "density": "24 BLG",
+            "alcohol": "5%",
+            "type": "zacieranie"
+        },
+        "recipe": {
+            "fermenting_components": [
+                {
+                    "name": "barley",
+                    "quantity": "20g"
+                },
+                {
+                    "name": "malt",
+                    "quantity": "10g"
+                }
+            ],
+            "hop": [
+                {
+                    "name": "americano",
+                    "quantity": "20g"
+                },
+                {
+                    "name": "italiano",
+                    "quantity": "10g"
+                }
+            ],
+            "yeast": [
+                {
+                    "name": "fermentum_mobile",
+                    "quantity": "23ml"
+                }
+            ]
+        },
+        "rating": {
+            "general_rating": "4.5",
+            "costam1": "4.5",
+            "costam2": "3"
+        },
+        "comments": {
+            "date1": "blabla",
+            "date2": "blablabla"
+        },
+        "files": {
+            "main_image": "http://gfx.chillizet.pl/var/zetchilli/storage/images/food/newsy/dlaczego-piwo-koncernowe-nie-smakuje-to-zadna-tajemnica-1351/19972-1-pol-PL/Dlaczego-piwo-koncernowe-nie-smakuje-To-zadna-tajemnica_article.jpg"
+        }
+    },
+   "batch7": {
+        "details": {
+            "name": "Piwko7",
+            "style": "lager",
+            "date": "04.06.2016",
+            "volume": "20l",
+            "IBU": "35",
+            "SRM": "5",
+            "density": "24 BLG",
+            "alcohol": "5%",
+            "type": "zacieranie"
+        },
+        "recipe": {
+            "fermenting_components": [
+                {
+                    "name": "barley",
+                    "quantity": "20g"
+                },
+                {
+                    "name": "malt",
+                    "quantity": "10g"
+                }
+            ],
+            "hop": [
+                {
+                    "name": "americano",
+                    "quantity": "20g"
+                },
+                {
+                    "name": "italiano",
+                    "quantity": "10g"
+                }
+            ],
+            "yeast": [
+                {
+                    "name": "fermentum_mobile",
+                    "quantity": "23ml"
+                }
+            ]
+        },
+        "rating": {
+            "general_rating":"4.5",
+            "costam1": "4.5",
+            "costam2": "3"
+        },
+        "comments": {
+            "date1": "blabla",
+            "date2": "blablabla"
+        },
+        "files": {
+            "main_image": "http://gfx.chillizet.pl/var/zetchilli/storage/images/food/newsy/dlaczego-piwo-koncernowe-nie-smakuje-to-zadna-tajemnica-1351/19972-1-pol-PL/Dlaczego-piwo-koncernowe-nie-smakuje-To-zadna-tajemnica_article.jpg"
+        }
+    },
+   "batch8": {
+        "details": {
+            "name": "Piwko8",
+            "style": "IPA",
+            "date": "04.06.2016",
+            "volume": "20l",
+            "IBU": "35",
+            "SRM": "5",
+            "density": "24 BLG",
+            "alcohol": "5%",
+            "type": "zacieranie"
+        },
+        "recipe": {
+            "fermenting_components": [
+                {
+                    "name": "barley",
+                    "quantity": "20g"
+                },
+                {
+                    "name": "malt",
+                    "quantity": "10g"
+                }
+            ],
+            "hop": [
+                {
+                    "name": "americano",
+                    "quantity": "20g"
+                },
+                {
+                    "name": "italiano",
+                    "quantity": "10g"
+                }
+            ],
+            "yeast": [
+                {
+                    "name": "fermentum_mobile",
+                    "quantity": "23ml"
+                }
+            ]
+        },
+        "rating": {
+            "general_rating": "4.5",
+            "costam1":"4.5",
+            "costam2": "3"
+        },
+        "comments": {
+            "date1": "blabla",
+            "date2": "blablabla"
+        },
+        "files": {
+            "main_image": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Dark_beer_and_light_beer.jpg/220px-Dark_beer_and_light_beer.jpg"
+        }
+    }
+}
