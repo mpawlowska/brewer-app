@@ -8,6 +8,7 @@ import Header from '../Header/Header.js';
 import MainActionButtons from '../MainActionButtons/MainActionButtons.js'
 import MainDetailsView from '../MainDetailsView/MainDetailsView';
 import MainListView from '../MainListView/MainListView';
+import AddBatchView from '../AddBatchView/AddBatchView';
 import batches from '../../data/batches';
 
 
@@ -38,6 +39,7 @@ export default class App extends React.Component {
                            )}
                         />
                     </Switch>
+                    <Route exact path="/newbatch" component={ AddBatchView }></Route>
                     {/*<Switch>*/}
                         {/*<Route exact path="/" component={ MyWarkiContent }></Route>*/}
                         {/*<Route exact path="/recipe" component={ RecipeContent }></Route>*/}

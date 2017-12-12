@@ -1,7 +1,6 @@
 import React from 'react';
 import {
-    Route,
-    Switch
+    Link
 } from 'react-router-dom';
 import { Button } from 'semantic-ui-react';
 
@@ -13,12 +12,14 @@ export default class AddBatchButton extends React.Component {
 
     render() {
         return (
+            <Link to="/newbatch">
             <Button
                 content='Dodaj warkę'
                 icon='add square'
                 labelPosition='right'
                 color="green"
             />
+            </Link>
         );
     }
 }
