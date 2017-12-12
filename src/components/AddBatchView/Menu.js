@@ -29,7 +29,7 @@ export default class AddMenu extends React.Component {
         return (
             <div style={{height: '100%', width: '75%'}}>
                 <Menu attached='top' pointing secondary>
-                    <Link to="/newbatch/details">
+                    <Link to="/newbatch">
                         <Menu.Item name="details" active={activeItem === 'details'} onClick={this.handleItemClick}>Podsumowanie
                         </Menu.Item>
                     </Link>
@@ -52,7 +52,7 @@ export default class AddMenu extends React.Component {
                 <Segment attached='bottom'>
                     <Form>
                         <Switch>
-                            <Route exact path="/newbatch/details" component={ Details }></Route>
+                            <Route exact path="/newbatch" component={ Details }></Route>
                             <Route exact path="/newbatch/recipe" component={ Recipe }></Route>
                             <Route exact path="/newbatch/rating-comments" component={ Rating_Comments }></Route>
                             <Route exact path="/newbatch/files" component={ Files }></Route>
