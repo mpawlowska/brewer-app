@@ -39,7 +39,7 @@ export default class App extends React.Component {
                            )}
                         />
                     </Switch>
-                    <Route exact path="/newbatch" component={ AddBatchView }></Route>
+                    <Route path="/newbatch" component={ AddBatchView }></Route>
                     {/*<Switch>*/}
                         {/*<Route exact path="/" component={ MyWarkiContent }></Route>*/}
                         {/*<Route exact path="/recipe" component={ RecipeContent }></Route>*/}
