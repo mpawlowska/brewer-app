@@ -57,7 +57,7 @@ export default class AddMenu extends React.Component {
                             <Route exact path="/newbatch/rating-comments" component={ Rating_Comments }></Route>
                             <Route exact path="/newbatch/files" component={ Files }></Route>
                         </Switch>
-                        <Button type='submit'>Zakończ dodawanie warki</Button>
+                        <Button type='submit' color="blue">Zakończ dodawanie warki</Button>
                     </Form>
                 </Segment>
             </div>
