@@ -26,15 +26,14 @@ class RecipeIngredients extends React.Component {
         });
     };
 
-    handleOnInput = (e, index) => {
-        console.log('z rodzica', e.target.value, e.target.name, );
+    handleOnInput = (dataFromChild) => {
+        console.log(dataFromChild);
 
         // this.setState({
         //     ingredientsValues:
         // })
 
     };
-
 
         // this.setState({
         //         ingredientsName: this.state.ingredientsName.concat([inputValue])
