@@ -5,6 +5,14 @@ import AddMenu from './Menu';
 
 export default class AddForm extends React.Component {
 
+    constructor(props) {
+        super(props);
+
+        this.state = {
+
+        }
+    }
+
     render() {
         return (
             <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-around', height: '90%', width: '90%'}}>

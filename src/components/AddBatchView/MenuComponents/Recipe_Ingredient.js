@@ -4,6 +4,12 @@ import { Menu, Segment, Form, Container, Button, Divider, Input, Icon } from 'se
  export default class Recipe_Ingredient extends React.Component {
      constructor(props) {
          super(props);
+
+         this.state = {
+             index: this.props.index,
+             name: '',
+             quantity: ''
+         }
      }
 
      onClick = (e) => {
@@ -12,11 +18,22 @@ import { Menu, Segment, Form, Container, Button, Divider, Input, Icon } from 'se
             formField.removeChild(parent);
      };
 
+     onChange = (e) => {
+         const target = e.target;
+         const name = target.name;
+         const value = target.value;
+
+         this.setState({
+             [name]: value
+         });
+         console.log(this.state.name, this.state.quantity)
+     };
+
      render() {
          return (
-                 <div>
-                     <Input type="text" style={{width: "70%"}}/>
-                     <Input type="text" placeholder="Ilość" style={{width: "15%"}}/>
+                 <div style = {{marginBottom: '0.5em'}}>
+                     <Input type="text" style={{width: "70%"}} name='name' value={this.state.name} onChange={this.onChange} onInput={this.props.onInput} />
+                     <Input type="text" placeholder="Ilość" style={{width: "15%"}} name="quantity" value={this.state.quantity} onChange={this.onChange} onInput={this.props.onInput}/>
                      <Button size="mini"
                              style={{marginLeft: '1em', padding: '0.5em'}}
                              onClick={this.onClick}>

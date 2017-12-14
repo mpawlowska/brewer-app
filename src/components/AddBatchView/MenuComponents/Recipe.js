@@ -10,22 +10,48 @@ class RecipeIngredients extends React.Component {
             counter: 0,
             ingredients: [],
             ingredientsValues: []
-
         }
     }
+
     handleAddButtonClick = () => {
+        const newIngredientObj = {name: '', quantity: ''};
+        let newIngredientsValues = this.state.ingredientsValues;
+
+        newIngredientsValues.push(newIngredientObj);
+
         this.setState({
             counter: this.state.counter + 1,
-            ingredients: this.state.ingredients.concat([this.state.counter])
+            ingredients: this.state.ingredients.concat([this.state.counter]),
+            ingredientsValues: newIngredientsValues
         });
     };
+
+    handleOnInput = (e, index) => {
+        console.log('z rodzica', e.target.value, e.target.name, );
+
+        // this.setState({
+        //     ingredientsValues:
+        // })
+
+    };
+
+
+        // this.setState({
+        //         ingredientsName: this.state.ingredientsName.concat([inputValue])
+        //     });
+
+        // this.setState({
+        //     ingredientsName: this.state.ingredientsName.concat([inputValue])
+        // });
+        //
+        // console.log(this.state.ingredientsNameAndQuantity);
 
     render() {
         return (
             <Form.Field>
                 <label>{this.props.label}</label>
                 <Divider/>
-                {this.state.ingredients.map((elem, index) => <Recipe_Ingredient key={index}/>)}
+                {this.state.ingredients.map((elem, index) => <Recipe_Ingredient key={index} onChange={this.handleInputChange} onInput={this.handleOnInput} index={index}/>)}
                 <Button content='Dodaj składnik' icon='add' labelPosition='left' size="mini" onClick={this.handleAddButtonClick}/>
             </Form.Field>
         )
