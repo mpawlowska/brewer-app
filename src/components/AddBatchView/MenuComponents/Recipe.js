@@ -2,62 +2,35 @@ import React from 'react';
 import { Menu, Segment, Form, Container, Button, Divider, Input, Icon } from 'semantic-ui-react'
 import Recipe_Ingredient from './Recipe_Ingredient';
 
-class RecipeFermentIngredients extends React.Component {
+class RecipeIngredients extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            ingredients: []
+            counter: 0,
+            ingredients: [],
+            ingredientsValues: []
+
         }
     }
-
     handleAddButtonClick = () => {
         this.setState({
-            ingredients: this.state.ingredients.concat(['ingredient'])
-        })
+            counter: this.state.counter + 1,
+            ingredients: this.state.ingredients.concat([this.state.counter])
+        });
     };
-
-    handleDeleteButtonClick = () => {
-        console.log()
-        this.setState({
-            ingredients: this.state.ingredients.splice[]
-        })
-    };
-
 
     render() {
         return (
             <Form.Field>
-                <label>Składniki fermentowalne</label>
+                <label>{this.props.label}</label>
                 <Divider/>
-                {this.state.ingredients.map((elem, i) => <Recipe_Ingredient key={i} onClick={this.handleDeleteButtonClick} index={i}/>)}
+                {this.state.ingredients.map((elem, index) => <Recipe_Ingredient key={index}/>)}
                 <Button content='Dodaj składnik' icon='add' labelPosition='left' size="mini" onClick={this.handleAddButtonClick}/>
             </Form.Field>
         )
     }
 }
-
-// export default class RecipeYeast extends React.Component {
-//     constructor(props) {
-//         super(props);
-//     }
-// }
-//
-// export default class RecipeHop extends React.Component {
-//     constructor(props) {
-//         super(props);
-//     }
-// }
-//
-// export default class RecipeAddons extends React.Component {
-//     constructor(props) {
-//         super(props);
-//     }
-// }
-
-
-
-
 
 export default class Recipe extends React.Component {
     constructor(props) {
@@ -70,24 +43,12 @@ export default class Recipe extends React.Component {
             <Container style={{height: "100%"}}>
 
                 <Form.Group widths="equal">
-                    <RecipeFermentIngredients/>
-                    <Form.Field>
-                        <label>Drożdże</label>
-                        <Divider/>
-                        <Button content='Dodaj składnik' icon='add' labelPosition='left' size="mini" />
-                    </Form.Field>
+                    <RecipeIngredients label="Składniki fermentowalne"/>
+                    <RecipeIngredients label="Drożdże"/>
                 </Form.Group>
                 <Form.Group widths="equal">
-                    <Form.Field>
-                        <label>Chmiele</label>
-                        <Divider/>
-                        <Button content='Dodaj składnik' icon='add' labelPosition='left' size="mini" />
-                    </Form.Field>
-                    <Form.Field>
-                        <label>Dodatki</label>
-                        <Divider/>
-                        <Button content='Dodaj składnik' icon='add' labelPosition='left' size="mini" />
-                    </Form.Field>
+                    <RecipeIngredients label="Chmiele"/>
+                    <RecipeIngredients label="Dodatki"/>
                 </Form.Group>
             </Container>
         )
