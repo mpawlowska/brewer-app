@@ -4,43 +4,30 @@ import { Menu, Segment, Form, Container, Button, Divider, Input, Icon } from 'se
  export default class Recipe_Ingredient extends React.Component {
      constructor(props) {
          super(props);
-
-         this.state = {
-             index: this.props.index,
-             name: '',
-             quantity: ''
-         }
      }
 
-     onClick = (e) => {
-         const parent = e.target.parentNode;
-         const formField = parent.parentNode;
-            formField.removeChild(parent);
+     onClick = () => {
+         this.props.onDeleteClick(this.props.index);
      };
 
      onChange = (e) => {
-         const target = e.target;
-         const name = target.name;
-         const value = target.value;
-
-         this.setState({
-             [name]: value
-         });
-         console.log(this.state.name, this.state.quantity)
-
-         this.props.onInput(this.state.index);
+         this.props.onChange(this.props.index, e.target.name, e.target.value);
      };
 
+
+     // w value inputów przekazuję wartość z propsów, tak aby po usuwaniu okreslonych inputów, koklejny render powodował pokazywanie się odpowiednich elementów (z odpowiednimi wartościami) - wartości te sa brane z metody map tablicy, w której zapisuję wartości z tych inputów (w rodzicu: ingredients)
+
      render() {
-         return (
-                 <div style = {{marginBottom: '0.5em'}}>
-                     <Input type="text" style={{width: "70%"}} name='name' value={this.state.name} onChange={this.onChange} onInput={this.props.onInput} index={this.props.index}/>
-                     <Input type="text" placeholder="Ilość" style={{width: "15%"}} name="quantity" value={this.state.quantity} onChange={this.onChange} onInput={this.props.onInput} index={this.props.index}/>
-                     <Button size="mini"
-                             style={{marginLeft: '1em', padding: '0.5em'}}
-                             onClick={this.onClick}>
-                         Usuń
-                     </Button>
-                 </div>
-         )}
+          return (
+             <div style = {{marginBottom: '0.5em'}}>
+                 <Input type="text" style={{width: "70%"}} name='name' value={this.props.name} onChange={this.onChange}/>
+                 <Input type="text" placeholder="Ilość" style={{width: "15%"}} name="quantity" value={this.props.quantity} onChange={this.onChange}/>
+                 <Button size="mini"
+                         style={{marginLeft: '1em', padding: '0.5em'}}
+                         onClick={this.onClick}>
+                     Usuń
+                 </Button>
+             </div>
+          )
+     }
  }

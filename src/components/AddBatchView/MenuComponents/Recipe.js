@@ -6,51 +6,49 @@ class RecipeIngredients extends React.Component {
     constructor(props) {
         super(props);
 
+        // w state.ingredients zapisują się w tablicy wartości z inputów (nazwa składnika i ilość) w postaci obiektów {name: '', quantity: ''
         this.state = {
-            counter: 0,
-            ingredients: [],
-            ingredientsValues: []
+            ingredients: []
         }
     }
-
+    // dodaję puste pole z inputami:
     handleAddButtonClick = () => {
         const newIngredientObj = {name: '', quantity: ''};
-        let newIngredientsValues = this.state.ingredientsValues;
+        let { ingredients } = this.state;
 
-        newIngredientsValues.push(newIngredientObj);
+        ingredients.push(newIngredientObj);
 
         this.setState({
-            counter: this.state.counter + 1,
-            ingredients: this.state.ingredients.concat([this.state.counter]),
-            ingredientsValues: newIngredientsValues
+            ingredients: ingredients
         });
     };
 
-    handleOnInput = (dataFromChild) => {
-        console.log(dataFromChild);
+    // usuwam dany obiekt z inputami z tablicy ingredients - identyfikuję go na podstawie index przekazanego w propsach przy tworzeniu za pomocą map, ten index otrzymuję dzięki wywołaniu metody w dziecku
+    handleDeleteButtonClick = (ingredientIndex) => {
+        let { ingredients } = this.state;
+        ingredients.splice(ingredientIndex, 1);
 
-        // this.setState({
-        //     ingredientsValues:
-        // })
-
+        this.setState({
+            ingredients: ingredients
+        });
     };
 
-        // this.setState({
-        //         ingredientsName: this.state.ingredientsName.concat([inputValue])
-        //     });
+    handleInputChange = (ingredientIndex, name, value) => {
+        let { ingredients } = this.state;
+        ingredients[ingredientIndex][name] = value;
 
-        // this.setState({
-        //     ingredientsName: this.state.ingredientsName.concat([inputValue])
-        // });
-        //
-        // console.log(this.state.ingredientsNameAndQuantity);
+        this.setState({
+            ingredients: ingredients
+        });
+    };
 
     render() {
+        console.log(this.state.ingredients);
         return (
             <Form.Field>
                 <label>{this.props.label}</label>
                 <Divider/>
-                {this.state.ingredients.map((elem, index) => <Recipe_Ingredient key={index} onChange={this.handleInputChange} onInput={this.handleOnInput} index={index}/>)}
+                {this.state.ingredients.map((ingredient, index) => <Recipe_Ingredient key={index} index={index} onChange={this.handleInputChange} onDeleteClick={this.handleDeleteButtonClick} name={ingredient['name']} quantity={ingredient['quantity']}/>)}
                 <Button content='Dodaj składnik' icon='add' labelPosition='left' size="mini" onClick={this.handleAddButtonClick}/>
             </Form.Field>
         )
@@ -66,7 +64,6 @@ export default class Recipe extends React.Component {
     render() {
         return (
             <Container style={{height: "100%"}}>
-
                 <Form.Group widths="equal">
                     <RecipeIngredients label="Składniki fermentowalne"/>
                     <RecipeIngredients label="Drożdże"/>

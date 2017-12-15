@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Container, Grid } from 'semantic-ui-react'
+import { Form, Container, Input } from 'semantic-ui-react'
 
 export default class Details extends React.Component {
     constructor(props) {
@@ -13,46 +13,46 @@ export default class Details extends React.Component {
                 <Form.Group widths="equal">
                     <Form.Field>
                         <label>Nazwa</label>
-                        <input />
+                        <Input />
                     </Form.Field>
                     <Form.Field>
                         <label>Styl</label>
-                        <input />
+                        <Input />
                     </Form.Field>
                 </Form.Group>
                 <Form.Group widths="equal">
                     <Form.Field>
                         <label>Data warzenia</label>
-                        <input />
+                        <Input />
                     </Form.Field>
                     <Form.Field>
                         <label>Wielkość</label>
-                        <input />
+                        <Input />
                     </Form.Field>
                 </Form.Group>
                 <Form.Group widths="equal">
                     <Form.Field>
                         <label>IBU</label>
-                        <input />
+                        <Input />
                     </Form.Field>
                     <Form.Field>
                         <label>SRM</label>
-                        <input />
+                        <Input />
                     </Form.Field>
                 </Form.Group>
                 <Form.Group widths="equal">
                     <Form.Field>
                         <label>Gęstość</label>
-                        <input />
+                        <Input />
                     </Form.Field>
                     <Form.Field>
                         <label>Alkohol</label>
-                        <input />
+                        <Input />
                     </Form.Field>
                 </Form.Group>
                     <Form.Field>
                         <label>Typ</label>
-                        <input />
+                        <Input />
                     </Form.Field>
             </Container>
         )

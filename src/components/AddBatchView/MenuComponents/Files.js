@@ -15,6 +15,6 @@ export default class Files extends React.Component {
 
     render() {
 
-        return <p>4 view</p>
+        return <p></p>
     }
 }
