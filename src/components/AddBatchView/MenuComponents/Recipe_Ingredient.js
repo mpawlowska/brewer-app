@@ -11,9 +11,8 @@ import { Menu, Segment, Form, Container, Button, Divider, Input, Icon } from 'se
      };
 
      onChange = (e) => {
-         this.props.onChange(this.props.index, e.target.name, e.target.value);
+         this.props.onChange(e, this.props.index);
      };
-
 
      // w value inputów przekazuję wartość z propsów, tak aby po usuwaniu okreslonych inputów, koklejny render powodował pokazywanie się odpowiednich elementów (z odpowiednimi wartościami) - wartości te sa brane z metody map tablicy, w której zapisuję wartości z tych inputów (w rodzicu: ingredients)
 

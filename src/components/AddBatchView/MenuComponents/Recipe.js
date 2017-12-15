@@ -33,7 +33,9 @@ class RecipeIngredients extends React.Component {
         });
     };
 
-    handleInputChange = (ingredientIndex, name, value) => {
+    handleInputChange = (e, ingredientIndex) => {
+        let name = e.target.name;
+        let value = e.target.value;
         let { ingredients } = this.state;
         ingredients[ingredientIndex][name] = value;
 
@@ -41,6 +43,15 @@ class RecipeIngredients extends React.Component {
             ingredients: ingredients
         });
     };
+
+    // handleInputChange = (ingredientIndex, name, value) => {
+    //     let { ingredients } = this.state;
+    //     ingredients[ingredientIndex][name] = value;
+    //
+    //     this.setState({
+    //         ingredients: ingredients
+    //     });
+    // };
 
     render() {
         console.log(this.state.ingredients);
