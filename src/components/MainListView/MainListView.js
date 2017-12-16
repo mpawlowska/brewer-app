@@ -8,6 +8,10 @@ export default class MainListView extends React.Component {
         super(props);
     }
 
+    componentDidMount() {
+        this.props.pathSave('/list')
+    }
+
     render() {
         return(
             <Container>

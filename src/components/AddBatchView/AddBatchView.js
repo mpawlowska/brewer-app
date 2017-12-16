@@ -1,14 +1,15 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import AddForm from './AddForm';
 import { Button, Icon } from 'semantic-ui-react'
 
 
 export default class AddBatchView extends React.Component {
 
-    // metoda, która powoduje powrót do poprzedniego path z history
-    goBack = () => {
-        this.props.history.goBack();
-    };
+    // metoda, która powoduje powrót do poprzedniego path z history - tu nie moge jej wykorzystać, bo poprzednim path mogą być twż inne zakładki z formularza dodawania, a musze cofnąć do głównej strony
+    // goBack = () => {
+    //     this.props.history.goBack();
+    // };
 
     render() {
         return (
@@ -17,9 +18,11 @@ export default class AddBatchView extends React.Component {
                 </div>
                 <div style={{width:'90vw', backgroundColor: 'white', zIndex: '999', opacity: '100', position: 'absolute', top: '3em', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '3em 0'}}>
                     <AddForm/>
-                    <Button icon style={{position: 'absolute', top: '1em', right: '2em'}} onClick={this.goBack}>
-                        <Icon name='window close' />
-                    </Button>
+                    <Link to={this.props.pathToGoBack}>
+                        <Button icon style={{position: 'absolute', top: '1em', right: '2em'}}>
+                            <Icon name='window close' />
+                        </Button>
+                    </Link>
                 </div>
             </div>
         )

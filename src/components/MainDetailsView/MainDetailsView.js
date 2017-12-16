@@ -52,6 +52,10 @@ export default class MainDetailsView extends React.Component {
     //         this.setState({batches: batches});
     //     }
 
+    componentDidMount() {
+        this.props.pathSave('/cards')
+    }
+
     render() {
         return(
             <Container>
