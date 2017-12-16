@@ -8,14 +8,24 @@ import { Menu, Segment, Form, Button } from 'semantic-ui-react'
 import Details from './MenuComponents/Details';
 import Recipe from './MenuComponents/Recipe';
 import Rating_Comments from './MenuComponents/Rating_Comments';
-import Files from './MenuComponents/files';
+import Files from './MenuComponents/Files';
 
 export default class AddMenu extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            activeItem: 'details'
+            activeItem: 'details',
+            name: '',
+            style: '',
+            date: '',
+            volume: '',
+            ibu: '',
+            srm: '',
+            density: '',
+            alcohol: '',
+            type: '',
+            ingredients: []
         }
     }
 
@@ -24,8 +34,21 @@ export default class AddMenu extends React.Component {
         this.setState({activeItem: name})
     };
 
+    handleComponentUpdate = (name, value) => {
+        this.setState({
+            [name]: value,
+        });
+    // przekazuję jeszcze wyżej bo potrzebuję do nowej batchCard - można to jakoś ograniczyć, aby wywoływało się tylko przy zmianie kilku określonych kluczy
+        this.props.onDetailsChange(name, value);
+    };
+
+    onCloseClick = () => {
+
+    };
+
     render() {
-        const { activeItem } = this.state;
+        let { activeItem, name, style, date, ibu, srm, alcohol, volume, density, type }  = this.state;
+
         return (
             <div style={{height: '100%', width: '75%'}}>
                 <Menu attached='top' pointing secondary>
@@ -50,14 +73,24 @@ export default class AddMenu extends React.Component {
 
                 </Menu>
                 <Segment attached='bottom'>
-                    <Form>
+                    <Form style={{position: 'relative'}}>
                         <Switch>
-                            <Route exact path="/newbatch" component={ Details }></Route>
-                            <Route exact path="/newbatch/recipe" component={ Recipe }></Route>
+                            <Route
+                                exact path="/newbatch"
+                                render={(routeProps) => (
+                                    <Details {...routeProps} componentUpdate = {this.handleComponentUpdate} name={name} style={style} ibu={ibu} alcohol={alcohol} volume={volume} date={date} srm={srm} density={density} type={type}/>
+                                )}
+                                />
+                            <Route
+                                exact path="/newbatch/recipe"
+                                render={(routeProps) => (
+                                    <Recipe {...routeProps} componentUpdate = {this.handleComponentUpdate} >
+
+                            </Route>
                             <Route exact path="/newbatch/rating-comments" component={ Rating_Comments }></Route>
                             <Route exact path="/newbatch/files" component={ Files }></Route>
                         </Switch>
-                        <Button type='submit' color="blue">Zakończ dodawanie warki</Button>
+                        <Button type='submit' color="blue" style={{position: 'relative', left: '42em', marginTop: '1em'}} onClick={this.onCloseClick}>Zakończ dodawanie warki</Button>
                     </Form>
                 </Segment>
             </div>

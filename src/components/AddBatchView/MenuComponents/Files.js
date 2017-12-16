@@ -12,9 +12,4 @@ export default class Files extends React.Component {
         //     activeItem: 'details'
         // }
     }
-
-    render() {
-
-        return <p></p>
-    }
 }

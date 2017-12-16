@@ -8,9 +8,20 @@ export default class MainDetailsView extends React.Component {
     constructor(props) {
         super(props);
 
-        this.state = {
-            batches: []
-        };
+        // const batchesRef = firebase.database().ref();
+        // let batches = [];
+        //
+        // batchesRef.on('value', snap => {
+        //     snap.forEach((childSnapshot) => {
+        //         batches.push(childSnapshot.val());
+        //     })
+        // });
+
+        // this.state = {
+        //     batches: batches
+        // };
+        //
+        // console.log('BATChes from constr', this.state.batches);
     }
 
     // tym sposobem wyświetla się tylko jedna warka - dlaczego? ale wyswietla się od razu, bez koniecnzości klikania na 'Karty'
@@ -28,24 +39,25 @@ export default class MainDetailsView extends React.Component {
     //     batchesRef.on('value', this.onDataChange);
     // }
 
-    componentDidMount() {
-        const batchesRef = firebase.database().ref();
-        let batches = [];
-
-            batchesRef.on('value', snap => {
-                snap.forEach((childSnapshot) => {
-                    batches.push(childSnapshot.val());
-                })
-            });
-
-            this.setState({batches: batches});
-        }
+    // componentWillMount() {
+    //     const batchesRef = firebase.database().ref();
+    //     let batches = [];
+    //
+    //         batchesRef.on('value', snap => {
+    //             snap.forEach((childSnapshot) => {
+    //                 batches.push(childSnapshot.val());
+    //             })
+    //         });
+    //
+    //         this.setState({batches: batches});
+    //     }
 
     render() {
+        console.log('render MainDetailsView', this.props.batches);
         return(
             <Container>
             <Grid columns={5} stackable>
-                {this.state.batches.map((batch, index) => {
+                {this.props.batches.map((batch, index) => {
                     return (
                         <Grid.Column key={index}>
                             <BatchCard key={index} batch={batch}/>

@@ -10,7 +10,7 @@ export default class BatchCard extends React.Component {
         const extra = (
             <span>
                 <Icon name='calendar'/>
-                <span>clae</span>
+                <span>{this.props.date}</span>
             </span>
         );
 
@@ -18,8 +18,8 @@ export default class BatchCard extends React.Component {
             <Card color="green" style={{width: '12em'}}>
                 {/*<Image src={this.props.batch.files.main_image} alt="Zdjęcie warki"/>*/}
                 <Card.Content>
-                    <Card.Header textAlign="center">nazwa jakaś taka dluzsza nazwa
-                        {/*{this.props.batch.details.name}*/}
+                    <Card.Header textAlign="center">
+                        {this.props.name}
                     </Card.Header>
                     <Table basic='very'>
                         <Table.Body>
@@ -32,8 +32,8 @@ export default class BatchCard extends React.Component {
                                         </Header.Content>
                                     </Header>
                                 </Table.Cell>
-                                <Table.Cell style={{fontWeight: 'bold'}}>styl
-                                    {/*{this.props.batch.details.style}*/}
+                                <Table.Cell style={{fontWeight: 'bold'}}>
+                                    {this.props.style}
                                 </Table.Cell>
                             </Table.Row>
 
@@ -45,8 +45,8 @@ export default class BatchCard extends React.Component {
                                         </Header.Content>
                                     </Header>
                                 </Table.Cell>
-                                <Table.Cell>moje ibu
-                                    {/*{this.props.batch.details.IBU}*/}
+                                <Table.Cell>
+                                    {this.props.ibu}
                                 </Table.Cell>
                             </Table.Row>
 
@@ -58,8 +58,8 @@ export default class BatchCard extends React.Component {
                                         </Header.Content>
                                     </Header>
                                 </Table.Cell>
-                                <Table.Cell> alko
-                                    {/*{this.props.batch.details.alcohol}*/}
+                                <Table.Cell>
+                                    {this.props.alcohol}
                                 </Table.Cell>
                             </Table.Row>
 
@@ -71,8 +71,8 @@ export default class BatchCard extends React.Component {
                                         </Header.Content>
                                     </Header>
                                 </Table.Cell>
-                                <Table.Cell>vol
-                                    {/*{this.props.batch.details.volume}*/}
+                                <Table.Cell>
+                                    {this.props.volume}
                                 </Table.Cell>
                             </Table.Row>
 

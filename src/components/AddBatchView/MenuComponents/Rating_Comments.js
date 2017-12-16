@@ -10,8 +10,4 @@ export default class Rating_Comments extends React.Component {
         // }
     }
 
-    render() {
-
-        return <p>3 view</p>
-    }
 }

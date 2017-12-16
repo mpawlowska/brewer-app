@@ -9,17 +9,30 @@ import MainActionButtons from '../MainActionButtons/MainActionButtons.js'
 import MainDetailsView from '../MainDetailsView/MainDetailsView';
 import MainListView from '../MainListView/MainListView';
 import AddBatchView from '../AddBatchView/AddBatchView';
-import batches from '../../data/batches';
+import batchesJS from '../../data/batches';
 
 
 export default class App extends React.Component {
-    // constructor(props) {
-    //     super(props);
-    //
-    //     }
-    // }
+    constructor(props) {
+        super(props);
 
-    render() {   
+        // pobieram batches z Firebase:
+        const batchesRef = firebase.database().ref();
+        let batches = [];
+
+        batchesRef.on('value', snap => {
+            snap.forEach((childSnapshot) => {
+                batches.push(childSnapshot.val());
+            })
+        });
+
+        this.state = {
+            batches: batches
+        }
+    }
+
+    render() {
+        console.log('app render', this.state.batches);
         return (
             <div className='container'>
                 <Header />
@@ -29,20 +42,20 @@ export default class App extends React.Component {
                         <Route
                             exact path="/cards"
                             render={(routeProps) => (
-                                <MainDetailsView {...routeProps}/>
+                                <MainDetailsView {...routeProps} batches={this.state.batches}/>
                             )}
                         />
                         <Route
                             exact path="/list"
                             render={(routeProps) => (
-                               <MainListView {...routeProps} batches={batches}/>
+                               <MainListView {...routeProps} batches={batchesJS}/>
                            )}
                         />
                     </Switch>
                     <Route path="/newbatch" component={ AddBatchView }></Route>
                     {/*<Switch>*/}
                         {/*<Route exact path="/" component={ MyWarkiContent }></Route>*/}
-                        {/*<Route exact path="/recipe" component={ RecipeContent }></Route>*/}
+                        {/*<Route exact path="/recipe" component={ CalculatorsContent }></Route>*/}
                         {/*<Route path='*' render={*/}
                             {/*() => <div>Nie znaleziono strony.</div>*/}
                         {/*}></Route>*/}

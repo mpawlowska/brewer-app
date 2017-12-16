@@ -1,5 +1,6 @@
 import React from 'react';
-import AddForm from './AddForm'
+import AddForm from './AddForm';
+import { Button, Icon } from 'semantic-ui-react'
 
 
 export default class AddBatchView extends React.Component {
@@ -10,6 +11,9 @@ export default class AddBatchView extends React.Component {
                 </div>
                 <div style={{width:'90vw', backgroundColor: 'white', zIndex: '999', opacity: '100', position: 'absolute', top: '3em', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '3em 0'}}>
                     <AddForm/>
+                    <Button icon style={{position: 'absolute', top: '1em', right: '2em'}}>
+                        <Icon name='window close' />
+                    </Button>
                 </div>
             </div>
         )
