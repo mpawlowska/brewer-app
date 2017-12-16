@@ -1,10 +1,11 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Grid, Container } from 'semantic-ui-react';
 import BatchCard from './BatchCard';
 
 // w state będzie przyjmował listę wszystkich warek z bazy
 
-export default class MainDetailsView extends React.Component {
+export default class MainCardsView extends React.Component {
     constructor(props) {
         super(props);
 
@@ -63,7 +64,9 @@ export default class MainDetailsView extends React.Component {
                     {this.props.batches.map((batch, index) => {
                         return (
                             <Grid.Column key={index}>
-                                <BatchCard key={index} batch={batch}/>
+                                <Link to = {`batchdetails/${batch.id}`}>
+                                    <BatchCard key={index} batch={batch}/>
+                                </Link>
                             </Grid.Column>
                             )
                         })
@@ -73,3 +76,5 @@ export default class MainDetailsView extends React.Component {
         )
     }
 }
+
+

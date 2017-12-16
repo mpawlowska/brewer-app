@@ -3,9 +3,10 @@ import { Route, Switch} from 'react-router-dom';
 import 'normalize.css';
 import Header from '../Header/Header.js';
 import MainActionButtons from '../MainActionButtons/MainActionButtons.js'
-import MainDetailsView from '../MainDetailsView/MainDetailsView';
+import MainCardsView from '../MainCardsView/MainCardsView';
 import MainListView from '../MainListView/MainListView';
 import AddBatchView from '../AddBatchView/AddBatchView';
+import BatchDetailsView from '../BatchDetailsView/BatchDetailsView';
 
 
 export default class App extends React.Component {
@@ -45,13 +46,13 @@ export default class App extends React.Component {
                         <Route
                             exact path="/"
                             render={(routeProps) => (
-                                <MainDetailsView {...routeProps} batches={this.state.batches} pathSave={this.onViewChange}/>
+                                <MainCardsView {...routeProps} batches={this.state.batches} pathSave={this.onViewChange}/>
                             )}
                         />
                         <Route
                             exact path="/cards"
                             render={(routeProps) => (
-                                <MainDetailsView {...routeProps} batches={this.state.batches} pathSave={this.onViewChange}/>
+                                <MainCardsView {...routeProps} batches={this.state.batches} pathSave={this.onViewChange}/>
                             )}
                         />
                         <Route
@@ -66,6 +67,12 @@ export default class App extends React.Component {
                                <AddBatchView {...routeProps} pathToGoBack={this.state.view}/>
                            )}
                     />
+                    <Route path='/batchdetails/:batchId'
+                           render = {(routeProps) => (
+                               <BatchDetailsView {...routeProps} batches={this.state.batches} pathToGoBack={this.state.view}/>
+                           )}
+                    />
+
                     {/*<Switch>*/}
                         {/*<Route exact path="/" component={ MyWarkiContent }></Route>*/}
                         {/*<Route exact path="/recipe" component={ CalculatorsContent }></Route>*/}

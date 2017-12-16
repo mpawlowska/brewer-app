@@ -10,7 +10,7 @@ export default class BatchListItem extends React.Component {
 
     render() {
         return (
-            <List.Item as="a">
+            <List.Item >
                 <List.Icon name='beer' size='large' verticalAlign='middle'/>
                 <List.Content>
                     <List.Header>{this.props.batch.details.name}</List.Header>
@@ -36,8 +36,8 @@ export default class BatchListItem extends React.Component {
                             </List.Item>
                             <List.Item>
                                 <List.Content>
-                                    <List.Header>Wielkość</List.Header>
-                                    <List.Description style={{textAlign: "center"}}>{this.props.batch.details.volume}</List.Description>
+                                    <List.Header>Gęstość</List.Header>
+                                    <List.Description style={{textAlign: "center"}}>{this.props.batch.details.density}</List.Description>
                                 </List.Content>
                             </List.Item>
                         </List>

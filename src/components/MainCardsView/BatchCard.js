@@ -71,12 +71,12 @@ export default class BatchCard extends React.Component {
                                 <Table.Cell>
                                     <Header as='h5'>
                                         <Header.Content>
-                                            Wielkość
+                                            Gęstość
                                         </Header.Content>
                                     </Header>
                                 </Table.Cell>
                                 <Table.Cell>
-                                    {this.props.batch.details.volume}
+                                    {this.props.batch.details.density}
                                 </Table.Cell>
                             </Table.Row>
 
