@@ -6,7 +6,6 @@ import MainActionButtons from '../MainActionButtons/MainActionButtons.js'
 import MainDetailsView from '../MainDetailsView/MainDetailsView';
 import MainListView from '../MainListView/MainListView';
 import AddBatchView from '../AddBatchView/AddBatchView';
-import batchesJS from '../../data/batches';
 
 
 export default class App extends React.Component {
@@ -44,11 +43,11 @@ export default class App extends React.Component {
                         <Route
                             exact path="/list"
                             render={(routeProps) => (
-                               <MainListView {...routeProps} batches={batchesJS}/>
+                               <MainListView {...routeProps} batches={this.state.batches}/>
                            )}
                         />
                     </Switch>
-                    <Route path="/newbatch" component={ AddBatchView }></Route>
+                    <Route path="/newbatch" component={ AddBatchView }/>
                     {/*<Switch>*/}
                         {/*<Route exact path="/" component={ MyWarkiContent }></Route>*/}
                         {/*<Route exact path="/recipe" component={ CalculatorsContent }></Route>*/}
