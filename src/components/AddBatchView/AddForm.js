@@ -1,7 +1,6 @@
 import React from 'react';
 import NewBatchCard from './NewBatchCard';
-import AddMenu from './Menu';
-
+import AddMenu from './MenuComponents/AddMenu';
 
 export default class AddForm extends React.Component {
 
@@ -21,6 +20,7 @@ export default class AddForm extends React.Component {
         }
     }
 
+    // tu można ograniczyć powyżej w state i w poniższej metodzie tylko do tych kluczy, które są istotne do przekazania do NewBatchCard
     handleDetailsChange = (name, value) => {
         this.setState({
             [name]: value
@@ -28,18 +28,16 @@ export default class AddForm extends React.Component {
     };
 
     render() {
-        let { name, style, ibu, alcohol, volume, date } = this.state;
+        let { name, style, ibu, alcohol, density, date } = this.state;
         return (
             <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-around', height: '90%', width: '90%'}}>
-                <NewBatchCard name={name} style={style} ibu={ibu} alcohol={alcohol} volume={volume} date={date}/>
+                <NewBatchCard name={name} style={style} ibu={ibu} alcohol={alcohol} density={density} date={date}/>
                 <AddMenu onDetailsChange={this.handleDetailsChange}/>
             </div>
 
         )
     }
 }
-
-
 
 
 // Getting a reference to the database service

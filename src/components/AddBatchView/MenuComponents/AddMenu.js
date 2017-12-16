@@ -5,10 +5,10 @@ import {
     Link
 } from 'react-router-dom';
 import { Menu, Segment, Form, Button } from 'semantic-ui-react'
-import Details from './MenuComponents/Details';
-import Recipe from './MenuComponents/Recipe';
-import Rating_Comments from './MenuComponents/Rating_Comments';
-import Files from './MenuComponents/Files';
+import Details from './Details';
+import Recipe from './Recipe';
+import Rating_Comments from './Rating_Comments';
+import Files from './Files';
 
 export default class AddMenu extends React.Component {
     constructor(props) {

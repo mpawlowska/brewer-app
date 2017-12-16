@@ -12,7 +12,7 @@ export default class App extends React.Component {
     constructor(props) {
         super(props);
 
-        // pobieram batches z Firebase:
+        // pobieram batches z Firebase: - trzeba będzie to umieścić w innej metodzie, aby dane się synchronizowały po zmianie w bazie
         const batchesRef = firebase.database().ref();
         let batches = [];
 
@@ -34,6 +34,12 @@ export default class App extends React.Component {
                 <main style={{marginTop: '6em'}}>
                     <MainActionButtons />
                     <Switch>
+                        <Route
+                            exact path="/"
+                            render={(routeProps) => (
+                                <MainDetailsView {...routeProps} batches={this.state.batches}/>
+                            )}
+                        />
                         <Route
                             exact path="/cards"
                             render={(routeProps) => (

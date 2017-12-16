@@ -5,6 +5,7 @@ import { Button, Icon } from 'semantic-ui-react'
 
 export default class AddBatchView extends React.Component {
 
+    // metoda, która powoduje powrót do poprzedniego path z history
     goBack = () => {
         this.props.history.goBack();
     };

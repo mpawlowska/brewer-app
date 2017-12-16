@@ -53,19 +53,18 @@ export default class MainDetailsView extends React.Component {
     //     }
 
     render() {
-        console.log('render MainDetailsView', this.props.batches);
         return(
             <Container>
-            <Grid columns={5} stackable>
-                {this.props.batches.map((batch, index) => {
-                    return (
-                        <Grid.Column key={index}>
-                            <BatchCard key={index} batch={batch}/>
-                        </Grid.Column>
-                        )
-                    })
-                }
-            </Grid>
+                <Grid columns={5} stackable>
+                    {this.props.batches.map((batch, index) => {
+                        return (
+                            <Grid.Column key={index}>
+                                <BatchCard key={index} batch={batch}/>
+                            </Grid.Column>
+                            )
+                        })
+                    }
+                </Grid>
             </Container>
         )
     }

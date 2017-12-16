@@ -21,8 +21,6 @@ export default class FilterButton extends React.Component {
 
     render() {
         const {searchQuery, value} = this.state;
-        console.log(`SearchQuery ${this.state.searchQuery}`);
-        console.log(`value ${this.state.value}`);
         return (
             <Dropdown
                 style={{display: 'block', width: '15em', marginTop: '1.5em'}}
