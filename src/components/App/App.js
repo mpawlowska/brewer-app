@@ -38,7 +38,7 @@ export default class App extends React.Component {
     render() {
         return (
             <div className='container'>
-                <Header />
+                <Header pathToGoBack={this.state.view}/>
                 <main style={{marginTop: '6em'}}>
                     <MainActionButtons />
                     <Switch>
