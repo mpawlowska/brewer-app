@@ -25,7 +25,10 @@ export default class AddMenu extends React.Component {
             density: '',
             alcohol: '',
             type: '',
-            ingredients: []
+            ingredients_ferm: [],
+            ingredients_yeast: [],
+            ingredients_hop: [],
+            ingredients_addons: []
         }
     }
 
@@ -34,7 +37,8 @@ export default class AddMenu extends React.Component {
         this.setState({activeItem: name})
     };
 
-    handleComponentUpdate = (name, value) => {
+    // do przechwytywania danych z inputów w Podsumowaniu
+    handleDetailsComponentUpdate = (name, value) => {
         this.setState({
             [name]: value,
         });
@@ -42,30 +46,110 @@ export default class AddMenu extends React.Component {
         this.props.onDetailsChange(name, value);
     };
 
+    // do przechwytywania danych z inputów w Recepturze - najpierw tworzę funkcje uniwersalne, któtre będą określały, który rodzaj składnikach powinien być poddany zmianie
+    chooseIngredients = (category) => {
+        let ingredients;
+        switch(category){
+            case 'ingredients_ferm': {
+                return ingredients = this.state.ingredients_ferm;
+            }
+            case 'ingredients_yeast': {
+                return ingredients = this.state.ingredients_yeast;
+            }
+            case 'ingredients_hop': {
+                return ingredients = this.state.ingredients_hop;
+            }
+            case 'ingredients_addons': {
+                return ingredients = this.state.ingredients_addons;
+            }
+            default: console.log('nie naleziono odpowiednich ingredients');
+        }
+    };
+
+    updateIngredients = (category, newIngredients) => {
+        switch(category){
+            case 'ingredients_ferm': {
+                this.setState({
+                    ingredients_ferm: newIngredients
+                });
+                break;
+            }
+            case 'ingredients_yeast': {
+                this.setState({
+                    ingredients_yeast: newIngredients
+                });
+                break;
+            }
+            case 'ingredients_hop': {
+                this.setState({
+                    ingredients_hop: newIngredients
+                });
+                break;
+            }
+            case 'ingredients_addons': {
+                this.setState({
+                    ingredients_addons: newIngredients
+                });
+                break;
+            }
+            default: console.log('nie zapisały się ingredients w state AddMenu');
+        }
+    };
+
+    handleRecipeComponentAddIngr = (category) => {
+        const newIngredientObj = {name: '', quantity: ''};
+        let ingredients = this.chooseIngredients(category);
+
+        ingredients.push(newIngredientObj);
+
+        this.updateIngredients(category, ingredients);
+    };
+
+    handleRecipeComponentUpdate = (e, ingredientIndex, category) => {
+        let name = e.target.name;
+        let value = e.target.value;
+
+        let ingredients = this.chooseIngredients(category);
+
+        ingredients[ingredientIndex][name] = value;
+
+        this.updateIngredients(category, ingredients);
+    };
+
+    handleRecipeComponentDeleteIngr = (ingredientIndex, category) => {
+        let ingredients = this.chooseIngredients(category);
+
+        ingredients.splice(ingredientIndex, 1);
+
+        this.updateIngredients(category, ingredients);
+    };
+
     onCloseClick = () => {
 
     };
 
     render() {
-        let { activeItem, name, style, date, ibu, srm, alcohol, volume, density, type }  = this.state;
+        let { activeItem, name, style, date, ibu, srm, alcohol, volume, density, type, ingredients_ferm, ingredients_yeast, ingredients_hop, ingredients_addons }  = this.state;
 
         return (
             <div style={{height: '100%', width: '75%'}}>
                 <Menu attached='top' pointing secondary>
                     <Link to="/newbatch">
-                        <Menu.Item name="details" active={activeItem === 'details'} onClick={this.handleItemClick}>Podsumowanie
+                        <Menu.Item name="details" active={activeItem === 'details'} onClick={this.handleItemClick}>
+                            Podsumowanie
                         </Menu.Item>
                     </Link>
                     <Link to="/newbatch/recipe">
-                        <Menu.Item name="recipe" active={activeItem === 'recipe'} onClick={this.handleItemClick}>Receptura
+                        <Menu.Item name="recipe" active={activeItem === 'recipe'} onClick={this.handleItemClick}>
+                            Receptura
                         </Menu.Item>
                     </Link>
                     <Link to="/newbatch/rating_comments">
-                        <Menu.Item name="rating-comments" active={activeItem === 'rating-comments'} onClick={this.handleItemClick}>Ocena i uwagi
+                        <Menu.Item name="rating-comments" active={activeItem === 'rating-comments'} onClick={this.handleItemClick}>
+                            Ocena i uwagi
                         </Menu.Item>
                     </Link>
                     <Link to="/newbatch/files">
-
                         <Menu.Item name="files" active={activeItem === 'files'} onClick={this.handleItemClick}>
                             Załączniki
                         </Menu.Item>
@@ -78,15 +162,15 @@ export default class AddMenu extends React.Component {
                             <Route
                                 exact path="/newbatch"
                                 render={(routeProps) => (
-                                    <Details {...routeProps} componentUpdate = {this.handleComponentUpdate} name={name} style={style} ibu={ibu} alcohol={alcohol} volume={volume} date={date} srm={srm} density={density} type={type}/>
+                                    <Details {...routeProps} componentUpdate = {this.handleDetailsComponentUpdate} name={name} style={style} ibu={ibu} alcohol={alcohol} volume={volume} date={date} srm={srm} density={density} type={type}/>
                                 )}
-                                />
+                            />
                             <Route
                                 exact path="/newbatch/recipe"
                                 render={(routeProps) => (
-                                    <Recipe {...routeProps} componentUpdate = {this.handleComponentUpdate} >
-
-                            </Route>
+                                    <Recipe {...routeProps} componentUpdate = {this.handleRecipeComponentUpdate} ingredients_ferm={ingredients_ferm} ingredients_yeast={ingredients_yeast} ingredients_hop={ingredients_hop} ingredients_addons={ingredients_addons} componentAdd = {this.handleRecipeComponentAddIngr} componentDelete={this.handleRecipeComponentDeleteIngr}/>
+                                )}
+                            />
                             <Route exact path="/newbatch/rating-comments" component={ Rating_Comments }></Route>
                             <Route exact path="/newbatch/files" component={ Files }></Route>
                         </Switch>

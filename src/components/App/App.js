@@ -1,8 +1,5 @@
 import React from 'react';
-import {
-    Route,
-    Switch
-} from 'react-router-dom';
+import { Route, Switch} from 'react-router-dom';
 import 'normalize.css';
 import Header from '../Header/Header.js';
 import MainActionButtons from '../MainActionButtons/MainActionButtons.js'
@@ -32,7 +29,6 @@ export default class App extends React.Component {
     }
 
     render() {
-        console.log('app render', this.state.batches);
         return (
             <div className='container'>
                 <Header />

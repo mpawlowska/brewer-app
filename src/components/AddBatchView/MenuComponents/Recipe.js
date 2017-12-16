@@ -7,41 +7,51 @@ class RecipeIngredients extends React.Component {
         super(props);
 
         // w state.ingredients zapisują się w tablicy wartości z inputów (nazwa składnika i ilość) w postaci obiektów {name: '', quantity: ''
-        this.state = {
-            ingredients: []
-        }
+        // this.state = {
+        //     ingredients: []
+        // }
     }
     // dodaję puste pole z inputami:
     handleAddButtonClick = () => {
-        const newIngredientObj = {name: '', quantity: ''};
-        let { ingredients } = this.state;
+        console.log(this.props.category);
+        let category = this.props.category;
+        // const newIngredientObj = {name: '', quantity: ''};
+        // let { ingredients } = this.state;
+        //
+        // ingredients.push(newIngredientObj);
+        //
+        // this.setState({
+        //     ingredients: ingredients
+        // });
 
-        ingredients.push(newIngredientObj);
-
-        this.setState({
-            ingredients: ingredients
-        });
+        this.props.componentAdd(category);
     };
 
     // usuwam dany obiekt z inputami z tablicy ingredients - identyfikuję go na podstawie index przekazanego w propsach przy tworzeniu za pomocą map, ten index otrzymuję dzięki wywołaniu metody w dziecku
     handleDeleteButtonClick = (ingredientIndex) => {
-        let { ingredients } = this.state;
-        ingredients.splice(ingredientIndex, 1);
+        let category = this.props.category;
+        // let { ingredients } = this.state;
+        // ingredients.splice(ingredientIndex, 1);
+        //
+        // this.setState({
+        //     ingredients: ingredients
+        // });
 
-        this.setState({
-            ingredients: ingredients
-        });
+        this.props.componentDelete(ingredientIndex, category);
     };
 
     handleInputChange = (e, ingredientIndex) => {
-        let name = e.target.name;
-        let value = e.target.value;
-        let { ingredients } = this.state;
-        ingredients[ingredientIndex][name] = value;
+        let category = this.props.category;
+        // let name = e.target.name;
+        // let value = e.target.value;
+        // let { ingredients } = this.state;
+        // ingredients[ingredientIndex][name] = value;
+        //
+        // this.setState({
+        //     ingredients: ingredients
+        // });
 
-        this.setState({
-            ingredients: ingredients
-        });
+        this.props.componentUpdate(e, ingredientIndex, category);
     };
 
     // handleInputChange = (ingredientIndex, name, value) => {
@@ -54,12 +64,11 @@ class RecipeIngredients extends React.Component {
     // };
 
     render() {
-        console.log(this.state.ingredients);
         return (
             <Form.Field>
                 <label>{this.props.label}</label>
                 <Divider/>
-                {this.state.ingredients.map((ingredient, index) => <Recipe_Ingredient key={index} index={index} onChange={this.handleInputChange} onDeleteClick={this.handleDeleteButtonClick} name={ingredient['name']} quantity={ingredient['quantity']}/>)}
+                {this.props.ingredients.map((ingredient, index) => <Recipe_Ingredient key={index} index={index} onChange={this.handleInputChange} onDeleteClick={this.handleDeleteButtonClick} name={ingredient['name']} quantity={ingredient['quantity']}/>)}
                 <Button content='Dodaj składnik' icon='add' labelPosition='left' size="mini" onClick={this.handleAddButtonClick}/>
             </Form.Field>
         )
@@ -76,12 +85,12 @@ export default class Recipe extends React.Component {
         return (
             <Container style={{height: "100%"}}>
                 <Form.Group widths="equal">
-                    <RecipeIngredients label="Składniki fermentowalne"/>
-                    <RecipeIngredients label="Drożdże"/>
+                    <RecipeIngredients label="Składniki fermentowalne" ingredients={this.props.ingredients_ferm} componentUpdate={this.props.componentUpdate} componentAdd={this.props.componentAdd} componentDelete={this.props.componentDelete} category='ingredients_ferm'/>
+                    <RecipeIngredients label="Drożdże" ingredients={this.props.ingredients_yeast} componentUpdate={this.props.componentUpdate} componentAdd={this.props.componentAdd} componentDelete={this.props.componentDelete} category='ingredients_yeast'/>
                 </Form.Group>
                 <Form.Group widths="equal">
-                    <RecipeIngredients label="Chmiele"/>
-                    <RecipeIngredients label="Dodatki"/>
+                    <RecipeIngredients label="Chmiele" ingredients={this.props.ingredients_hop} componentUpdate={this.props.componentUpdate} componentAdd={this.props.componentAdd} componentDelete={this.props.componentDelete} category='ingredients_hop'/>
+                    <RecipeIngredients label="Dodatki" ingredients={this.props.ingredients_addons} componentUpdate={this.props.componentUpdate} componentAdd={this.props.componentAdd} componentDelete={this.props.componentDelete} category='ingredients_addons'/>
                 </Form.Group>
             </Container>
         )
