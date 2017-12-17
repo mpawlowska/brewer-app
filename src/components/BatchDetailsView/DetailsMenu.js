@@ -34,48 +34,27 @@ export default class DetailsMenu extends React.Component {
         return (
             <div style={{height: '100%', width: '75%'}}>
                 <Menu attached='top' pointing secondary>
-                    <Link to="/batchdetails">
+
                         <Menu.Item name="details" active={activeItem === 'details'} onClick={this.handleItemClick}>
                             Podsumowanie
                         </Menu.Item>
-                    </Link>
-                    <Link to="/batchdetails/recipe">
+
+
                         <Menu.Item name="recipe" active={activeItem === 'recipe'} onClick={this.handleItemClick}>
                             Receptura
                         </Menu.Item>
-                    </Link>
-                    <Link to="/batchdetails/rating_comments">
+
+
                         <Menu.Item name="rating-comments" active={activeItem === 'rating-comments'} onClick={this.handleItemClick}>
                             Ocena i uwagi
                         </Menu.Item>
-                    </Link>
-                    <Link to="/batchdetails/files">
+
                         <Menu.Item name="files" active={activeItem === 'files'} onClick={this.handleItemClick}>
                             Załączniki
                         </Menu.Item>
-                    </Link>
 
                 </Menu>
                 <Segment attached='bottom'>
-                    <Form style={{position: 'relative'}}>
-                        <Switch>
-                            <Route
-                                exact path="/batchdetails"
-                                render={(routeProps) => (
-                                    <Details {...routeProps} componentUpdate = {this.handleDetailsComponentUpdate} name={name} style={style} ibu={ibu} alcohol={alcohol} volume={volume} date={date} srm={srm} density={density} type={type}/>
-                                )}
-                            />
-                            <Route
-                                exact path="/batchdetails/recipe"
-                                render={(routeProps) => (
-                                    <Recipe {...routeProps} componentUpdate = {this.handleRecipeComponentUpdate} ingredients_ferm={ingredients_ferm} ingredients_yeast={ingredients_yeast} ingredients_hop={ingredients_hop} componentAdd = {this.handleRecipeComponentAddIngr} componentDelete={this.handleRecipeComponentDeleteIngr}/>
-                                )}
-                            />
-                            <Route exact path="/batchdetails/rating-comments" component={ Rating_Comments }></Route>
-                            <Route exact path="/batchdetails/files" component={ Files }></Route>
-                        </Switch>
-                        <Button type='submit' color="blue" style={{position: 'relative', left: '42em', marginTop: '1em'}} onClick={this.onCloseClick}>Edytuj</Button>
-                    </Form>
                 </Segment>
             </div>
         )

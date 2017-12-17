@@ -5,8 +5,7 @@ module.exports = {
   entry: './src/index.js',
   output: {
     path: path.resolve('dist'),
-    filename: 'app.js',
-    publicPath: '/'
+    filename: 'app.js'
   },
   module: {
     rules: [
@@ -22,7 +21,11 @@ module.exports = {
       },
       { 
         test: /\.s?css$/,
-        use: ['style-loader', 'css-loader', 'sass-loader']
+        use: ['style-loader', 'css-loader', 'resolve-url-loader', 'sass-loader']
+      },
+      {
+        test: /\.(png|jpg|svg|gif|webp)/,
+        use: 'file-loader'
       }
     ]
   },
@@ -35,3 +38,4 @@ module.exports = {
     historyApiFallback: true
   }
 };
+
