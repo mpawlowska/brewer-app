@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Switch} from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import 'normalize.css';
 import Header from '../Header/Header.js';
 import MainActionButtons from '../MainActionButtons/MainActionButtons.js'
