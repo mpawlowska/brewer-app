@@ -6,7 +6,7 @@ const Details_Input = (props) => {
     return (
         <Form.Field>
             <label>{props.label}</label>
-            <Input type="text" name={props.name} onChange={props.onChange} value={props.value}/>
+            <Input disabled={props.disabled} type="text" name={props.name} onChange={props.onChange} value={props.value}/>
         </Form.Field>
     )
 };
@@ -14,7 +14,7 @@ const Details_Input = (props) => {
 export default class Details extends React.Component {
     constructor(props) {
         super(props);
-        
+
         // this.state = {
         //     name: '',
         //     style: '',
@@ -47,22 +47,22 @@ export default class Details extends React.Component {
         return (
             <Container style={{height: "100%"}}>
                 <Form.Group widths="equal">
-                    <Details_Input label="Nazwa" name="name" onChange={this.handleInputChange} value={this.props.name}/>
-                    <Details_Input label="Styl" name="style" onChange={this.handleInputChange} value={this.props.style}/>
+                    <Details_Input disabled={this.props.disabled} label="Nazwa" name="name" onChange={this.handleInputChange} value={this.props.name}/>
+                    <Details_Input disabled={this.props.disabled} label="Styl" name="style" onChange={this.handleInputChange} value={this.props.style}/>
                 </Form.Group>
                 <Form.Group widths="equal">
-                    <Details_Input label="Data warzenia" name="date" onChange={this.handleInputChange} value={this.props.date}/>
-                    <Details_Input label="Wielkość" name="volume" onChange={this.handleInputChange} value={this.props.volume}/>
+                    <Details_Input disabled={this.props.disabled} label="Data warzenia" name="date" onChange={this.handleInputChange} value={this.props.date}/>
+                    <Details_Input disabled={this.props.disabled} label="Wielkość" name="volume" onChange={this.handleInputChange} value={this.props.volume}/>
                 </Form.Group>
                 <Form.Group widths="equal">
-                    <Details_Input label="IBU" name="ibu" onChange={this.handleInputChange} value={this.props.ibu}/>
-                    <Details_Input label="SRM" name="srm" onChange={this.handleInputChange} value={this.props.srm}/>
+                    <Details_Input disabled={this.props.disabled} label="IBU" name="ibu" onChange={this.handleInputChange} value={this.props.ibu}/>
+                    <Details_Input disabled={this.props.disabled} label="SRM" name="srm" onChange={this.handleInputChange} value={this.props.srm}/>
                 </Form.Group>
                 <Form.Group widths="equal">
-                    <Details_Input label="Gęstość" name="density" onChange={this.handleInputChange} value={this.props.density}/>
-                    <Details_Input label="Alkohol" name="alcohol" onChange={this.handleInputChange} value={this.props.alcohol}/>
+                    <Details_Input disabled={this.props.disabled} label="Gęstość" name="density" onChange={this.handleInputChange} value={this.props.density}/>
+                    <Details_Input disabled={this.props.disabled} label="Alkohol" name="alcohol" onChange={this.handleInputChange} value={this.props.alcohol}/>
                 </Form.Group>
-                <Details_Input label="Typ" name="type"/>
+                <Details_Input disabled={this.props.disabled} label="Typ" name="type"/>
             </Container>
         )
     }

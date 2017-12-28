@@ -64,8 +64,8 @@ export default class MainCardsView extends React.Component {
                     {this.props.batches.map((batch, index) => {
                         return (
                             <Grid.Column key={index}>
-                                <Link to = {`batchdetails/${batch.id}`}>
-                                    <BatchCard key={index} batch={batch}/>
+                                <Link to = {`batchdetails/${batch.key}`}>
+                                    <BatchCard batch={batch}/>
                                 </Link>
                             </Grid.Column>
                             )

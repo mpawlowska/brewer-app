@@ -5,56 +5,113 @@ import {
     Link
 } from 'react-router-dom';
 import { Menu, Segment, Form, Button } from 'semantic-ui-react'
-import Details from '../AddBatchView/MenuComponents/Details';
-import Recipe from '../AddBatchView/MenuComponents/Recipe';
-import Rating_Comments from '../AddBatchView/MenuComponents/Rating_Comments';
-import Files from '../AddBatchView/MenuComponents/Files';
+import Details from '../../AddBatchView/MenuComponents/Details';
+import Recipe from '../../AddBatchView/MenuComponents/Recipe';
+import Rating_Comments from '../../AddBatchView/MenuComponents/Rating_Comments';
+import Files from '../../AddBatchView/MenuComponents/Files';
 
 export default class DetailsMenu extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            activeItem: 'details'
+            activeItem: 'details',
+            buttonText: 'Edytuj',
+            disabled: true,
+            name: '',
+            style: '',
+            date: '',
+            volume: '',
+            ibu: '',
+            srm: '',
+            density: '',
+            alcohol: '',
+            type: '',
+            ingredients_ferm: [],
+            ingredients_yeast: [],
+            ingredients_hop: [],
+            ingredients_addons: []
+            }
         };
+
+    componentDidMount() {
+        let {name, style, date, ibu, srm, alcohol, volume, density, type} = this.props.batch.details;
+        let {fermenting_components: ingredients_ferm, yeast: ingredients_yeast, hop: ingredients_hop}  = this.props.batch.recipe;
+        this.setState({
+            name: name,
+            style: style,
+            date: date,
+            volume: volume,
+            ibu: ibu,
+            srm: srm,
+            density: density,
+            alcohol: alcohol,
+            type: type,
+            ingredients_ferm: ingredients_ferm,
+            ingredients_yeast: ingredients_yeast,
+            ingredients_hop: ingredients_hop
+        });
     }
 
-        handleItemClick = (e, {name}) => {
-            console.log(name);
-            this.setState({
-                activeItem: name
-            })
-        };
+    handleItemClick = (e, {name}) => {
+        console.log(name);
+        this.setState({
+            activeItem: name
+        })
+    };
+
+    onEditClick =() => {
+        this.state.disabled ? this.setState({disabled: false, buttonText: 'Zapisz zmiany'}) : this.setState({disabled: true, buttonText: 'Edytuj'});
+    };
+
 
     render() {
         let {activeItem} = this.state;
-        let {name, style, date, ibu, srm, alcohol, volume, density, type} = this.props.batch.details;
-        let {fermenting_components: ingredients_ferm, yeast: ingredients_yeast, hop: ingredients_hop}  = this.props.batch.recipe;
 
         return (
             <div style={{height: '100%', width: '75%'}}>
                 <Menu attached='top' pointing secondary>
-
+                    <Link to= {`/batchdetails/${this.props.batch.key}`}>
                         <Menu.Item name="details" active={activeItem === 'details'} onClick={this.handleItemClick}>
                             Podsumowanie
                         </Menu.Item>
-
-
+                    </Link>
+                    <Link to= {`/batchdetails/${this.props.batch.key}/recipe`}>
                         <Menu.Item name="recipe" active={activeItem === 'recipe'} onClick={this.handleItemClick}>
                             Receptura
                         </Menu.Item>
-
-
+                    </Link>
+                    <Link to={`/batchdetails/${this.props.batch.key}/rating_comments`}>
                         <Menu.Item name="rating-comments" active={activeItem === 'rating-comments'} onClick={this.handleItemClick}>
                             Ocena i uwagi
                         </Menu.Item>
-
+                    </Link>
+                    <Link to={`/batchdetails/${this.props.batch.key}/files`}>
                         <Menu.Item name="files" active={activeItem === 'files'} onClick={this.handleItemClick}>
                             Załączniki
                         </Menu.Item>
-
+                    </Link>
                 </Menu>
                 <Segment attached='bottom'>
+                    <Form style={{position: 'relative'}}>
+                        <Switch>
+                            <Route
+                                exact path="/batchdetails/:batchKey"
+                                render={(routeProps) => (
+                                    <Details {...routeProps} disabled={this.state.disabled} componentUpdate = {this.handleDetailsComponentUpdate} name={this.state.name} style={this.state.style} ibu={this.state.ibu} alcohol={this.state.alcohol} volume={this.state.volume} date={this.state.date} srm={this.state.srm} density={this.state.density} type={this.state.type}/>
+                                )}
+                            />
+                            <Route
+                                exact path="/batchdetails/:batchKey/recipe"
+                                render={(routeProps) => (
+                                    <Recipe {...routeProps} disabled={this.state.disabled} componentUpdate = {this.handleRecipeComponentUpdate} ingredients_ferm={this.state.ingredients_ferm} ingredients_yeast={this.state.ingredients_yeast} ingredients_hop={this.state.ingredients_hop} ingredients_addons={this.state.ingredients_addons} componentAdd = {this.handleRecipeComponentAddIngr} componentDelete={this.handleRecipeComponentDeleteIngr}/>
+                                )}
+                            />
+                            {/*<Route exact path="/batchdetails/:batchKey/rating-comments" component={ Rating_Comments }></Route>*/}
+                            {/*<Route exact path="/batchdetails/:batchKey/files" component={ Files }></Route>*/}
+                        </Switch>
+                        <Button type='submit' color="blue" style={{position: 'relative', left: '42em', marginTop: '1em'}} onClick={this.onEditClick}>{this.state.buttonText}</Button>
+                    </Form>
                 </Segment>
             </div>
         )

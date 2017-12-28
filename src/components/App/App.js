@@ -18,8 +18,10 @@ export default class App extends React.Component {
         let batches = [];
 
         batchesRef.on('value', snap => {
-            snap.forEach((childSnapshot) => {
-                batches.push(childSnapshot.val());
+            snap.forEach(childSnapshot => {
+                let batch = childSnapshot.val();
+                batch.key = childSnapshot.key;
+                batches.push(batch);
             })
         });
 
@@ -67,7 +69,7 @@ export default class App extends React.Component {
                                <AddBatchView {...routeProps} pathToGoBack={this.state.view}/>
                            )}
                     />
-                    <Route path='/batchdetails/:batchId'
+                    <Route path='/batchdetails/:batchKey'
                            render = {(routeProps) => (
                                <BatchDetailsView {...routeProps} batches={this.state.batches} pathToGoBack={this.state.view}/>
                            )}

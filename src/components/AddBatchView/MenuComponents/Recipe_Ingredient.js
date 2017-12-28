@@ -19,8 +19,8 @@ import { Menu, Segment, Form, Container, Button, Divider, Input, Icon } from 'se
      render() {
           return (
              <div style = {{marginBottom: '0.5em'}}>
-                 <Input type="text" style={{width: "70%"}} name='name' value={this.props.name} onChange={this.onChange}/>
-                 <Input type="text" placeholder="Ilość" style={{width: "15%"}} name="quantity" value={this.props.quantity} onChange={this.onChange}/>
+                 <Input disabled={this.props.disabled} type="text" style={{width: "70%"}} name='name' value={this.props.name} onChange={this.onChange}/>
+                 <Input disabled={this.props.disabled} type="text" placeholder="Ilość" style={{width: "15%"}} name="quantity" value={this.props.quantity} onChange={this.onChange}/>
                  <Button size="mini"
                          style={{marginLeft: '1em', padding: '0.5em'}}
                          onClick={this.onClick}>

@@ -20,7 +20,7 @@ export default class BatchCard extends React.Component {
         // Card będzie miało Link to = ... i przekierowywało do strony ze szczegółami warki
         return(
             <Card color="green" style={{width: '14em'}}>
-                <Image src={this.props.batch.files.main_image} alt="Zdjęcie warki" style={{height: '10em', width: '14em'}}/>
+                {/*<Image src={this.props.batch.files.main_image} alt="Zdjęcie warki" style={{height: '10em', width: '14em'}}/>*/}
                 <Card.Content>
                     <Card.Header textAlign="center">
                         {this.props.batch.details.name}

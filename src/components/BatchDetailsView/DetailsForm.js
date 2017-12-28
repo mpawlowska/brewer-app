@@ -1,6 +1,6 @@
 import React from 'react';
 import BatchCard from '../MainCardsView/BatchCard';
-import DetailsMenu from './DetailsMenu';
+import DetailsMenu from './DetailsComponents/DetailsMenu';
 
 export default class DetailsForm extends React.Component {
 

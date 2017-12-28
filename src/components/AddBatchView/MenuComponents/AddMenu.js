@@ -16,6 +16,7 @@ export default class AddMenu extends React.Component {
 
         this.state = {
             activeItem: 'details',
+            disabled: false,
             name: '',
             style: '',
             date: '',
@@ -32,6 +33,7 @@ export default class AddMenu extends React.Component {
         }
     }
 
+
     handleItemClick = (e, { name }) => {
         console.log(name);
         this.setState({activeItem: name})
@@ -46,7 +48,7 @@ export default class AddMenu extends React.Component {
         this.props.onDetailsChange(name, value);
     };
 
-    // do przechwytywania danych z inputów w Recepturze - najpierw tworzę funkcje uniwersalne, któtre będą określały, który rodzaj składnikach powinien być poddany zmianie
+    // do przechwytywania danych z inputów w Recepturze - najpierw tworzę funkcje uniwersalne, które będą określały, który rodzaj składnika powinien być poddany zmianie
     chooseIngredients = (category) => {
         let ingredients;
         switch(category){
@@ -124,12 +126,37 @@ export default class AddMenu extends React.Component {
         this.updateIngredients(category, ingredients);
     };
 
+    // obsługa buttona 'Zakończ dodawanie warki' --> dodanie nowej warki do Firebase
     onCloseClick = () => {
+        console.log('klik');
 
+        // Getting a reference to the database service
+        const batchesRef = firebase.database().ref();
+        const newBatch = {
+            "details": {
+                "name": this.state.name,
+                "style": this.state.style,
+                "date": this.state.date,
+                "volume": this.state.volume,
+                "IBU": this.state.ibu,
+                "SRM": this.state.srm,
+                "density": this.state.density,
+                "alcohol": this.state.alcohol,
+                "type": this.state.type
+            },
+            "recipe": {
+                "fermenting_components": this.state.ingredients_ferm,
+                "hop": this.state.ingredients_hop,
+                "yeast": this.state.ingredients_yeast
+            },
+        };
+
+        batchesRef.push(newBatch);
+        console.log(key);
     };
 
     render() {
-        let { activeItem, name, style, date, ibu, srm, alcohol, volume, density, type, ingredients_ferm, ingredients_yeast, ingredients_hop, ingredients_addons }  = this.state;
+        let { activeItem, name, style, date, ibu, srm, alcohol, volume, density, type, ingredients_ferm, ingredients_yeast, ingredients_hop, ingredients_addons, disabled }  = this.state;
 
         return (
             <div style={{height: '100%', width: '75%'}}>
@@ -162,17 +189,17 @@ export default class AddMenu extends React.Component {
                             <Route
                                 exact path="/newbatch"
                                 render={(routeProps) => (
-                                    <Details {...routeProps} componentUpdate = {this.handleDetailsComponentUpdate} name={name} style={style} ibu={ibu} alcohol={alcohol} volume={volume} date={date} srm={srm} density={density} type={type}/>
+                                    <Details {...routeProps} disabled={disabled} componentUpdate = {this.handleDetailsComponentUpdate} name={name} style={style} ibu={ibu} alcohol={alcohol} volume={volume} date={date} srm={srm} density={density} type={type}/>
                                 )}
                             />
                             <Route
                                 exact path="/newbatch/recipe"
                                 render={(routeProps) => (
-                                    <Recipe {...routeProps} componentUpdate = {this.handleRecipeComponentUpdate} ingredients_ferm={ingredients_ferm} ingredients_yeast={ingredients_yeast} ingredients_hop={ingredients_hop} ingredients_addons={ingredients_addons} componentAdd = {this.handleRecipeComponentAddIngr} componentDelete={this.handleRecipeComponentDeleteIngr}/>
+                                    <Recipe {...routeProps} disabled={disabled} componentUpdate = {this.handleRecipeComponentUpdate} ingredients_ferm={ingredients_ferm} ingredients_yeast={ingredients_yeast} ingredients_hop={ingredients_hop} ingredients_addons={ingredients_addons} componentAdd = {this.handleRecipeComponentAddIngr} componentDelete={this.handleRecipeComponentDeleteIngr}/>
                                 )}
                             />
-                            <Route exact path="/newbatch/rating-comments" component={ Rating_Comments }></Route>
-                            <Route exact path="/newbatch/files" component={ Files }></Route>
+                            <Route exact path="/newbatch/rating-comments" disabled={disabled} component={ Rating_Comments }></Route>
+                            <Route exact path="/newbatch/files" disabled={disabled} component={ Files }></Route>
                         </Switch>
                         <Button type='submit' color="blue" style={{position: 'relative', left: '42em', marginTop: '1em'}} onClick={this.onCloseClick}>Zakończ dodawanie warki</Button>
                     </Form>
@@ -181,3 +208,5 @@ export default class AddMenu extends React.Component {
         )
     }
 }
+
+

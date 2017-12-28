@@ -6,7 +6,7 @@ import { Button, Icon } from 'semantic-ui-react'
 
 export default class AddBatchView extends React.Component {
 
-    // metoda, która powoduje powrót do poprzedniego path z history - tu nie moge jej wykorzystać, bo poprzednim path mogą być twż inne zakładki z formularza dodawania, a musze cofnąć do głównej strony
+    // metoda, która powoduje powrót do poprzedniego path z history - tu nie moge jej wykorzystać, bo poprzednim path mogą być też inne zakładki z formularza dodawania, a musze cofnąć do głównej strony
     // goBack = () => {
     //     this.props.history.goBack();
     // };
