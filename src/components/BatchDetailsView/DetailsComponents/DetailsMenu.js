@@ -18,25 +18,41 @@ export default class DetailsMenu extends React.Component {
             activeItem: 'details',
             buttonText: 'Edytuj',
             disabled: true,
-            name: '',
-            style: '',
-            date: '',
-            volume: '',
-            ibu: '',
-            srm: '',
-            density: '',
-            alcohol: '',
-            type: '',
-            ingredients_ferm: [],
-            ingredients_yeast: [],
-            ingredients_hop: [],
-            ingredients_addons: []
+        //     name: '',
+        //     style: '',
+        //     date: '',
+        //     volume: '',
+        //     ibu: '',
+        //     srm: '',
+        //     density: '',
+        //     alcohol: '',
+        //     type: '',
+        //     ingredients_ferm: [],
+        //     ingredients_yeast: [],
+        //     ingredients_hop: [],
+        //     ingredients_addons: []
             }
         };
 
     componentDidMount() {
         let {name, style, date, ibu, srm, alcohol, volume, density, type} = this.props.batch.details;
-        let {fermenting_components: ingredients_ferm, yeast: ingredients_yeast, hop: ingredients_hop}  = this.props.batch.recipe;
+        let ingredients_ferm, ingredients_yeast, ingredients_hop, ingredients_addons;
+
+        // jeśli pobrane z bazy składniki są pustymi stringami, to zamieniam je na tablicę, aby można je było wyświetlić poprzez metodę map
+        if (!this.props.ingredients_ferm) {
+            ingredients_ferm = [];
+        }
+        if (!this.props.ingredients_yeast) {
+            ingredients_yeast = [];
+        }
+        if (!this.props.ingredients_hop) {
+            ingredients_hop = [];
+        }
+        if (!this.props.ingredients_addons) {
+            ingredients_addons = [];
+        }
+
+
         this.setState({
             name: name,
             style: style,
@@ -49,7 +65,8 @@ export default class DetailsMenu extends React.Component {
             type: type,
             ingredients_ferm: ingredients_ferm,
             ingredients_yeast: ingredients_yeast,
-            ingredients_hop: ingredients_hop
+            ingredients_hop: ingredients_hop,
+            ingredients_addons: ingredients_addons
         });
     }
 
@@ -66,7 +83,7 @@ export default class DetailsMenu extends React.Component {
 
 
     render() {
-        let {activeItem} = this.state;
+        let { activeItem, name, style, date, ibu, srm, alcohol, volume, density, type, ingredients_ferm, ingredients_yeast, ingredients_hop, ingredients_addons, disabled }  = this.state;
 
         return (
             <div style={{height: '100%', width: '75%'}}>

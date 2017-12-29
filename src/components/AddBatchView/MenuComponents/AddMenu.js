@@ -33,7 +33,7 @@ export default class AddMenu extends React.Component {
         }
     }
 
-
+    // do zmiany aktywnej zakładki w menu
     handleItemClick = (e, { name }) => {
         console.log(name);
         this.setState({activeItem: name})
@@ -64,7 +64,7 @@ export default class AddMenu extends React.Component {
             case 'ingredients_addons': {
                 return ingredients = this.state.ingredients_addons;
             }
-            default: console.log('nie naleziono odpowiednich ingredients');
+            default: console.log('nie znaleziono odpowiednich ingredients');
         }
     };
 
@@ -104,6 +104,14 @@ export default class AddMenu extends React.Component {
 
         ingredients.push(newIngredientObj);
 
+        // if (!ingredients) {
+        //     ingredients = [];
+        //     ingredients.push(newIngredientObj);
+        // }
+        // else {
+        //     ingredients.push(newIngredientObj);
+        // }
+
         this.updateIngredients(category, ingredients);
     };
 
@@ -114,6 +122,14 @@ export default class AddMenu extends React.Component {
         let ingredients = this.chooseIngredients(category);
 
         ingredients[ingredientIndex][name] = value;
+
+        // if (!ingredients) {
+        //     ingredients = [];
+        //     ingredients[ingredientIndex][name] = value;
+        // }
+        // else {
+        //     ingredients[ingredientIndex][name] = value;
+        // }
 
         this.updateIngredients(category, ingredients);
     };
@@ -132,28 +148,44 @@ export default class AddMenu extends React.Component {
 
         // Getting a reference to the database service
         const batchesRef = firebase.database().ref();
+        let { name, style, date, ibu, srm, alcohol, volume, density, type } = this.state;
+        let ingredients_ferm, ingredients_yeast, ingredients_hop, ingredients_addons;
+
+        // Ponieważ z Firebase nie zapisują się puste tablice, to w wypadku kiedy nia ma któryś składników dodanych w Recipe, to zamieniam pustą tablicę na pustego stringa, który zapisze się w Firebase.
+        if (this.state.ingredients_ferm == false) {
+            ingredients_ferm = '';
+        }
+        if (this.state.ingredients_yeast == false) {
+            ingredients_yeast = '';
+        }
+        if (this.state.ingredients_hop == false) {
+            ingredients_hop = '';
+        }
+        if (this.state.ingredients_addons == false) {
+            ingredients_addons = '';
+        }
+
+
         const newBatch = {
             "details": {
-                "name": this.state.name,
-                "style": this.state.style,
-                "date": this.state.date,
-                "volume": this.state.volume,
-                "IBU": this.state.ibu,
-                "SRM": this.state.srm,
-                "density": this.state.density,
-                "alcohol": this.state.alcohol,
-                "type": this.state.type
+                "name": name,
+                "style": style,
+                "date": date,
+                "volume": volume,
+                "IBU": ibu,
+                "SRM": srm,
+                "density": density,
+                "alcohol": alcohol,
+                "type": type
             },
             "recipe": {
-                "fermenting_components": this.state.ingredients_ferm,
-                "hop": this.state.ingredients_hop,
-                "yeast": this.state.ingredients_yeast
+                "fermenting_components": ingredients_ferm,
+                "hop": ingredients_hop,
+                "yeast": ingredients_yeast
             },
         };
 
         batchesRef.push(newBatch);
-
-
     };
 
     render() {

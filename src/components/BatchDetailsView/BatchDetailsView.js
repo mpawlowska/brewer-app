@@ -6,10 +6,6 @@ import { Button, Icon } from 'semantic-ui-react'
 
 export default class BatchDetailsView extends React.Component {
 
-    // metoda, która powoduje powrót do poprzedniego path z history - tu nie moge jej wykorzystać, bo poprzednim path mogą być twż inne zakładki z formularza dodawania, a musze cofnąć do głównej strony
-    // goBack = () => {
-    //     this.props.history.goBack();
-    // };
 
     render() {
         const batchKey = this.props.match.params.batchKey;
@@ -17,7 +13,6 @@ export default class BatchDetailsView extends React.Component {
         const batch = batches.filter(batch => batch.key === batchKey);
         console.log(batch);
         const batchObj = batch[0];
-
         return (
             <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
                 <div style={{height: '100vh', width:'100vw', backgroundColor: '#333333', opacity: '0.75', position: 'fixed', left: '0', top: '0', zIndex: '998'}}>
@@ -35,5 +30,10 @@ export default class BatchDetailsView extends React.Component {
     }
 };
 
+
+// metoda, która powoduje powrót do poprzedniego path z history - tu nie moge jej wykorzystać, bo poprzednim path mogą być też inne zakładki z formularza dodawania, a muszę cofnąć do głównej strony
+// goBack = () => {
+//     this.props.history.goBack();
+// };
 
 
