@@ -1,5 +1,6 @@
 import React from 'react';
-import { Card, Icon, Image, Table, Header } from 'semantic-ui-react'
+import { Card, Icon, Image, Table, Header, Button } from 'semantic-ui-react';
+import { Link } from 'react-router-dom';
 
 
 // w propsach będzie dostawała dane konkretnej batch przekazananej przez maindetailsview
@@ -7,6 +8,7 @@ export default class BatchCard extends React.Component {
     constructor(props) {
         super(props);
     }
+
 
     render() {
         const extra = (

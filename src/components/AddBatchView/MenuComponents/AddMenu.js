@@ -143,7 +143,8 @@ export default class AddMenu extends React.Component {
     };
 
     // obsługa buttona 'Zakończ dodawanie warki' --> dodanie nowej warki do Firebase
-    onCloseClick = () => {
+    onCloseClick = (e) => {
+        e.preventDefault();
         console.log('klik');
 
         // tworzę referencję do bazy i potrzebne mi zmienne

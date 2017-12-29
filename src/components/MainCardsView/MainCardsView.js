@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Grid, Container } from 'semantic-ui-react';
+import { Grid, Container, Button } from 'semantic-ui-react';
 import BatchCard from './BatchCard';
 
 // w state będzie przyjmował listę wszystkich warek z bazy
@@ -57,6 +57,12 @@ export default class MainCardsView extends React.Component {
         this.props.pathSave('/cards')
     }
 
+    handleDelete = (e) => {
+        console.log('del');
+
+
+    };
+
     render() {
         return(
             <Container>
@@ -65,8 +71,17 @@ export default class MainCardsView extends React.Component {
                         return (
                             <Grid.Column key={index}>
                                 <Link to = {`batchdetails/${batch.key}`}>
-                                    <BatchCard name={batch.details.name} style={batch.details.style} ibu={batch.details.ibu} alcohol={batch.details.alcohol} density={batch.details.density} date={batch.details.date}/>
+                                    <BatchCard name={batch.details.name} style={batch.details.style} ibu={batch.details.ibu} alcohol={batch.details.alcohol} density={batch.details.density} date={batch.details.date} />
                                 </Link>
+                                <Button size='mini' icon='delete' content='Usuń' onClick = {
+                                    () => {
+                                        const batchKey = batch.key;
+                                        const batchRef = firebase.database().ref(batchKey);
+
+                                        batchRef.remove();
+                                    }
+                                }
+                                />
                             </Grid.Column>
                             )
                         })
