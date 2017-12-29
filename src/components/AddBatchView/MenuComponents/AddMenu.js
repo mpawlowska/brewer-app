@@ -179,8 +179,8 @@ export default class AddMenu extends React.Component {
                 "style": style,
                 "date": date,
                 "volume": volume,
-                "IBU": ibu,
-                "SRM": srm,
+                "ibu": ibu,
+                "srm": srm,
                 "density": density,
                 "alcohol": alcohol,
                 "type": type

@@ -81,9 +81,68 @@ export default class DetailsMenu extends React.Component {
     };
 
     // do uaktywnienia pól i buttonów po kliknięciu w button Edytuj
+    // tutaj też obsługa buttona 'Zapisz i zakończ edycję' --> dodanie zmian w danej warce do Firebase
     onEditClick =() => {
-        this.state.disabled ? this.setState({disabled: false, buttonText: 'Zapisz zmiany'}) : this.setState({disabled: true, buttonText: 'Edytuj'});
+        if (this.state.disabled) {
+            this.setState({
+                disabled: false,
+                buttonText: 'Zapisz i zakończ edycję'
+            });
+        } else {
+            this.setState({disabled: true, buttonText: 'Edytuj'});
+
+            // tworzę referencję do konkrente warki w bazie i nadpisuję jej dane
+            const batchKey = this.props.batch.key;
+            const batchRef = firebase.database().ref(batchKey);
+            let { name, style, date, ibu, srm, alcohol, volume, density, type } = this.state;
+            let ingredients_ferm, ingredients_yeast, ingredients_hop, ingredients_addons;
+
+            // Ponieważ w Firebase nie zapisują się puste tablice, to w wypadku kiedy nia ma któryś składników dodanych w Recipe, to zamieniam pustą tablicę na pustego stringa, który zapisze się w Firebase.
+            if (this.state.ingredients_ferm == false) {
+                ingredients_ferm = '';
+            } else {
+                ingredients_ferm = this.state.ingredients_ferm;
+            }
+            if (this.state.ingredients_yeast == false) {
+                ingredients_yeast = '';
+            } else {
+                ingredients_yeast = this.state.ingredients_yeast;
+            }
+            if (this.state.ingredients_hop == false) {
+                ingredients_hop = '';
+            } else {
+                ingredients_hop = this.state.ingredients_hop;
+            }
+            if (this.state.ingredients_addons == false) {
+                ingredients_addons = '';
+            } else {
+                ingredients_addons = this.state.ingredients_addons;
+            }
+
+            const newBatch = {
+                "details": {
+                    "name": name,
+                    "style": style,
+                    "date": date,
+                    "volume": volume,
+                    "ibu": ibu,
+                    "srm": srm,
+                    "density": density,
+                    "alcohol": alcohol,
+                    "type": type
+                },
+                "recipe": {
+                    "fermenting_components": ingredients_ferm,
+                    "hop": ingredients_hop,
+                    "yeast": ingredients_yeast,
+                    "addons": ingredients_addons
+                },
+            };
+
+            batchRef.set(newBatch);
+        }
     };
+
 
     // do przechwytywania danych z inputów w Podsumowaniu
     handleDetailsComponentUpdate = (name, value) => {
@@ -92,6 +151,153 @@ export default class DetailsMenu extends React.Component {
         });
         // przekazuję jeszcze wyżej bo potrzebuję do nowej batchCard - można to jakoś ograniczyć, aby wywoływało się tylko przy zmianie kilku określonych kluczy
         this.props.onDetailsChange(name, value);
+    };
+
+    // do przechwytywania danych z inputów w Recepturze - najpierw tworzę funkcje uniwersalne, które będą określały, który rodzaj składnika powinien być poddany zmianie
+    chooseIngredients = (category) => {
+        let ingredients;
+        switch(category){
+            case 'ingredients_ferm': {
+                return ingredients = this.state.ingredients_ferm;
+            }
+            case 'ingredients_yeast': {
+                return ingredients = this.state.ingredients_yeast;
+            }
+            case 'ingredients_hop': {
+                return ingredients = this.state.ingredients_hop;
+            }
+            case 'ingredients_addons': {
+                return ingredients = this.state.ingredients_addons;
+            }
+            default: console.log('nie znaleziono odpowiednich ingredients');
+        }
+    };
+
+    updateIngredients = (category, newIngredients) => {
+        switch(category){
+            case 'ingredients_ferm': {
+                this.setState({
+                    ingredients_ferm: newIngredients
+                });
+                break;
+            }
+            case 'ingredients_yeast': {
+                this.setState({
+                    ingredients_yeast: newIngredients
+                });
+                break;
+            }
+            case 'ingredients_hop': {
+                this.setState({
+                    ingredients_hop: newIngredients
+                });
+                break;
+            }
+            case 'ingredients_addons': {
+                this.setState({
+                    ingredients_addons: newIngredients
+                });
+                break;
+            }
+            default: console.log('nie zapisały się ingredients w state AddMenu');
+        }
+    };
+
+    handleRecipeComponentAddIngr = (category) => {
+        const newIngredientObj = {name: '', quantity: ''};
+        let ingredients = this.chooseIngredients(category);
+
+        ingredients.push(newIngredientObj);
+
+        // if (!ingredients) {
+        //     ingredients = [];
+        //     ingredients.push(newIngredientObj);
+        // }
+        // else {
+        //     ingredients.push(newIngredientObj);
+        // }
+
+        this.updateIngredients(category, ingredients);
+    };
+
+    handleRecipeComponentUpdate = (e, ingredientIndex, category) => {
+        let name = e.target.name;
+        let value = e.target.value;
+
+        let ingredients = this.chooseIngredients(category);
+
+        ingredients[ingredientIndex][name] = value;
+
+        // if (!ingredients) {
+        //     ingredients = [];
+        //     ingredients[ingredientIndex][name] = value;
+        // }
+        // else {
+        //     ingredients[ingredientIndex][name] = value;
+        // }
+
+        this.updateIngredients(category, ingredients);
+    };
+
+    handleRecipeComponentDeleteIngr = (ingredientIndex, category) => {
+        let ingredients = this.chooseIngredients(category);
+
+        ingredients.splice(ingredientIndex, 1);
+
+        this.updateIngredients(category, ingredients);
+    };
+
+    // obsługa buttona 'Zakończ dodawanie warki' --> dodanie nowej warki do Firebase
+    onCloseClick = () => {
+        console.log('klik');
+
+        // tworzę referencję do bazy i potrzebne mi zmienne
+        const batchesRef = firebase.database().ref();
+        let { name, style, date, ibu, srm, alcohol, volume, density, type } = this.state;
+        let ingredients_ferm, ingredients_yeast, ingredients_hop, ingredients_addons;
+
+        // Ponieważ w Firebase nie zapisują się puste tablice, to w wypadku kiedy nia ma któryś składników dodanych w Recipe, to zamieniam pustą tablicę na pustego stringa, który zapisze się w Firebase.
+        if (this.state.ingredients_ferm == false) {
+            ingredients_ferm = '';
+        } else {
+            ingredients_ferm = this.state.ingredients_ferm;
+        }
+        if (this.state.ingredients_yeast == false) {
+            ingredients_yeast = '';
+        } else {
+            ingredients_yeast = this.state.ingredients_yeast;
+        }
+        if (this.state.ingredients_hop == false) {
+            ingredients_hop = '';
+        } else {
+            ingredients_hop = this.state.ingredients_hop;
+        }
+        if (this.state.ingredients_addons == false) {
+            ingredients_addons = '';
+        } else {
+            ingredients_addons = this.state.ingredients_addons;
+        }
+
+        const newBatch = {
+            "details": {
+                "name": name,
+                "style": style,
+                "date": date,
+                "volume": volume,
+                "ibu": ibu,
+                "srm": srm,
+                "density": density,
+                "alcohol": alcohol,
+                "type": type
+            },
+            "recipe": {
+                "fermenting_components": ingredients_ferm,
+                "hop": ingredients_hop,
+                "yeast": ingredients_yeast,
+                "addons": ingredients_addons
+            },
+        };
+        batchesRef.push(newBatch);
     };
 
 
@@ -140,7 +346,7 @@ export default class DetailsMenu extends React.Component {
                             {/*<Route exact path="/batchdetails/:batchKey/rating-comments" component={ Rating_Comments }></Route>*/}
                             {/*<Route exact path="/batchdetails/:batchKey/files" component={ Files }></Route>*/}
                         </Switch>
-                        <Button type='submit' color="blue" style={{position: 'relative', left: '42em', marginTop: '1em'}} onClick={this.onEditClick}>{this.state.buttonText}</Button>
+                        <Button type='text' color="blue" style={{position: 'relative', left: '42em', marginTop: '1em'}} onClick={this.onEditClick}>{this.state.buttonText}</Button>
                     </Form>
                 </Segment>
             </div>

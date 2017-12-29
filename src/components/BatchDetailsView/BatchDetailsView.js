@@ -13,8 +13,6 @@ export default class BatchDetailsView extends React.Component {
         const batch = batches.filter(batch => batch.key === batchKey);
         const batchObj = batch[0];
 
-        console.log(batchObj);
-
         return (
 
             <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>

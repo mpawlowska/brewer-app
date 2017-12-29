@@ -25,7 +25,7 @@ export default class BatchListItem extends React.Component {
                             <List.Item>
                                 <List.Content>
                                     <List.Header>IBU</List.Header>
-                                    <List.Description style={{textAlign: "center"}}>{this.props.batch.details.IBU}</List.Description>
+                                    <List.Description style={{textAlign: "center"}}>{this.props.batch.details.ibu}</List.Description>
                                 </List.Content>
                             </List.Item>
                             <List.Item>
