@@ -57,11 +57,11 @@ export default class MainCardsView extends React.Component {
         this.props.pathSave('/cards')
     }
 
-    handleDelete = (e) => {
-        console.log('del');
-
-
+    handleDelete = (batchToDelete) => {
+        const batchRef = firebase.database().ref(batchToDelete);
+        batchRef.remove();
     };
+
 
     render() {
         return(
@@ -73,14 +73,8 @@ export default class MainCardsView extends React.Component {
                                 <Link to = {`batchdetails/${batch.key}`}>
                                     <BatchCard name={batch.details.name} style={batch.details.style} ibu={batch.details.ibu} alcohol={batch.details.alcohol} density={batch.details.density} date={batch.details.date} />
                                 </Link>
-                                <Button size='mini' icon='delete' content='Usuń' onClick = {
-                                    () => {
-                                        const batchKey = batch.key;
-                                        const batchRef = firebase.database().ref(batchKey);
+                                <Button size='mini' icon='delete' content='Usuń' onClick = {() => this.handleDelete(batch.key)}
 
-                                        batchRef.remove();
-                                    }
-                                }
                                 />
                             </Grid.Column>
                             )
@@ -91,5 +85,7 @@ export default class MainCardsView extends React.Component {
         )
     }
 }
+
+
 
 
