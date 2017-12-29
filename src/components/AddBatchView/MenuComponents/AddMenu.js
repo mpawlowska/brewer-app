@@ -146,25 +146,32 @@ export default class AddMenu extends React.Component {
     onCloseClick = () => {
         console.log('klik');
 
-        // Getting a reference to the database service
+        // tworzę referencję do bazy i potrzebne mi zmienne
         const batchesRef = firebase.database().ref();
         let { name, style, date, ibu, srm, alcohol, volume, density, type } = this.state;
         let ingredients_ferm, ingredients_yeast, ingredients_hop, ingredients_addons;
 
-        // Ponieważ z Firebase nie zapisują się puste tablice, to w wypadku kiedy nia ma któryś składników dodanych w Recipe, to zamieniam pustą tablicę na pustego stringa, który zapisze się w Firebase.
+        // Ponieważ w Firebase nie zapisują się puste tablice, to w wypadku kiedy nia ma któryś składników dodanych w Recipe, to zamieniam pustą tablicę na pustego stringa, który zapisze się w Firebase.
         if (this.state.ingredients_ferm == false) {
             ingredients_ferm = '';
+        } else {
+            ingredients_ferm = this.state.ingredients_ferm;
         }
         if (this.state.ingredients_yeast == false) {
             ingredients_yeast = '';
+        } else {
+            ingredients_yeast = this.state.ingredients_yeast;
         }
         if (this.state.ingredients_hop == false) {
             ingredients_hop = '';
+        } else {
+            ingredients_hop = this.state.ingredients_hop;
         }
         if (this.state.ingredients_addons == false) {
             ingredients_addons = '';
+        } else {
+            ingredients_addons = this.state.ingredients_addons;
         }
-
 
         const newBatch = {
             "details": {
@@ -181,10 +188,10 @@ export default class AddMenu extends React.Component {
             "recipe": {
                 "fermenting_components": ingredients_ferm,
                 "hop": ingredients_hop,
-                "yeast": ingredients_yeast
+                "yeast": ingredients_yeast,
+                "addons": ingredients_addons
             },
         };
-
         batchesRef.push(newBatch);
     };
 
@@ -235,7 +242,7 @@ export default class AddMenu extends React.Component {
                             <Route exact path="/newbatch/files" disabled={disabled} component={ Files }></Route>
                         </Switch>
                         <Link to={this.props.pathToGoBack}>
-                            <Button type='submit' color="blue" style={{position: 'relative', left: '42em', marginTop: '1em'}} onClick={this.onCloseClick}>Zakończ dodawanie warki</Button>
+                            <Button type='submit' onClick={this.onCloseClick} color="blue" style={{position: 'relative', left: '42em', marginTop: '1em'}}>Zakończ dodawanie warki</Button>
                         </Link>
                     </Form>
                 </Segment>
@@ -243,5 +250,7 @@ export default class AddMenu extends React.Component {
         )
     }
 }
+
+//Ponieważ button submit w formularzu jest 'owinięty' routerowym Linkiem, nie działa zdarzenie onSubmit ustawione dla Form. Aby warki zapisały się w bazie musiałam użyć zdarzenia onClick na tym buttonie - do poprawy
 
 

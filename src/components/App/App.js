@@ -13,25 +13,31 @@ export default class App extends React.Component {
     constructor(props) {
         super(props);
 
-        // pobieram batches z Firebase: - trzeba będzie to umieścić w innej metodzie, aby dane się synchronizowały po zmianie w bazie
-        const batchesRef = firebase.database().ref();
-        let batches = [];
-
-        batchesRef.on('value', snap => {
-            snap.forEach(childSnapshot => {
-                let batch = childSnapshot.val();
-                batch.key = childSnapshot.key;
-                batches.push(batch);
-            })
-        });
-
         this.state = {
-            batches: batches,
+            batches: [],
             view: '/cards'
         }
     }
 
+    componentDidMount() {
+        const batchesRef = firebase.database().ref();
 
+        batchesRef.on('value', snap => {
+            let batches = [];
+            snap.forEach(childSnapshot => {
+                let batch = childSnapshot.val();
+                batch.key = childSnapshot.key;
+                batches.push(batch);
+            });
+            this.setState({
+                batches: batches
+            })
+        });
+    }
+    /* Dane z Firebase powyżej będą synchronizowały się po każdej zmienie w bazie. Value odpala się nie tylko kiedy za pierwszym razem złapie event listenera, ale też za każdym razem kiedy item jest dodawany do bazy lub usuwany
+    This value automatically fires on two occassions:
+    */
+    
     onViewChange = (view) => {
         this.state.view == view ||
         this.setState({
