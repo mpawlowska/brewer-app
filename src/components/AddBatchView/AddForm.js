@@ -32,7 +32,7 @@ export default class AddForm extends React.Component {
         return (
             <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-around', height: '90%', width: '90%'}}>
                 <NewBatchCard name={name} style={style} ibu={ibu} alcohol={alcohol} density={density} date={date}/>
-                <AddMenu onDetailsChange={this.handleDetailsChange}/>
+                <AddMenu onDetailsChange={this.handleDetailsChange} pathToGoBack={this.props.pathToGoBack}/>
             </div>
 
         )

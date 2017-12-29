@@ -152,7 +152,8 @@ export default class AddMenu extends React.Component {
         };
 
         batchesRef.push(newBatch);
-        console.log(key);
+
+
     };
 
     render() {
@@ -201,7 +202,9 @@ export default class AddMenu extends React.Component {
                             <Route exact path="/newbatch/rating-comments" disabled={disabled} component={ Rating_Comments }></Route>
                             <Route exact path="/newbatch/files" disabled={disabled} component={ Files }></Route>
                         </Switch>
-                        <Button type='submit' color="blue" style={{position: 'relative', left: '42em', marginTop: '1em'}} onClick={this.onCloseClick}>Zakończ dodawanie warki</Button>
+                        <Link to={this.props.pathToGoBack}>
+                            <Button type='submit' color="blue" style={{position: 'relative', left: '42em', marginTop: '1em'}} onClick={this.onCloseClick}>Zakończ dodawanie warki</Button>
+                        </Link>
                     </Form>
                 </Segment>
             </div>
