@@ -175,87 +175,74 @@ export default class DetailsMenu extends React.Component {
     /* ---------------OBSŁUGA BUTTONA----------------- */
 
     // do uaktywnienia pól i buttonów po kliknięciu w button Edytuj
-    onEditClick =() => {
+    // do zapisania zmian / zakończenia edycji i powrotu do poprzdniego widoku po kliknięciu w button 'Zapisz i zakończ edycję') -> dodanie zmian w danej warce do Firebase
+    onEditClick =(e) => {
+
         if (this.state.disabled) {
+            e.preventDefault();  // to zapobiega uaktywnieniu Link z routera i przejściu na inną path
             this.setState({
                 disabled: false,
                 buttonText: 'Zapisz i zakończ edycję'
             });
-        }
-    };
 
-    /* ------------------------------------------------ */
-
-    // do zapisania zmian / zakończenia edycji i powrotu do poprzdniego widoku (obsługa buttona 'Zapisz i zakończ edycję') -> dodanie zmian w danej warce do Firebase
-
-    onFinishEditClick = () => {
-
-        // tworzę referencję do konkretnej warki w bazie i nadpisuję jej dane
-        const batchKey = this.props.batch.key;
-        const batchRef = firebase.database().ref(batchKey);
-        let { name, style, date, ibu, srm, alcohol, volume, density, type } = this.state;
-        let ingredients_ferm, ingredients_yeast, ingredients_hop, ingredients_addons;
-
-        // Ponieważ w Firebase nie zapisują się puste tablice, to w wypadku kiedy nia ma którychś składników dodanych w Recipe, to zamieniam pustą tablicę na pustego stringa, który zapisze się w Firebase.
-        if (this.state.ingredients_ferm == false) {
-            ingredients_ferm = '';
         } else {
-            ingredients_ferm = this.state.ingredients_ferm;
-        }
-        if (this.state.ingredients_yeast == false) {
-            ingredients_yeast = '';
-        } else {
-            ingredients_yeast = this.state.ingredients_yeast;
-        }
-        if (this.state.ingredients_hop == false) {
-            ingredients_hop = '';
-        } else {
-            ingredients_hop = this.state.ingredients_hop;
-        }
-        if (this.state.ingredients_addons == false) {
-            ingredients_addons = '';
-        } else {
-            ingredients_addons = this.state.ingredients_addons;
-        }
-        // tworzę nowe dane na podstawie state
-        const newBatch = {
-            "details": {
-                "name": name,
-                "style": style,
-                "date": date,
-                "volume": volume,
-                "ibu": ibu,
-                "srm": srm,
-                "density": density,
-                "alcohol": alcohol,
-                "type": type
-            },
-            "recipe": {
-                "fermenting_components": ingredients_ferm,
-                "hop": ingredients_hop,
-                "yeast": ingredients_yeast,
-                "addons": ingredients_addons
-            },
-        };
+            // tworzę referencję do konkretnej warki w bazie i nadpisuję jej dane
+            const batchKey = this.props.batch.key;
+            const batchRef = firebase.database().ref(batchKey);
+            let { name, style, date, ibu, srm, alcohol, volume, density, type } = this.state;
+            let ingredients_ferm, ingredients_yeast, ingredients_hop, ingredients_addons;
 
-        // zapisuję do bazy
-        batchRef.set(newBatch);
+            // Ponieważ w Firebase nie zapisują się puste tablice, to w wypadku kiedy nia ma którychś składników dodanych w Recipe, to zamieniam pustą tablicę na pustego stringa, który zapisze się w Firebase.
+            if (this.state.ingredients_ferm == false) {
+                ingredients_ferm = '';
+            } else {
+                ingredients_ferm = this.state.ingredients_ferm;
+            }
+            if (this.state.ingredients_yeast == false) {
+                ingredients_yeast = '';
+            } else {
+                ingredients_yeast = this.state.ingredients_yeast;
+            }
+            if (this.state.ingredients_hop == false) {
+                ingredients_hop = '';
+            } else {
+                ingredients_hop = this.state.ingredients_hop;
+            }
+            if (this.state.ingredients_addons == false) {
+                ingredients_addons = '';
+            } else {
+                ingredients_addons = this.state.ingredients_addons;
+            }
+            // tworzę nowe dane na podstawie state
+            const newBatch = {
+                "details": {
+                    "name": name,
+                    "style": style,
+                    "date": date,
+                    "volume": volume,
+                    "ibu": ibu,
+                    "srm": srm,
+                    "density": density,
+                    "alcohol": alcohol,
+                    "type": type
+                },
+                "recipe": {
+                    "fermenting_components": ingredients_ferm,
+                    "hop": ingredients_hop,
+                    "yeast": ingredients_yeast,
+                    "addons": ingredients_addons
+                },
+            };
+
+            // zapisuję do bazy
+            batchRef.set(newBatch);
+        }
     };
 
     /* ------------------------------------------------ */
 
     render() {
         let { activeItem, name, style, date, ibu, srm, alcohol, volume, density, type, ingredients_ferm, ingredients_yeast, ingredients_hop, ingredients_addons, disabled }  = this.state;
-
-        const link = (
-            <Link to={this.props.pathToGoBack}>
-                <Button type='text' color="blue" style={{position: 'relative', left: '42em', marginTop: '1em'}} onClick={this.onFinishEditClick}>Zapisz i zakończ edycję</Button>
-            </Link>
-        );
-
-        const editButton = <Button type='text' color="blue" style={{position: 'relative', left: '42em', marginTop: '1em'}} onClick={this.onEditClick}>Edytuj</Button>;
-
-        let conditionalLink = this.state.disabled ? editButton : link;
 
         return (
             <div style={{height: '100%', width: '75%'}}>
@@ -299,7 +286,9 @@ export default class DetailsMenu extends React.Component {
                             {/*<Route exact path="/batchdetails/:batchKey/rating-comments" component={ Rating_Comments }></Route>*/}
                             {/*<Route exact path="/batchdetails/:batchKey/files" component={ Files }></Route>*/}
                         </Switch>
-                        {conditionalLink}
+                        <Link to={this.props.pathToGoBack}>
+                            <Button type='text' color="blue" style={{position: 'relative', left: '42em', marginTop: '1em'}} onClick={this.onEditClick}>{this.state.buttonText}</Button>
+                        </Link>
                     </Form>
                 </Segment>
             </div>

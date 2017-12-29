@@ -143,9 +143,7 @@ export default class AddMenu extends React.Component {
     };
 
     // obsługa buttona 'Zakończ dodawanie warki' --> dodanie nowej warki do Firebase
-    onCloseClick = (e) => {
-        e.preventDefault();
-        console.log('klik');
+    onCloseClick = () => {
 
         // tworzę referencję do bazy i potrzebne mi zmienne
         const batchesRef = firebase.database().ref();
@@ -198,6 +196,7 @@ export default class AddMenu extends React.Component {
 
     render() {
         let { activeItem, name, style, date, ibu, srm, alcohol, volume, density, type, ingredients_ferm, ingredients_yeast, ingredients_hop, ingredients_addons, disabled }  = this.state;
+        console.log(this.props.pathToGoBack);
 
         return (
             <div style={{height: '100%', width: '75%'}}>
