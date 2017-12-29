@@ -19,7 +19,9 @@ export default class MainListView extends React.Component {
                 <List divided relaxed animated>
                     {this.props.batches.map((batch, index) => {
                         return (
-                            <BatchListItem key={index} batch={batch} />
+                            <Link to = {`batchdetails/${batch.key}`}>
+                                <BatchListItem key={index} batch={batch} />
+                            </Link>
                             )
                         })
                     }
@@ -30,8 +32,5 @@ export default class MainListView extends React.Component {
 }
 
 /*
-wykrzaczało jak wstawiłam linki
- <Link to = {`batchdetails/${batch.id}`}>
- <BatchListItem key={index} batch={batch} />
- </Link>
+POPRAWIĆ FORMATOWANIE PO WSTAWIENIU LINK TO!
  */

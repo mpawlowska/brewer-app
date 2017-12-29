@@ -31,6 +31,7 @@ export default class App extends React.Component {
         }
     }
 
+
     onViewChange = (view) => {
         this.state.view == view ||
         this.setState({
