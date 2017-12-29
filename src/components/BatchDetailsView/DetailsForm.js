@@ -16,11 +16,52 @@ export default class DetailsForm extends React.Component {
             srm: '',
             density: '',
             alcohol: '',
-            type: ''
+            type: '',
+            // ingredients_ferm: '',
+            // ingredients_yeast: '',
+            // ingredients_hop: '',
+            // ingredients_addons: ''
         }
     }
 
-    // tu można ograniczyć powyżej w state i w poniższej metodzie tylko do tych kluczy, które są istotne do przekazania do NewBatchCard
+    componentWillMount() {
+        // let {name, style, ibu, alcohol, density, date, srm, volume, type} = this.props.batch.details;
+        this.setState({
+            name: this.props.batch.details.name,
+            style: this.props.batch.details.style,
+            date: this.props.batch.details.date,
+            volume: this.props.batch.details.volume,
+            ibu: this.props.batch.details.ibu,
+            srm: this.props.batch.details.srm,
+            density: this.props.batch.details.density,
+            alcohol: this.props.batch.details.alcohol,
+            type: this.props.batch.details.type,
+        })
+    }
+
+    // na początek - do podglądu - ustawiam w state wartości jakie są w props.batch, która przyszła z bazy
+    // componentWillMount() {
+    //     let { name, style, ibu, alcohol, density, date, srm, volume, type } = this.props.batch.details;
+    //     // let {fermenting_components : ingredients_ferm, yeast : ingredients_yeast, hops: ingredients_hop, addons : ingredients_addons } = this.props.batch.recipe;
+    //
+    //     this.setState({
+    //         name: name,
+    //         style: style,
+    //         date: date,
+    //         volume: volume,
+    //         ibu: ibu,
+    //         srm: srm,
+    //         density: density,
+    //         alcohol: alcohol,
+    //         type: type,
+    //         ingredients_ferm: ingredients_ferm,
+    //         ingredients_yeast: ingredients_yeast,
+    //         ingredients_hop: ingredients_hop,
+    //         ingredients_addons: ingredients_addons
+    //     })
+    // }
+
+    // jeśli user zmieni wartości inputów, zapisuję je w state i przekazuję do odpowiedniego renderowania w dziecku
     handleDetailsChange = (name, value) => {
         this.setState({
             [name]: value
@@ -28,10 +69,10 @@ export default class DetailsForm extends React.Component {
     };
 
     render() {
-        let { name, style, ibu, alcohol, density, date } = this.props.batch;
+        let { name, style, ibu, alcohol, density, date } = this.state;
         return (
             <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-around', height: '90%', width: '90%'}}>
-                <BatchCard batch={this.props.batch}/>
+                <BatchCard name={name} style={style} ibu={ibu} alcohol={alcohol} density={density} date={date}/>
                 <DetailsMenu onDetailsChange={this.handleDetailsChange} batch={this.props.batch}/>
             </div>
 

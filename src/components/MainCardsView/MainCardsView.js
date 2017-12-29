@@ -65,7 +65,7 @@ export default class MainCardsView extends React.Component {
                         return (
                             <Grid.Column key={index}>
                                 <Link to = {`batchdetails/${batch.key}`}>
-                                    <BatchCard batch={batch}/>
+                                    <BatchCard name={batch.details.name} style={batch.details.style} ibu={batch.details.ibu} alcohol={batch.details.alcohol} density={batch.details.density} date={batch.details.date}/>
                                 </Link>
                             </Grid.Column>
                             )

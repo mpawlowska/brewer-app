@@ -14,34 +14,14 @@ const Details_Input = (props) => {
 export default class Details extends React.Component {
     constructor(props) {
         super(props);
-
-        // this.state = {
-        //     name: '',
-        //     style: '',
-        //     date: '',
-        //     volume: '',
-        //     ibu: '',
-        //     srm: '',
-        //     density: '',
-        //     alcohol: '',
-        //     type: ''
-        // }
     }
 
     handleInputChange = (e) => {
         let name = e.target.name;
         let value = e.target.value;
 
-        // this.setState({
-        //     [name]: value
-        //     });
-
         this.props.componentUpdate(name, value);
     };
-
-    // gdzie umieścić tę moetodę? willUpadte i didUpdate pwooduje zapętlenie updatów i błąd
-    // this.props.componentUpdate(this.state);
-
 
     render() {
         return (
