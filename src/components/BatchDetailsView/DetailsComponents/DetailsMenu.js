@@ -35,7 +35,7 @@ export default class DetailsMenu extends React.Component {
             ingredients_addons: ''
         };
     }
-
+    /* ------------------------------------------------ */
     //  // na początek - do podglądu - ustawiam w state wartości jakie są w props.batch, która przyszła z bazy
     componentWillMount() {
         let {name, style, date, ibu, srm, alcohol, volume, density, type} = this.props.batch.details;
@@ -71,6 +71,7 @@ export default class DetailsMenu extends React.Component {
             ingredients_addons: ingredients_addons
         });
     }
+    /* ------------------------------------------------ */
 
     // do zmiany aktywnej zakładki w Menu
     handleItemClick = (e, {name}) => {
@@ -80,69 +81,7 @@ export default class DetailsMenu extends React.Component {
         })
     };
 
-    // do uaktywnienia pól i buttonów po kliknięciu w button Edytuj
-    // tutaj też obsługa buttona 'Zapisz i zakończ edycję' --> dodanie zmian w danej warce do Firebase
-    onEditClick =() => {
-        if (this.state.disabled) {
-            this.setState({
-                disabled: false,
-                buttonText: 'Zapisz i zakończ edycję'
-            });
-        } else {
-            this.setState({disabled: true, buttonText: 'Edytuj'});
-
-            // tworzę referencję do konkrente warki w bazie i nadpisuję jej dane
-            const batchKey = this.props.batch.key;
-            const batchRef = firebase.database().ref(batchKey);
-            let { name, style, date, ibu, srm, alcohol, volume, density, type } = this.state;
-            let ingredients_ferm, ingredients_yeast, ingredients_hop, ingredients_addons;
-
-            // Ponieważ w Firebase nie zapisują się puste tablice, to w wypadku kiedy nia ma któryś składników dodanych w Recipe, to zamieniam pustą tablicę na pustego stringa, który zapisze się w Firebase.
-            if (this.state.ingredients_ferm == false) {
-                ingredients_ferm = '';
-            } else {
-                ingredients_ferm = this.state.ingredients_ferm;
-            }
-            if (this.state.ingredients_yeast == false) {
-                ingredients_yeast = '';
-            } else {
-                ingredients_yeast = this.state.ingredients_yeast;
-            }
-            if (this.state.ingredients_hop == false) {
-                ingredients_hop = '';
-            } else {
-                ingredients_hop = this.state.ingredients_hop;
-            }
-            if (this.state.ingredients_addons == false) {
-                ingredients_addons = '';
-            } else {
-                ingredients_addons = this.state.ingredients_addons;
-            }
-
-            const newBatch = {
-                "details": {
-                    "name": name,
-                    "style": style,
-                    "date": date,
-                    "volume": volume,
-                    "ibu": ibu,
-                    "srm": srm,
-                    "density": density,
-                    "alcohol": alcohol,
-                    "type": type
-                },
-                "recipe": {
-                    "fermenting_components": ingredients_ferm,
-                    "hop": ingredients_hop,
-                    "yeast": ingredients_yeast,
-                    "addons": ingredients_addons
-                },
-            };
-
-            batchRef.set(newBatch);
-        }
-    };
-
+    /* ---------------------OBSŁUGA DETAILS/PODSUMOWANIE--------------------------- */
 
     // do przechwytywania danych z inputów w Podsumowaniu
     handleDetailsComponentUpdate = (name, value) => {
@@ -152,6 +91,8 @@ export default class DetailsMenu extends React.Component {
         // przekazuję jeszcze wyżej bo potrzebuję do nowej batchCard - można to jakoś ograniczyć, aby wywoływało się tylko przy zmianie kilku określonych kluczy
         this.props.onDetailsChange(name, value);
     };
+
+    /* --------------------OBSŁUGA RECIPE/RECEPTURA---------------------------- */
 
     // do przechwytywania danych z inputów w Recepturze - najpierw tworzę funkcje uniwersalne, które będą określały, który rodzaj składnika powinien być poddany zmianie
     chooseIngredients = (category) => {
@@ -209,14 +150,6 @@ export default class DetailsMenu extends React.Component {
 
         ingredients.push(newIngredientObj);
 
-        // if (!ingredients) {
-        //     ingredients = [];
-        //     ingredients.push(newIngredientObj);
-        // }
-        // else {
-        //     ingredients.push(newIngredientObj);
-        // }
-
         this.updateIngredients(category, ingredients);
     };
 
@@ -227,14 +160,6 @@ export default class DetailsMenu extends React.Component {
         let ingredients = this.chooseIngredients(category);
 
         ingredients[ingredientIndex][name] = value;
-
-        // if (!ingredients) {
-        //     ingredients = [];
-        //     ingredients[ingredientIndex][name] = value;
-        // }
-        // else {
-        //     ingredients[ingredientIndex][name] = value;
-        // }
 
         this.updateIngredients(category, ingredients);
     };
@@ -247,16 +172,31 @@ export default class DetailsMenu extends React.Component {
         this.updateIngredients(category, ingredients);
     };
 
-    // obsługa buttona 'Zakończ dodawanie warki' --> dodanie nowej warki do Firebase
-    onCloseClick = () => {
-        console.log('klik');
+    /* ---------------OBSŁUGA BUTTONA----------------- */
 
-        // tworzę referencję do bazy i potrzebne mi zmienne
-        const batchesRef = firebase.database().ref();
+    // do uaktywnienia pól i buttonów po kliknięciu w button Edytuj
+    onEditClick =() => {
+        if (this.state.disabled) {
+            this.setState({
+                disabled: false,
+                buttonText: 'Zapisz i zakończ edycję'
+            });
+        }
+    };
+
+    /* ------------------------------------------------ */
+
+    // do zapisania zmian / zakończenia edycji i powrotu do poprzdniego widoku (obsługa buttona 'Zapisz i zakończ edycję') -> dodanie zmian w danej warce do Firebase
+
+    onFinishEditClick = () => {
+
+        // tworzę referencję do konkretnej warki w bazie i nadpisuję jej dane
+        const batchKey = this.props.batch.key;
+        const batchRef = firebase.database().ref(batchKey);
         let { name, style, date, ibu, srm, alcohol, volume, density, type } = this.state;
         let ingredients_ferm, ingredients_yeast, ingredients_hop, ingredients_addons;
 
-        // Ponieważ w Firebase nie zapisują się puste tablice, to w wypadku kiedy nia ma któryś składników dodanych w Recipe, to zamieniam pustą tablicę na pustego stringa, który zapisze się w Firebase.
+        // Ponieważ w Firebase nie zapisują się puste tablice, to w wypadku kiedy nia ma którychś składników dodanych w Recipe, to zamieniam pustą tablicę na pustego stringa, który zapisze się w Firebase.
         if (this.state.ingredients_ferm == false) {
             ingredients_ferm = '';
         } else {
@@ -277,7 +217,7 @@ export default class DetailsMenu extends React.Component {
         } else {
             ingredients_addons = this.state.ingredients_addons;
         }
-
+        // tworzę nowe dane na podstawie state
         const newBatch = {
             "details": {
                 "name": name,
@@ -297,12 +237,25 @@ export default class DetailsMenu extends React.Component {
                 "addons": ingredients_addons
             },
         };
-        batchesRef.push(newBatch);
+
+        // zapisuję do bazy
+        batchRef.set(newBatch);
     };
 
+    /* ------------------------------------------------ */
 
     render() {
         let { activeItem, name, style, date, ibu, srm, alcohol, volume, density, type, ingredients_ferm, ingredients_yeast, ingredients_hop, ingredients_addons, disabled }  = this.state;
+
+        const link = (
+            <Link to={this.props.pathToGoBack}>
+                <Button type='text' color="blue" style={{position: 'relative', left: '42em', marginTop: '1em'}} onClick={this.onFinishEditClick}>Zapisz i zakończ edycję</Button>
+            </Link>
+        );
+
+        const editButton = <Button type='text' color="blue" style={{position: 'relative', left: '42em', marginTop: '1em'}} onClick={this.onEditClick}>Edytuj</Button>;
+
+        let conditionalLink = this.state.disabled ? editButton : link;
 
         return (
             <div style={{height: '100%', width: '75%'}}>
@@ -346,10 +299,10 @@ export default class DetailsMenu extends React.Component {
                             {/*<Route exact path="/batchdetails/:batchKey/rating-comments" component={ Rating_Comments }></Route>*/}
                             {/*<Route exact path="/batchdetails/:batchKey/files" component={ Files }></Route>*/}
                         </Switch>
-                        <Button type='text' color="blue" style={{position: 'relative', left: '42em', marginTop: '1em'}} onClick={this.onEditClick}>{this.state.buttonText}</Button>
+                        {conditionalLink}
                     </Form>
                 </Segment>
             </div>
         )
     }
-}
+};
