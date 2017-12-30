@@ -38,20 +38,21 @@ export default class DetailsMenu extends React.Component {
     /* ------------------------------------------------ */
     //  // na początek - do podglądu - ustawiam w state wartości jakie są w props.batch, która przyszła z bazy
     componentWillMount() {
+
+        let {fermenting_components : ingredients_ferm, yeast : ingredients_yeast, hop: ingredients_hop, addons : ingredients_addons } = this.props.batch.recipe;
         let {name, style, date, ibu, srm, alcohol, volume, density, type} = this.props.batch.details;
-        let {fermenting_components : ingredients_ferm, yeast : ingredients_yeast, hops: ingredients_hop, addons : ingredients_addons } = this.props.batch.recipe;
 
         // jeśli pobrane z bazy składniki są pustymi stringami, to zamieniam je na tablicę, aby można je było wyświetlić poprzez metodę map
-        if (!this.props.ingredients_ferm) {
+        if (!ingredients_ferm) {
             ingredients_ferm = [];
         }
-        if (!this.props.ingredients_yeast) {
+        if (!ingredients_yeast) {
             ingredients_yeast = [];
         }
-        if (!this.props.ingredients_hop) {
+        if (!ingredients_hop) {
             ingredients_hop = [];
         }
-        if (!this.props.ingredients_addons) {
+        if (!ingredients_addons) {
             ingredients_addons = [];
         }
 
