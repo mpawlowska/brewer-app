@@ -4,7 +4,7 @@ import {
     Switch,
     Link
 } from 'react-router-dom';
-import { Menu, Segment, Form, Button } from 'semantic-ui-react'
+import { Menu, Segment, Form, Button, Popup } from 'semantic-ui-react'
 import Details from '../../AddBatchView/MenuComponents/Details';
 import Recipe from '../../AddBatchView/MenuComponents/Recipe';
 import Rating_Comments from '../../AddBatchView/MenuComponents/Rating_Comments';
@@ -190,7 +190,7 @@ export default class DetailsMenu extends React.Component {
             // tworzę referencję do konkretnej warki w bazie i nadpisuję jej dane
             const batchKey = this.props.batch.key;
             const batchRef = firebase.database().ref(batchKey);
-            let { name, style, date, ibu, srm, alcohol, volume, density, type } = this.state;
+            let {name, style, date, ibu, srm, alcohol, volume, density, type} = this.state;
             let ingredients_ferm, ingredients_yeast, ingredients_hop, ingredients_addons;
 
             // Ponieważ w Firebase nie zapisują się puste tablice, to w wypadku kiedy nia ma którychś składników dodanych w Recipe, to zamieniam pustą tablicę na pustego stringa, który zapisze się w Firebase.
@@ -240,10 +240,16 @@ export default class DetailsMenu extends React.Component {
         }
     };
 
-    /* ------------------------------------------------ */
+        /* ------------------------------------------------ */
+
+    onDeleteBatchClick = (batchToDelete) => {
+        const batchRef = firebase.database().ref(batchToDelete);
+        batchRef.remove();
+    };
 
     render() {
         let { activeItem, name, style, date, ibu, srm, alcohol, volume, density, type, ingredients_ferm, ingredients_yeast, ingredients_hop, ingredients_addons, disabled }  = this.state;
+        const deleteBatchButton = <Button type='text' color="blue" style={{position: 'relative', left: '45em', marginTop: '1em'}}>Usuń warkę</Button>;
 
         return (
             <div style={{height: '100%', width: '75%'}}>
@@ -290,6 +296,22 @@ export default class DetailsMenu extends React.Component {
                         <Link to={this.props.pathToGoBack}>
                             <Button type='text' color="blue" style={{position: 'relative', left: '42em', marginTop: '1em'}} onClick={this.onEditClick}>{this.state.buttonText}</Button>
                         </Link>
+                        <Popup
+                            trigger={deleteBatchButton}
+                            on='click'
+                            position='top right'
+                            flowing
+                        >
+                            <Popup.Header>
+                                Czy na pewno chcesz usunąć warkę?
+                            </Popup.Header>
+                            <Popup.Content>
+                                <Link to={this.props.pathToGoBack}>
+                                    <Button color='red' content='Tak' onClick = {() => this.onDeleteBatchClick(this.props.batch.key)}/>
+                                </Link>
+                                <Button color='green' content='Nie'/>
+                            </Popup.Content>
+                        </Popup>
                     </Form>
                 </Segment>
             </div>
