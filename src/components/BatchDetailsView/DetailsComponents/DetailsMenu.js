@@ -33,7 +33,8 @@ export default class DetailsMenu extends React.Component {
             ingredients_ferm: '',
             ingredients_yeast: '',
             ingredients_hop: '',
-            ingredients_addons: ''
+            ingredients_addons: '',
+            inputFile: ''
         };
     }
     /* ------------------------------------------------ */
@@ -89,6 +90,14 @@ export default class DetailsMenu extends React.Component {
         const currentPopupState = this.state.isPopupOpen;
         this.setState({
             isPopupOpen: !currentPopupState
+        })
+    };
+
+    /* ----------- ZAPISANIE W STATE PLIKU - metoda wywoływana w Files -------------- */
+
+    onFileUpload = (inputFile) => {
+        this.setState({
+            inputFile: inputFile
         })
     };
 
@@ -247,6 +256,19 @@ export default class DetailsMenu extends React.Component {
 
             // zapisuję do bazy
             batchRef.set(newBatch);
+
+            /* ----------- dodanie pliku do storage -------------- */
+
+            // tworzę storage reference
+            const storageRef = firebase.storage().ref();
+
+            // pobieram plik zapisany wcześniej w state
+            let file = this.state.inputFile;
+
+            // zapisuję plik w storage --> nazwa pliku to key warki
+            file && storageRef.child(`images/${batchKey}`).put(file).then(function(snapshot) {
+                console.log('Uploaded file!');
+            });
         }
     };
 
@@ -289,20 +311,37 @@ export default class DetailsMenu extends React.Component {
                 <Segment attached='bottom'>
                     <Form style={{position: 'relative'}}>
                         <Switch>
+
+                            /* -------- widok Podsumowania -------- */
+
                             <Route
                                 exact path="/batchdetails/:batchKey"
                                 render={(routeProps) => (
-                                    <Details {...routeProps} changePathName={this.changePathName} disabled={this.state.disabled} componentUpdate = {this.handleDetailsComponentUpdate} name={this.state.name} style={this.state.style} ibu={this.state.ibu} alcohol={this.state.alcohol} volume={this.state.volume} date={this.state.date} srm={this.state.srm} density={this.state.density} type={this.state.type}/>
+                                    <Details {...routeProps} disabled={this.state.disabled} componentUpdate = {this.handleDetailsComponentUpdate} name={this.state.name} style={this.state.style} ibu={this.state.ibu} alcohol={this.state.alcohol} volume={this.state.volume} date={this.state.date} srm={this.state.srm} density={this.state.density} type={this.state.type}/>
                                 )}
                             />
+
+                            /* -------- widok Receptury -------- */
+
                             <Route
                                 exact path="/batchdetails/:batchKey/recipe"
                                 render={(routeProps) => (
-                                    <Recipe {...routeProps} changePathName={this.changePathName} disabled={this.state.disabled} componentUpdate = {this.handleRecipeComponentUpdate} ingredients_ferm={this.state.ingredients_ferm} ingredients_yeast={this.state.ingredients_yeast} ingredients_hop={this.state.ingredients_hop} ingredients_addons={this.state.ingredients_addons} componentAdd = {this.handleRecipeComponentAddIngr} componentDelete={this.handleRecipeComponentDeleteIngr}/>
+                                    <Recipe {...routeProps} disabled={this.state.disabled} componentUpdate = {this.handleRecipeComponentUpdate} ingredients_ferm={this.state.ingredients_ferm} ingredients_yeast={this.state.ingredients_yeast} ingredients_hop={this.state.ingredients_hop} ingredients_addons={this.state.ingredients_addons} componentAdd = {this.handleRecipeComponentAddIngr} componentDelete={this.handleRecipeComponentDeleteIngr}/>
                                 )}
                             />
+
+                            /* -------- widok Oceny i Komentarzy -------- */
+
                             {/*<Route exact path="/batchdetails/:batchKey/rating-comments" component={ Rating_Comments }></Route>*/}
-                            {/*<Route exact path="/batchdetails/:batchKey/files" component={ Files }></Route>*/}
+
+                            /* -------- widok Załączników -------- */
+
+                            <Route
+                                exact path="/batchdetails/:batchKey/files"
+                                render={(routeProps) => (
+                                    <Files {...routeProps} disabled={this.state.disabled} onFileUpload={this.onFileUpload} buttonText={this.state.inputFile ? 'Zmień zdjęcie' : 'Dodaj zdjęcie'}/>
+                                    )}
+                            />
                         </Switch>
                         <Link to={this.props.pathToGoBack}>
                             <Button type='text' color="blue" style={{position: 'relative', left: '42em', marginTop: '1em'}} onClick={this.onEditClick}>{this.state.buttonText}</Button>

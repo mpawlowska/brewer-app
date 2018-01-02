@@ -29,7 +29,8 @@ export default class AddMenu extends React.Component {
             ingredients_ferm: [],
             ingredients_yeast: [],
             ingredients_hop: [],
-            ingredients_addons: []
+            ingredients_addons: [],
+            inputFile: ''
         }
     }
 
@@ -142,7 +143,16 @@ export default class AddMenu extends React.Component {
         this.updateIngredients(category, ingredients);
     };
 
-    // obsługa buttona 'Zakończ dodawanie warki' --> dodanie nowej warki do Firebase
+    /* ----------- ZAPISANIE W STATE PLIKU - metoda wywoływana w Files -------------- */
+
+    onFileUpload = (inputFile) => {
+        this.setState({
+            inputFile: inputFile
+        })
+    };
+
+    /* ----------- OBSŁUGA BUTTONA 'ZAKOŃCZ DODAWANIE WARKI' - dodanie nowej warki do bazy i pliku do storage -------------- */
+
     onCloseClick = () => {
 
         // tworzę referencję do bazy i potrzebne mi zmienne
@@ -191,12 +201,26 @@ export default class AddMenu extends React.Component {
                 "addons": ingredients_addons
             },
         };
-        batchesRef.push(newBatch);
+        // wrzucam warkę do bazy, ale też zapisuję klucz, bo będzie mi potrzebny do zapisania w storage zdjęcia pod odpowiednią nazwą
+        let newBatchKey = batchesRef.push(newBatch).key;
+
+        /* ----------- dodanie pliku do storage -------------- */
+
+        // tworzę storage reference
+        const storageRef = firebase.storage().ref();
+
+        // pobieram plik zapisany wcześniej w state
+        let file = this.state.inputFile;
+
+        // zapisuję plik w storage --> nazwa pliku to key warki
+        file && storageRef.child(`images/${newBatchKey}`).put(file).then(function(snapshot) {
+            console.log('Uploaded file!');
+        });
     };
+
 
     render() {
         let { activeItem, name, style, date, ibu, srm, alcohol, volume, density, type, ingredients_ferm, ingredients_yeast, ingredients_hop, ingredients_addons, disabled }  = this.state;
-        console.log(this.props.pathToGoBack);
 
         return (
             <div style={{height: '100%', width: '75%'}}>
@@ -239,7 +263,12 @@ export default class AddMenu extends React.Component {
                                 )}
                             />
                             <Route exact path="/newbatch/rating-comments" disabled={disabled} component={ Rating_Comments }></Route>
-                            <Route exact path="/newbatch/files" disabled={disabled} component={ Files }></Route>
+                            <Route
+                                exact path="/newbatch/files"
+                                render={(routeProps) => (
+                                    <Files {...routeProps} disabled={disabled} onFileUpload={this.onFileUpload} buttonText={this.state.inputFile ? 'Zmień zdjęcie' : 'Dodaj zdjęcie'}/>
+                                )}
+                            />
                         </Switch>
                         <Link to={this.props.pathToGoBack}>
                             <Button type='submit' onClick={this.onCloseClick} color="blue" style={{position: 'relative', left: '42em', marginTop: '1em'}}>Zakończ dodawanie warki</Button>
