@@ -40,7 +40,6 @@ class RecipeIngredients extends React.Component {
     // };
 
     render() {
-        console.log('Ingr z Ingrs', this.props.ingredients);
         return (
             <Form.Field>
                 <label>{this.props.label}</label>

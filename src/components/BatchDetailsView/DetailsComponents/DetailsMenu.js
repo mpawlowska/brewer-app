@@ -20,6 +20,7 @@ export default class DetailsMenu extends React.Component {
             activeItem: 'details',
             buttonText: 'Edytuj',
             disabled: true,
+            isPopupOpen: false,
             name: '',
             style: '',
             date: '',
@@ -76,9 +77,18 @@ export default class DetailsMenu extends React.Component {
 
     // do zmiany aktywnej zakładki w Menu
     handleItemClick = (e, {name}) => {
-        console.log(name);
         this.setState({
             activeItem: name
+        })
+    };
+
+    /* ------------------------------------------------ */
+
+    // do zamykania Popup
+    togglePopup = () => {
+        const currentPopupState = this.state.isPopupOpen;
+        this.setState({
+            isPopupOpen: !currentPopupState
         })
     };
 
@@ -249,7 +259,8 @@ export default class DetailsMenu extends React.Component {
 
     render() {
         let { activeItem, name, style, date, ibu, srm, alcohol, volume, density, type, ingredients_ferm, ingredients_yeast, ingredients_hop, ingredients_addons, disabled }  = this.state;
-        const deleteBatchButton = <Button type='text' color="blue" style={{position: 'relative', left: '45em', marginTop: '1em'}}>Usuń warkę</Button>;
+        const deleteBatchButton =
+            <Button type='text' color="blue" style={{position: 'relative', left: '45em', marginTop: '1em'}} onClick={this.togglePopup}>Usuń warkę</Button>;
 
         return (
             <div style={{height: '100%', width: '75%'}}>
@@ -281,13 +292,13 @@ export default class DetailsMenu extends React.Component {
                             <Route
                                 exact path="/batchdetails/:batchKey"
                                 render={(routeProps) => (
-                                    <Details {...routeProps} disabled={this.state.disabled} componentUpdate = {this.handleDetailsComponentUpdate} name={this.state.name} style={this.state.style} ibu={this.state.ibu} alcohol={this.state.alcohol} volume={this.state.volume} date={this.state.date} srm={this.state.srm} density={this.state.density} type={this.state.type}/>
+                                    <Details {...routeProps} changePathName={this.changePathName} disabled={this.state.disabled} componentUpdate = {this.handleDetailsComponentUpdate} name={this.state.name} style={this.state.style} ibu={this.state.ibu} alcohol={this.state.alcohol} volume={this.state.volume} date={this.state.date} srm={this.state.srm} density={this.state.density} type={this.state.type}/>
                                 )}
                             />
                             <Route
                                 exact path="/batchdetails/:batchKey/recipe"
                                 render={(routeProps) => (
-                                    <Recipe {...routeProps} disabled={this.state.disabled} componentUpdate = {this.handleRecipeComponentUpdate} ingredients_ferm={this.state.ingredients_ferm} ingredients_yeast={this.state.ingredients_yeast} ingredients_hop={this.state.ingredients_hop} ingredients_addons={this.state.ingredients_addons} componentAdd = {this.handleRecipeComponentAddIngr} componentDelete={this.handleRecipeComponentDeleteIngr}/>
+                                    <Recipe {...routeProps} changePathName={this.changePathName} disabled={this.state.disabled} componentUpdate = {this.handleRecipeComponentUpdate} ingredients_ferm={this.state.ingredients_ferm} ingredients_yeast={this.state.ingredients_yeast} ingredients_hop={this.state.ingredients_hop} ingredients_addons={this.state.ingredients_addons} componentAdd = {this.handleRecipeComponentAddIngr} componentDelete={this.handleRecipeComponentDeleteIngr}/>
                                 )}
                             />
                             {/*<Route exact path="/batchdetails/:batchKey/rating-comments" component={ Rating_Comments }></Route>*/}
@@ -301,15 +312,16 @@ export default class DetailsMenu extends React.Component {
                             on='click'
                             position='top right'
                             flowing
+                            open={this.state.isPopupOpen}
                         >
                             <Popup.Header>
                                 Czy na pewno chcesz usunąć warkę?
                             </Popup.Header>
                             <Popup.Content>
                                 <Link to={this.props.pathToGoBack}>
-                                    <Button color='red' content='Tak' onClick = {() => this.onDeleteBatchClick(this.props.batch.key)}/>
+                                    <Button color='blue' content='Tak' onClick = {() => this.onDeleteBatchClick(this.props.batch.key)}/>
                                 </Link>
-                                <Button color='green' content='Nie'/>
+                                <Button color='green' content='Nie' onClick={this.togglePopup}/>
                             </Popup.Content>
                         </Popup>
                     </Form>

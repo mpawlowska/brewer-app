@@ -12,7 +12,6 @@ export default class BatchDetailsView extends React.Component {
         const batches = this.props.batches;
         const batch = batches.filter(batch => batch.key === batchKey);
         const batchObj = batch[0];
-        console.log('BATCH w detailsView', batchObj);
 
         return (
 

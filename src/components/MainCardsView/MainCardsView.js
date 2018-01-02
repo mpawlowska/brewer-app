@@ -1,13 +1,64 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { Grid, Container, Button } from 'semantic-ui-react';
+import { Route, Link } from 'react-router-dom';
+import { Grid, Container, Button, Popup } from 'semantic-ui-react';
 import BatchCard from './BatchCard';
 
-// w state będzie przyjmował listę wszystkich warek z bazy
+class DeletePopup extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            isOpen: false
+        };
+    }
+
+    handleOpen = () => {
+        this.setState({
+            isOpen: true
+        });
+    };
+
+    handleClose = () => {
+        this.setState({
+            isOpen: false
+        });
+    };
+
+    handleDelete = (batchToDelete) => {
+        const batchRef = firebase.database().ref(batchToDelete);
+        batchRef.remove();
+        this.handleClose();
+    };
+
+
+    render() {
+        return (
+            <Popup
+                trigger={<Button size='mini' icon='delete' content='Usuń'/>}
+                on='click'
+                position='top right'
+                flowing
+                open={this.state.isOpen}
+                onClose={this.handleClose}
+                onOpen={this.handleOpen}
+            >
+                <Popup.Header>
+                    Czy na pewno chcesz usunąć warkę?
+                </Popup.Header>
+                <Popup.Content>
+                    <Button color='red' content='Tak' onClick = {() => this.handleDelete(this.props.batchKey)}/>
+                    <Button color='green' content='Nie' onClick={this.handleClose}/>
+                </Popup.Content>
+            </Popup>
+        )
+    }
+}
 
 export default class MainCardsView extends React.Component {
     constructor(props) {
         super(props);
+
+
 
         // const batchesRef = firebase.database().ref();
         // let batches = [];
@@ -24,6 +75,8 @@ export default class MainCardsView extends React.Component {
         //
         // console.log('BATChes from constr', this.state.batches);
     }
+
+
 
     // tym sposobem wyświetla się tylko jedna warka - dlaczego? ale wyswietla się od razu, bez koniecnzości klikania na 'Karty'
 
@@ -57,11 +110,6 @@ export default class MainCardsView extends React.Component {
         this.props.pathSave('/cards')
     }
 
-    handleDelete = (batchToDelete) => {
-        const batchRef = firebase.database().ref(batchToDelete);
-        batchRef.remove();
-    };
-
 
     render() {
         return(
@@ -73,9 +121,7 @@ export default class MainCardsView extends React.Component {
                                 <Link to = {`batchdetails/${batch.key}`}>
                                     <BatchCard name={batch.details.name} style={batch.details.style} ibu={batch.details.ibu} alcohol={batch.details.alcohol} density={batch.details.density} date={batch.details.date} />
                                 </Link>
-                                <Button size='mini' icon='delete' content='Usuń' onClick = {() => this.handleDelete(batch.key)}
-
-                                />
+                                <DeletePopup batchKey={batch.key}/>
                             </Grid.Column>
                             )
                         })

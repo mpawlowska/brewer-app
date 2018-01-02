@@ -35,7 +35,6 @@ export default class App extends React.Component {
         });
     }
     /* Dane z Firebase powyżej będą synchronizowały się po każdej zmienie w bazie. Value odpala się nie tylko kiedy za pierwszym razem złapie event listenera, ale też za każdym razem kiedy item jest dodawany do bazy lub usuwany
-    This value automatically fires on two occassions:
     */
 
     onViewChange = (view) => {
