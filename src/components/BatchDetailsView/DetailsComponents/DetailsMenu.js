@@ -4,7 +4,7 @@ import {
     Switch,
     Link
 } from 'react-router-dom';
-import { Menu, Segment, Form, Button, Popup } from 'semantic-ui-react'
+import { Menu, Segment, Form, Button, Popup, Divider } from 'semantic-ui-react'
 import Details from '../../AddBatchView/MenuComponents/Details';
 import Recipe from '../../AddBatchView/MenuComponents/Recipe';
 import Rating_Comments from '../../AddBatchView/MenuComponents/Rating_Comments';
@@ -348,10 +348,11 @@ export default class DetailsMenu extends React.Component {
                             <Route
                                 exact path="/batchdetails/:batchKey/files"
                                 render={(routeProps) => (
-                                    <Files {...routeProps} disabled={this.state.disabled} onFileUpload={this.onFileUpload} buttonText={this.state.inputFile ? 'Zmień zdjęcie' : 'Dodaj zdjęcie'}/>
+                                    <Files {...routeProps} disabled={this.state.disabled} onFileUpload={this.onFileUpload} file={this.state.inputFile} imagePreviewUrl={this.state.imagePreviewUrl}/>
                                     )}
                             />
                         </Switch>
+                        <Divider> </Divider>
                         <Link to={this.props.pathToGoBack}>
                             <Button type='text' color="blue" style={{position: 'relative', left: '42em', marginTop: '1em'}} onClick={this.onEditClick}>{this.state.buttonText}</Button>
                         </Link>

@@ -1,14 +1,14 @@
 import React from 'react';
 import { Image, Label, Segment, Button } from 'semantic-ui-react'
 
+// wybrane przez usera zdjecie przekazywane jest metodami z Files do rodzica - DetailsMenu i tam trzymane w state
+// zdjęcie przekazywane jest do renderowania w Files w propsach od DetailsMenu;
 
 export default class Files extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            file: '',
-            imagePreviewUrl: '',
             buttonText: 'Wybierz zdjęcie'
         }
     }
@@ -21,9 +21,7 @@ export default class Files extends React.Component {
         reader.onloadend = () => {
             imageUrl = reader.result;
             this.setState({
-                file: file,
-                imagePreviewUrl: imageUrl,
-                buttonText: 'Zmień zdjęcie'
+                buttonText: 'Wybierz nowe zdjęcie'
             });
             this.props.onFileUpload(file, imageUrl);
         };
@@ -32,15 +30,13 @@ export default class Files extends React.Component {
 
     onCancel = () => {
         this.setState({
-            file: '',
-            imagePreviewUrl: '',
             buttonText: 'Wybierz zdjęcie'
         });
         this.props.onFileUpload(null, null);
     };
 
     render() {
-        let {imagePreviewUrl} = this.state;
+        let {imagePreviewUrl} = this.props;
         let imagePreview = null;
         let cancelButton = null;
         if (imagePreviewUrl) {
@@ -57,9 +53,9 @@ export default class Files extends React.Component {
             <div>
                 {imagePreview}
                 <span>
-                  <label htmlFor='img' className="ui icon button" >
+                  <label htmlFor='img' className="semantic ui button">
                     <i className="upload icon"> </i>
-                      {this.state.buttonText}
+                      {this.props.disabled ? 'Kliknij Edytuj, aby wybrać zdjęcie': this.state.buttonText}
                   </label>
                   <input type="file"
                          id='img'
