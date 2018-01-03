@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, Divider, Label } from 'semantic-ui-react'
+import { Image, Divider, Label, Segment } from 'semantic-ui-react'
 
 
 export default class Files extends React.Component {
@@ -35,11 +35,10 @@ export default class Files extends React.Component {
         let imagePreview = null;
         if (imagePreviewUrl) {
         imagePreview = (
-            <div>
-                <Label pointing='below'>Podgląd</Label>
+            <Segment compact>
+                <Label attached='top'>Podgląd</Label>
                 <Image src={imagePreviewUrl} size="small" style={{margin: '2em, 0'}} bordered rounded alt="Podgląd zdjęcia"/>
-                <Divider/>
-            </div>
+            </Segment>
         );
         }
 
