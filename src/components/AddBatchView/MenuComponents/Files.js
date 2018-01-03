@@ -125,30 +125,34 @@ function handleFiles(files) {
 
 class UploadButton extends React.Component {
 
-
     onUpload = (input) => {
-        this.props.onFileUpload(input);
+        console.log('TYP', input.type);
+        if (!input.type.startsWith('image/')){
+            prompt('Wybrany plik nie jest zdjęciem. Wybierz inny plik')
+        } else {
+            this.props.onFileUpload(input);
+        }
     };
 
     render() {
         console.log(this.props.text);
         return (
             <span>
-          <label htmlFor='img' className="ui icon button" >
-            <i className="upload icon"></i>
-              {this.props.text}
-          </label>
-          <input type="file" id='img'
-                 disabled = {this.props.disabled}
-                 style={{display: "none"}}
-                 ref={input => {
-                     this.fileInput = input;
-                 }}
-                 onChange={() => {
-                     this.onUpload(this.fileInput.files[0]);
-                 }}
-          />
-    </span>
+              <label htmlFor='img' className="ui icon button" >
+                <i className="upload icon"></i>
+                  {this.props.text}
+              </label>
+              <input type="file" id='img'
+                     disabled = {this.props.disabled}
+                     style={{display: "none"}}
+                     ref={input => {
+                         this.fileInput = input;
+                     }}
+                     onChange={() => {
+                         this.onUpload(this.fileInput.files[0]);
+                     }}
+              />
+            </span>
         );
     }
 }
@@ -165,7 +169,6 @@ export default class Files extends React.Component {
         console.log('Files render');
         return (
             <div>
-                <p>TBC</p>
                 <UploadButton onFileUpload={this.props.onFileUpload} disabled={this.props.disabled} text={this.props.buttonText}/>
             </div>
         )

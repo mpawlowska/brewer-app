@@ -19,7 +19,7 @@ export default class App extends React.Component {
         }
     }
 
-    componentDidMount() {
+    componentWillMount() {
         const batchesRef = firebase.database().ref();
 
         batchesRef.on('value', snap => {
