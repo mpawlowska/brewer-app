@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, Divider, Label, Segment } from 'semantic-ui-react'
+import { Image, Label, Segment, Button } from 'semantic-ui-react'
 
 
 export default class Files extends React.Component {
@@ -8,38 +8,49 @@ export default class Files extends React.Component {
 
         this.state = {
             file: '',
-            imagePreviewUrl: ''
+            imagePreviewUrl: '',
+            buttonText: 'Wybierz zdjęcie'
         }
     }
 
     handleUploadSuccess = (e) => {
-
         let reader = new FileReader();
         let file = e.target.files[0];
+        let imageUrl = null;
 
         reader.onloadend = () => {
+            imageUrl = reader.result;
             this.setState({
                 file: file,
-                imagePreviewUrl: reader.result
+                imagePreviewUrl: imageUrl,
+                buttonText: 'Zmień zdjęcie'
             });
+            this.props.onFileUpload(file, imageUrl);
         };
         reader.readAsDataURL(file);
-
-        this.props.onFileUpload(file);
     };
 
+    onCancel = () => {
+        this.setState({
+            file: '',
+            imagePreviewUrl: '',
+            buttonText: 'Wybierz zdjęcie'
+        });
+        this.props.onFileUpload(null, null);
+    };
 
     render() {
-
         let {imagePreviewUrl} = this.state;
         let imagePreview = null;
+        let cancelButton = null;
         if (imagePreviewUrl) {
-        imagePreview = (
-            <Segment compact>
-                <Label attached='top'>Podgląd</Label>
-                <Image src={imagePreviewUrl} size="small" style={{margin: '2em, 0'}} bordered rounded alt="Podgląd zdjęcia"/>
-            </Segment>
-        );
+            imagePreview = (
+                <Segment compact>
+                    <Label attached='top'>Podgląd</Label>
+                    <Image src={imagePreviewUrl} size="small" style={{margin: '2em, 0'}} bordered rounded alt="Podgląd zdjęcia"/>
+                </Segment>
+            );
+            cancelButton = <Button onClick={this.onCancel}>Anuluj</Button>
         }
 
         return (
@@ -48,7 +59,7 @@ export default class Files extends React.Component {
                 <span>
                   <label htmlFor='img' className="ui icon button" >
                     <i className="upload icon"> </i>
-                      Wybierz zdjęcie
+                      {this.state.buttonText}
                   </label>
                   <input type="file"
                          id='img'
@@ -62,6 +73,7 @@ export default class Files extends React.Component {
                              this.handleUploadSuccess
                          }
                   />
+                    {cancelButton}
                 </span>
             </div>
         )

@@ -7,7 +7,7 @@ export default class BatchCard extends React.Component {
         super(props);
 
         this.state = {
-            imageUrl: ''
+            imageUrl: '',
         }
     }
 
@@ -16,12 +16,15 @@ export default class BatchCard extends React.Component {
         const imageRef = storage.ref(`images/${this.props.batchKey}`);
         let that = this;
 
-        imageRef.getDownloadURL().then( url => {
-            that.setState({
-                imageUrl: url
-            })
-        });
+        if(imageRef) {
+            imageRef.getDownloadURL().then( url => {
+                that.setState({
+                    imageUrl: url
+                })
+            });
+        }
     }
+
 
     render() {
         const extra = (

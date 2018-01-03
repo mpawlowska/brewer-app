@@ -34,7 +34,8 @@ export default class DetailsMenu extends React.Component {
             ingredients_yeast: '',
             ingredients_hop: '',
             ingredients_addons: '',
-            inputFile: ''
+            inputFile: '',
+            imagePreviewUrl: ''
         };
     }
     /* ------------------------------------------------ */
@@ -93,14 +94,6 @@ export default class DetailsMenu extends React.Component {
         })
     };
 
-    /* ----------- ZAPISANIE W STATE PLIKU - metoda wywoływana w Files -------------- */
-
-    onFileUpload = (inputFile) => {
-        this.setState({
-            inputFile: inputFile
-        })
-    };
-
     /* ---------------------OBSŁUGA DETAILS/PODSUMOWANIE--------------------------- */
 
     // do przechwytywania danych z inputów w Podsumowaniu
@@ -111,6 +104,18 @@ export default class DetailsMenu extends React.Component {
         // przekazuję jeszcze wyżej bo potrzebuję do nowej batchCard - można to jakoś ograniczyć, aby wywoływało się tylko przy zmianie kilku określonych kluczy
         this.props.onDetailsChange(name, value);
     };
+
+    /* ---------------------OBSŁUGA FILES/ZDJĘCIE--------------------------- */
+
+    // zapisanie w state pliku
+
+    onFileUpload = (image, imagePreviewUrl) => {
+        this.setState({
+            inputFile: image,
+            imagePreviewUrl: imagePreviewUrl
+        });
+    };
+
 
     /* --------------------OBSŁUGA RECIPE/RECEPTURA---------------------------- */
 
@@ -278,6 +283,10 @@ export default class DetailsMenu extends React.Component {
         const batchRef = firebase.database().ref(batchToDelete);
         batchRef.remove();
     };
+
+    /* ------------------------------------------------ */
+
+
 
     render() {
         let { activeItem, name, style, date, ibu, srm, alcohol, volume, density, type, ingredients_ferm, ingredients_yeast, ingredients_hop, ingredients_addons, disabled }  = this.state;

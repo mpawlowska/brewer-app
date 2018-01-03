@@ -30,7 +30,8 @@ export default class AddMenu extends React.Component {
             ingredients_yeast: [],
             ingredients_hop: [],
             ingredients_addons: [],
-            inputFile: ''
+            inputFile: '',
+            imagePreviewUrl: ''
         }
     }
 
@@ -145,9 +146,10 @@ export default class AddMenu extends React.Component {
 
     /* ----------- ZAPISANIE W STATE PLIKU - metoda wywoływana w Files -------------- */
 
-    onFileUpload = (inputFile) => {
+    onFileUpload = (inputFile, imagePreviewUrl) => {
         this.setState({
-            inputFile: inputFile
+            inputFile: inputFile,
+            imagePreviewUrl: imagePreviewUrl
         })
     };
 

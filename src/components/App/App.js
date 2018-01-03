@@ -27,13 +27,16 @@ export default class App extends React.Component {
             snap.forEach(childSnapshot => {
                 let batch = childSnapshot.val();
                 batch.key = childSnapshot.key;
+
                 batches.push(batch);
             });
+
             this.setState({
                 batches: batches
             })
         });
     }
+
     /* Dane z Firebase powyżej będą synchronizowały się po każdej zmienie w bazie. Value odpala się nie tylko kiedy za pierwszym razem złapie event listenera, ale też za każdym razem kiedy item jest dodawany do bazy lub usuwany
     */
 

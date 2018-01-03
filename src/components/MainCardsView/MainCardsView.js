@@ -64,7 +64,6 @@ export default class MainCardsView extends React.Component {
     }
 
     render() {
-
         return(
             <Container>
                 <Grid columns={5} stackable>
