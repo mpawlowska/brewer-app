@@ -4,7 +4,7 @@ import {
     Switch,
     Link
 } from 'react-router-dom';
-import { Menu, Segment, Form, Button } from 'semantic-ui-react'
+import { Menu, Segment, Form, Button, Divider } from 'semantic-ui-react'
 import Details from './Details';
 import Recipe from './Recipe';
 import Rating_Comments from './Rating_Comments';
@@ -280,7 +280,7 @@ export default class AddMenu extends React.Component {
                                 )}
                             />
                             <Route
-                                exact path="/newBatch/rating-comments"
+                                exact path="/newBatch/rating_comments"
                                 render={(routeProps) => (
                                     <Rating_Comments {...routeProps} disabled={this.state.disabled} />
                                 )}
@@ -292,8 +292,11 @@ export default class AddMenu extends React.Component {
                                 )}
                             />
                         </Switch>
+
+                        <Divider> </Divider>
+
                         <Link to={this.props.pathToGoBack}>
-                            <Button type='submit' onClick={this.onCloseClick} color="blue" style={{position: 'relative', left: '42em', marginTop: '1em'}}>Zakończ dodawanie warki</Button>
+                            <Button type='submit' onClick={this.onCloseClick} color="blue" style={{position: 'relative', left: '42em', marginTop: '0.5em'}}>Zakończ dodawanie warki</Button>
                         </Link>
                     </Form>
                 </Segment>

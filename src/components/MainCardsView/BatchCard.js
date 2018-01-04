@@ -30,6 +30,19 @@ export default class BatchCard extends React.Component {
         }
     }
 
+    /*
+    TBD
+     storageRef.child("file.png").getDownloadURL().then(onResolve, onReject);
+
+     function onResolve(foundURL) {
+     //stuff
+     }
+
+     function onReject(error) {
+     console.log(error.code);
+     }
+     */
+
     componentWillReceiveProps(nextProps) {
         if(nextProps.imageUrl) {
             this.setState({
