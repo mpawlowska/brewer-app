@@ -7,7 +7,8 @@ export default class BatchCard extends React.Component {
         super(props);
 
         this.state = {
-            imageUrl: '',
+            imageUrlFromBase: '',
+            imageUrlFromInput: ''
         }
     }
 
@@ -19,24 +20,33 @@ export default class BatchCard extends React.Component {
         if(imageRef) {
             imageRef.getDownloadURL().then( url => {
                 that.setState({
-                    imageUrl: url
+                    imageUrlFromBase: url
                 })
             });
         }
     }
 
+    componentWillReceiveProps(nextProps) {
+        if(nextProps.imageUrl) {
+            this.setState({
+                imageUrlFromInput: nextProps.imageUrl
+            })
+        } else {
+            this.setState({
+                imageUrlFromInput: ''
+            })
+        }
+    }
+
 
     render() {
-        const extra = (
-            <span>
-                <Icon name='calendar' />
-                <span>{this.props.date}</span>
-            </span>
-        );
+        let imageUrl;
+        { this.state.imageUrlFromInput ? imageUrl = this.state.imageUrlFromInput : imageUrl = this.state.imageUrlFromBase}
+
         return(
 
             <Card color="green" style={{width: '14em'}}>
-                <Image src={this.state.imageUrl} alt="Zdjęcie warki"/>
+                {imageUrl && <Image src={imageUrl} alt="Zdjęcie warki"/>}
                 <Card.Content>
                     <Card.Header textAlign="center">
                         {this.props.name}
@@ -100,7 +110,10 @@ export default class BatchCard extends React.Component {
                     </Table>
                 </Card.Content>
                 <Card.Content extra>
-                    {extra}
+                    <span>
+                        <Icon name='calendar' />
+                        <span>{this.props.date}</span>
+                    </span>
                 </Card.Content>
             </Card>
         )

@@ -110,10 +110,12 @@ export default class DetailsMenu extends React.Component {
     // zapisanie w state pliku
 
     onFileUpload = (image, imagePreviewUrl) => {
+        this.props.onImageChange(imagePreviewUrl);
         this.setState({
             inputFile: image,
             imagePreviewUrl: imagePreviewUrl
         });
+
     };
 
 
@@ -352,6 +354,9 @@ export default class DetailsMenu extends React.Component {
                                     )}
                             />
                         </Switch>
+
+                        /* ---------------- */
+
                         <Divider> </Divider>
                         <Link to={this.props.pathToGoBack}>
                             <Button type='text' color="blue" style={{position: 'relative', left: '42em', marginTop: '1em'}} onClick={this.onEditClick}>{this.state.buttonText}</Button>

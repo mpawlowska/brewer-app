@@ -17,6 +17,7 @@ export default class DetailsForm extends React.Component {
             density: '',
             alcohol: '',
             type: '',
+            imageUrl: ''
             // ingredients_ferm: '',
             // ingredients_yeast: '',
             // ingredients_hop: '',
@@ -68,12 +69,18 @@ export default class DetailsForm extends React.Component {
         })
     };
 
+    handleImageChange = (imageUrl) => {
+        this.setState({
+            imageUrl: imageUrl
+        })
+    };
+
     render() {
         let { name, style, ibu, alcohol, density, date } = this.state;
         return (
             <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-around', height: '90%', width: '90%'}}>
-                <BatchCard name={name} style={style} ibu={ibu} alcohol={alcohol} density={density} date={date} batchKey={this.props.batch.key} />
-                <DetailsMenu onDetailsChange={this.handleDetailsChange} batch={this.props.batch} pathToGoBack={this.props.pathToGoBack} />
+                <BatchCard name={name} style={style} ibu={ibu} alcohol={alcohol} density={density} date={date} batchKey={this.props.batch.key} imageUrl={this.state.imageUrl}/>
+                <DetailsMenu onDetailsChange={this.handleDetailsChange} onImageChange={this.handleImageChange} batch={this.props.batch} pathToGoBack={this.props.pathToGoBack} />
             </div>
 
         )
