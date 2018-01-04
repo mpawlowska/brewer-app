@@ -16,7 +16,8 @@ export default class AddForm extends React.Component {
             srm: '',
             density: '',
             alcohol: '',
-            type: ''
+            type: '',
+            imageUrl: ''
         }
     }
 
@@ -27,12 +28,18 @@ export default class AddForm extends React.Component {
         })
     };
 
+    handleImageChange = (imageUrl) => {
+        this.setState({
+            imageUrl: imageUrl
+        })
+    };
+
     render() {
         let { name, style, ibu, alcohol, density, date } = this.state;
         return (
             <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-around', height: '90%', width: '90%'}}>
-                <NewBatchCard name={name} style={style} ibu={ibu} alcohol={alcohol} density={density} date={date}/>
-                <AddMenu onDetailsChange={this.handleDetailsChange} pathToGoBack={this.props.pathToGoBack}/>
+                <NewBatchCard name={name} style={style} ibu={ibu} alcohol={alcohol} density={density} date={date} imageUrl={this.state.imageUrl}/>
+                <AddMenu onDetailsChange={this.handleDetailsChange} onImageChange={this.handleImageChange} pathToGoBack={this.props.pathToGoBack}/>
             </div>
 
         )

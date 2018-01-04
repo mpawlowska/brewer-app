@@ -9,7 +9,7 @@ export default class Files extends React.Component {
         super(props);
 
         this.state = {
-            buttonText: 'Wybierz zdjęcie'
+            buttonText: 'Wybierz zdjęcie',
         }
     }
 
@@ -21,12 +21,13 @@ export default class Files extends React.Component {
         reader.onloadend = () => {
             imageUrl = reader.result;
             this.setState({
-                buttonText: 'Wybierz nowe zdjęcie'
+                buttonText: 'Wybierz nowe zdjęcie',
             });
             this.props.onFileUpload(file, imageUrl);
         };
         reader.readAsDataURL(file);
     };
+
 
     onCancel = () => {
         this.setState({

@@ -144,9 +144,12 @@ export default class AddMenu extends React.Component {
         this.updateIngredients(category, ingredients);
     };
 
-    /* ----------- ZAPISANIE W STATE PLIKU - metoda wywoływana w Files -------------- */
+    /* ---------------------OBSŁUGA FILES/ZDJĘCIE--------------------------- */
 
     onFileUpload = (inputFile, imagePreviewUrl) => {
+        // najpierw przekazuję wyżej url, aby image mógł sie wyświetlić w BatchCard
+        this.props.onImageChange(imagePreviewUrl);
+
         this.setState({
             inputFile: inputFile,
             imagePreviewUrl: imagePreviewUrl
@@ -220,6 +223,7 @@ export default class AddMenu extends React.Component {
         });
     };
 
+    /* --------------- RENDER ----------------------- */
 
     render() {
         let { activeItem, name, style, date, ibu, srm, alcohol, volume, density, type, ingredients_ferm, ingredients_yeast, ingredients_hop, ingredients_addons, disabled }  = this.state;
@@ -268,7 +272,7 @@ export default class AddMenu extends React.Component {
                             <Route
                                 exact path="/newbatch/files"
                                 render={(routeProps) => (
-                                    <Files {...routeProps} disabled={disabled} onFileUpload={this.onFileUpload} buttonText={this.state.inputFile ? 'Zmień zdjęcie' : 'Dodaj zdjęcie'}/>
+                                    <Files {...routeProps} disabled={disabled} onFileUpload={this.onFileUpload} imagePreviewUrl={this.state.imagePreviewUrl} />
                                 )}
                             />
                         </Switch>

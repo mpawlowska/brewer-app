@@ -110,14 +110,14 @@ export default class DetailsMenu extends React.Component {
     // zapisanie w state pliku
 
     onFileUpload = (image, imagePreviewUrl) => {
+        // najpierw przekazuję wyżej url, aby image mógł sie wyświetlić w BatchCard
         this.props.onImageChange(imagePreviewUrl);
+
         this.setState({
             inputFile: image,
             imagePreviewUrl: imagePreviewUrl
         });
-
     };
-
 
     /* --------------------OBSŁUGA RECIPE/RECEPTURA---------------------------- */
 
@@ -199,7 +199,7 @@ export default class DetailsMenu extends React.Component {
         this.updateIngredients(category, ingredients);
     };
 
-    /* ---------------OBSŁUGA BUTTONA----------------- */
+    /* ------- OBSŁUGA BUTTONA 'Zapisz i zakończ edycję' - dodanie nowej warki do bazy i pliku do storage ------ */
 
     // do uaktywnienia pól i buttonów po kliknięciu w button Edytuj
     // do zapisania zmian / zakończenia edycji i powrotu do poprzdniego widoku po kliknięciu w button 'Zapisz i zakończ edycję') -> dodanie zmian w danej warce do Firebase
@@ -279,16 +279,14 @@ export default class DetailsMenu extends React.Component {
         }
     };
 
-        /* ------------------------------------------------ */
+    /* ------------------------------------------------ */
 
     onDeleteBatchClick = (batchToDelete) => {
         const batchRef = firebase.database().ref(batchToDelete);
         batchRef.remove();
     };
 
-    /* ------------------------------------------------ */
-
-
+    /* --------------- RENDER ----------------------- */
 
     render() {
         let { activeItem, name, style, date, ibu, srm, alcohol, volume, density, type, ingredients_ferm, ingredients_yeast, ingredients_hop, ingredients_addons, disabled }  = this.state;
@@ -350,12 +348,10 @@ export default class DetailsMenu extends React.Component {
                             <Route
                                 exact path="/batchdetails/:batchKey/files"
                                 render={(routeProps) => (
-                                    <Files {...routeProps} disabled={this.state.disabled} onFileUpload={this.onFileUpload} file={this.state.inputFile} imagePreviewUrl={this.state.imagePreviewUrl}/>
+                                    <Files {...routeProps} disabled={this.state.disabled} onFileUpload={this.onFileUpload} imagePreviewUrl={this.state.imagePreviewUrl}/>
                                     )}
                             />
                         </Switch>
-
-                        /* ---------------- */
 
                         <Divider> </Divider>
                         <Link to={this.props.pathToGoBack}>

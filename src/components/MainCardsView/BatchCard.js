@@ -38,13 +38,12 @@ export default class BatchCard extends React.Component {
         }
     }
 
-
     render() {
+
         let imageUrl;
         { this.state.imageUrlFromInput ? imageUrl = this.state.imageUrlFromInput : imageUrl = this.state.imageUrlFromBase}
 
         return(
-
             <Card color="green" style={{width: '14em'}}>
                 {imageUrl && <Image src={imageUrl} alt="Zdjęcie warki"/>}
                 <Card.Content>
