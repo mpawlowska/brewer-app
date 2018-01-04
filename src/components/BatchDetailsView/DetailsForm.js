@@ -8,21 +8,15 @@ export default class DetailsForm extends React.Component {
         super(props);
 
         this.state = {
+            isImageInBase: '',
             name: '',
             style: '',
             date: '',
-            volume: '',
             ibu: '',
-            srm: '',
             density: '',
             alcohol: '',
-            type: '',
-            isImageInBase: '',
             imageUrl: ''
-            // ingredients_ferm: '',
-            // ingredients_yeast: '',
-            // ingredients_hop: '',
-            // ingredients_addons: ''
+
         }
     }
 

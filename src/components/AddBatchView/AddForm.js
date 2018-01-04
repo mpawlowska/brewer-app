@@ -7,17 +7,15 @@ export default class AddForm extends React.Component {
     constructor(props) {
         super(props);
 
+    // w state dane potrzebne do wyświetlania NewBatchCard
         this.state = {
             isImageInBase: false,
             name: '',
             style: '',
             date: '',
-            volume: '',
             ibu: '',
-            srm: '',
             density: '',
             alcohol: '',
-            type: '',
             imageUrl: ''
         }
     }
