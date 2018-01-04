@@ -13,16 +13,20 @@ export default class BatchCard extends React.Component {
     }
 
     componentWillMount() {
-        const storage = firebase.storage();
-        const imageRef = storage.ref(`images/${this.props.batchKey}`);
-        let that = this;
+        if(this.props.isImageInBase === 'true'){
+            console.log('porównanie');
+            const storage = firebase.storage();
+            const imageRef = storage.ref(`images/${this.props.batchKey}`);
+            let that = this;
+            console.log(imageRef);
 
-        if(imageRef) {
-            imageRef.getDownloadURL().then( url => {
-                that.setState({
-                    imageUrlFromBase: url
-                })
-            });
+            if(imageRef) {
+                imageRef.getDownloadURL().then( url => {
+                    that.setState({
+                        imageUrlFromBase: url
+                    })
+                });
+            }
         }
     }
 

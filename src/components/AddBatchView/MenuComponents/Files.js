@@ -23,7 +23,7 @@ export default class Files extends React.Component {
             this.setState({
                 buttonText: 'Wybierz nowe zdjęcie',
             });
-            this.props.onFileUpload(file, imageUrl);
+            this.props.onFileUpload(file, imageUrl, "true");
         };
         reader.readAsDataURL(file);
     };
@@ -33,7 +33,7 @@ export default class Files extends React.Component {
         this.setState({
             buttonText: 'Wybierz zdjęcie'
         });
-        this.props.onFileUpload(null, null);
+        this.props.onFileUpload(null, null, "false");
     };
 
     render() {

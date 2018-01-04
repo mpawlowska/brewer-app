@@ -199,6 +199,10 @@ export default class DetailsMenu extends React.Component {
         this.updateIngredients(category, ingredients);
     };
 
+    /* --------------------OBSŁUGA RATING_COMMENTS/Ocena i uwagi ---------------------------- */
+
+
+
     /* ------- OBSŁUGA BUTTONA 'Zapisz i zakończ edycję' - dodanie nowej warki do bazy i pliku do storage ------ */
 
     // do uaktywnienia pól i buttonów po kliknięciu w button Edytuj
@@ -266,16 +270,20 @@ export default class DetailsMenu extends React.Component {
 
             /* ----------- dodanie pliku do storage -------------- */
 
-            // tworzę storage reference
-            const storageRef = firebase.storage().ref();
+            if(this.state.inputFile) {
+                // tworzę storage reference
+                const storageRef = firebase.storage().ref();
 
-            // pobieram plik zapisany wcześniej w state
-            let file = this.state.inputFile;
+                // pobieram plik zapisany wcześniej w state
+                let file = this.state.inputFile;
 
-            // zapisuję plik w storage --> nazwa pliku to key warki
-            file && storageRef.child(`images/${batchKey}`).put(file).then(function(snapshot) {
-                console.log('Uploaded file!');
-            });
+                // zapisuję plik w storage --> nazwa pliku to key warki
+                file && storageRef.child(`images/${batchKey}`).put(file).then(function(snapshot) {
+                    console.log('Uploaded file!');
+                });
+
+                this.props.onImageAddToBase();
+            }
         }
     };
 
@@ -341,7 +349,12 @@ export default class DetailsMenu extends React.Component {
 
                             /* -------- widok Oceny i Komentarzy -------- */
 
-                            {/*<Route exact path="/batchdetails/:batchKey/rating-comments" component={ Rating_Comments }></Route>*/}
+                            <Route
+                                exact path="/batchdetails/:batchKey/rating-comments"
+                                render={(routeProps) => (
+                                  <Rating_Comments {...routeProps} disabled={this.state.disabled} />
+                                )}
+                            />
 
                             /* -------- widok Załączników -------- */
 

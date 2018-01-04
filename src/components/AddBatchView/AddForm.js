@@ -8,6 +8,7 @@ export default class AddForm extends React.Component {
         super(props);
 
         this.state = {
+            isImageInBase: false,
             name: '',
             style: '',
             date: '',
@@ -34,16 +35,21 @@ export default class AddForm extends React.Component {
         })
     };
 
+    handleImageAddToBase = () => {
+        this.setState({
+            isImageInBase: true
+        })
+    };
+
+
+
     render() {
         let { name, style, ibu, alcohol, density, date } = this.state;
         return (
             <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-around', height: '90%', width: '90%'}}>
-                <NewBatchCard name={name} style={style} ibu={ibu} alcohol={alcohol} density={density} date={date} imageUrl={this.state.imageUrl}/>
-                <AddMenu onDetailsChange={this.handleDetailsChange} onImageChange={this.handleImageChange} pathToGoBack={this.props.pathToGoBack}/>
+                <NewBatchCard name={name} style={style} ibu={ibu} alcohol={alcohol} density={density} date={date} imageUrl={this.state.imageUrl} isImageinBase={this.state.isImageInBase}/>
+                <AddMenu onDetailsChange={this.handleDetailsChange} onImageChange={this.handleImageChange} onImageAddToBase={this.handleImageAddToBase} pathToGoBack={this.props.pathToGoBack}/>
             </div>
-
         )
     }
 }
-
-

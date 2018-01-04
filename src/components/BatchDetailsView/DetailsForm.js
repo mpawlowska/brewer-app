@@ -17,6 +17,7 @@ export default class DetailsForm extends React.Component {
             density: '',
             alcohol: '',
             type: '',
+            isImageInBase: '',
             imageUrl: ''
             // ingredients_ferm: '',
             // ingredients_yeast: '',
@@ -37,6 +38,7 @@ export default class DetailsForm extends React.Component {
             density: this.props.batch.details.density,
             alcohol: this.props.batch.details.alcohol,
             type: this.props.batch.details.type,
+            isImageInBase: this.props.batch.details.hasImage,
         })
     }
 
@@ -75,12 +77,18 @@ export default class DetailsForm extends React.Component {
         })
     };
 
+    handleImageAddToBase = () => {
+        this.setState({
+            isImageInBase: 'true'
+        })
+    };
+
     render() {
         let { name, style, ibu, alcohol, density, date } = this.state;
         return (
             <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-around', height: '90%', width: '90%'}}>
-                <BatchCard name={name} style={style} ibu={ibu} alcohol={alcohol} density={density} date={date} batchKey={this.props.batch.key} imageUrl={this.state.imageUrl}/>
-                <DetailsMenu onDetailsChange={this.handleDetailsChange} onImageChange={this.handleImageChange} batch={this.props.batch} pathToGoBack={this.props.pathToGoBack} />
+                <BatchCard name={name} style={style} ibu={ibu} alcohol={alcohol} density={density} date={date} batchKey={this.props.batch.key} isImageInBase={this.state.isImageInBase} imageUrl={this.state.imageUrl}/>
+                <DetailsMenu onDetailsChange={this.handleDetailsChange} onImageChange={this.handleImageChange} batch={this.props.batch} onImageAddToBase={this.handleImageAddToBase} pathToGoBack={this.props.pathToGoBack} />
             </div>
 
         )

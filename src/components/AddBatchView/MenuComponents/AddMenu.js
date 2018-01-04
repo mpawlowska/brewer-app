@@ -17,6 +17,7 @@ export default class AddMenu extends React.Component {
         this.state = {
             activeItem: 'details',
             disabled: false,
+            hasImage: "false",
             name: '',
             style: '',
             date: '',
@@ -146,13 +147,14 @@ export default class AddMenu extends React.Component {
 
     /* ---------------------OBSŁUGA FILES/ZDJĘCIE--------------------------- */
 
-    onFileUpload = (inputFile, imagePreviewUrl) => {
+    onFileUpload = (inputFile, imagePreviewUrl, boolean) => {
         // najpierw przekazuję wyżej url, aby image mógł sie wyświetlić w BatchCard
         this.props.onImageChange(imagePreviewUrl);
 
         this.setState({
             inputFile: inputFile,
-            imagePreviewUrl: imagePreviewUrl
+            imagePreviewUrl: imagePreviewUrl,
+            hasImage: boolean
         })
     };
 
@@ -162,7 +164,7 @@ export default class AddMenu extends React.Component {
 
         // tworzę referencję do bazy i potrzebne mi zmienne
         const batchesRef = firebase.database().ref();
-        let { name, style, date, ibu, srm, alcohol, volume, density, type } = this.state;
+        let { hasImage, name, style, date, ibu, srm, alcohol, volume, density, type } = this.state;
         let ingredients_ferm, ingredients_yeast, ingredients_hop, ingredients_addons;
 
         // Ponieważ w Firebase nie zapisują się puste tablice, to w wypadku kiedy nia ma któryś składników dodanych w Recipe, to zamieniam pustą tablicę na pustego stringa, który zapisze się w Firebase.
@@ -189,6 +191,7 @@ export default class AddMenu extends React.Component {
 
         const newBatch = {
             "details": {
+                "hasImage": hasImage,
                 "name": name,
                 "style": style,
                 "date": date,
@@ -206,21 +209,29 @@ export default class AddMenu extends React.Component {
                 "addons": ingredients_addons
             },
         };
-        // wrzucam warkę do bazy, ale też zapisuję klucz, bo będzie mi potrzebny do zapisania w storage zdjęcia pod odpowiednią nazwą
         let newBatchKey = batchesRef.push(newBatch).key;
+
+        // wrzucam warkę do bazy, ale też zapisuję klucz, bo będzie mi potrzebny do zapisania w storage zdjęcia pod odpowiednią nazwą
+
 
         /* ----------- dodanie pliku do storage -------------- */
 
-        // tworzę storage reference
-        const storageRef = firebase.storage().ref();
+        if(this.state.inputFile) {
+            // tworzę storage reference
+            const storageRef = firebase.storage().ref();
 
-        // pobieram plik zapisany wcześniej w state
-        let file = this.state.inputFile;
+            // pobieram plik zapisany wcześniej w state
+            let file = this.state.inputFile;
 
-        // zapisuję plik w storage --> nazwa pliku to key warki
-        file && storageRef.child(`images/${newBatchKey}`).put(file).then(function(snapshot) {
-            console.log('Uploaded file!');
-        });
+            // zapisuję plik w storage --> nazwa pliku to key warki
+            file && storageRef.child(`images/${newBatchKey}`).put(file).then(function (snapshot) {
+                console.log('Uploaded file!');
+            });
+
+            this.props.onImageAddToBase()
+        }
+
+
     };
 
     /* --------------- RENDER ----------------------- */
@@ -268,7 +279,12 @@ export default class AddMenu extends React.Component {
                                     <Recipe {...routeProps} disabled={disabled} componentUpdate = {this.handleRecipeComponentUpdate} ingredients_ferm={ingredients_ferm} ingredients_yeast={ingredients_yeast} ingredients_hop={ingredients_hop} ingredients_addons={ingredients_addons} componentAdd = {this.handleRecipeComponentAddIngr} componentDelete={this.handleRecipeComponentDeleteIngr}/>
                                 )}
                             />
-                            <Route exact path="/newbatch/rating-comments" disabled={disabled} component={ Rating_Comments }></Route>
+                            <Route
+                                exact path="/newBatch/rating-comments"
+                                render={(routeProps) => (
+                                    <Rating_Comments {...routeProps} disabled={this.state.disabled} />
+                                )}
+                            />
                             <Route
                                 exact path="/newbatch/files"
                                 render={(routeProps) => (
