@@ -31,6 +31,12 @@ export default class AddMenu extends React.Component {
             ingredients_yeast: [],
             ingredients_hop: [],
             ingredients_addons: [],
+            rateGeneral: '',
+            rateStyle: '',
+            rateAroma: '',
+            rateLook: '',
+            rateFlavour : '',
+            rateBitterness: '',
             inputFile: '',
             imagePreviewUrl: ''
         }
@@ -38,17 +44,23 @@ export default class AddMenu extends React.Component {
 
     // do zmiany aktywnej zakładki w menu
     handleItemClick = (e, { name }) => {
-        console.log(name);
         this.setState({activeItem: name})
     };
 
     // do przechwytywania danych z inputów w Podsumowaniu
     handleDetailsComponentUpdate = (name, value) => {
         this.setState({
-            [name]: value,
+            [name]: value
         });
     // przekazuję jeszcze wyżej bo potrzebuję do nowej batchCard - można to jakoś ograniczyć, aby wywoływało się tylko przy zmianie kilku określonych kluczy
         this.props.onDetailsChange(name, value);
+    };
+
+    // do przechwytywania danych z inputów w Ocenie
+    handleRateChange = (name, rate) => {
+        this.setState({
+            [name]: rate
+        })
     };
 
     // do przechwytywania danych z inputów w Recepturze - najpierw tworzę funkcje uniwersalne, które będą określały, który rodzaj składnika powinien być poddany zmianie
@@ -237,7 +249,7 @@ export default class AddMenu extends React.Component {
     /* --------------- RENDER ----------------------- */
 
     render() {
-        let { activeItem, name, style, date, ibu, srm, alcohol, volume, density, type, ingredients_ferm, ingredients_yeast, ingredients_hop, ingredients_addons, disabled }  = this.state;
+        let { activeItem, name, style, date, ibu, srm, alcohol, volume, density, type, ingredients_ferm, ingredients_yeast, ingredients_hop, ingredients_addons, disabled, rateGeneral, rateAroma, rateBitterness, rateFlavour, rateLook, rateStyle }  = this.state;
 
         return (
             <div style={{height: '100%', width: '75%'}}>
@@ -282,7 +294,7 @@ export default class AddMenu extends React.Component {
                             <Route
                                 exact path="/newBatch/rating_comments"
                                 render={(routeProps) => (
-                                    <Rating_Comments {...routeProps} disabled={this.state.disabled} />
+                                    <Rating_Comments {...routeProps} disabled={this.state.disabled} handleRate={this.handleRateChange} rateGeneral={rateGeneral} rateAroma={rateAroma} rateBitterness={rateBitterness} rateFlavour={rateFlavour} rateLook={rateLook} rateStyle={rateStyle}/>
                                 )}
                             />
                             <Route

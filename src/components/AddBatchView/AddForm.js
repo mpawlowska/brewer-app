@@ -9,7 +9,7 @@ export default class AddForm extends React.Component {
 
     // w state dane potrzebne do wyświetlania NewBatchCard
         this.state = {
-            isImageInBase: false,
+            isImageInBase: 'false',
             name: '',
             style: '',
             date: '',
@@ -20,7 +20,6 @@ export default class AddForm extends React.Component {
         }
     }
 
-    // tu można ograniczyć powyżej w state i w poniższej metodzie tylko do tych kluczy, które są istotne do przekazania do NewBatchCard
     handleDetailsChange = (name, value) => {
         this.setState({
             [name]: value
@@ -35,10 +34,9 @@ export default class AddForm extends React.Component {
 
     handleImageAddToBase = () => {
         this.setState({
-            isImageInBase: true
+            isImageInBase: 'true'
         })
     };
-
 
 
     render() {

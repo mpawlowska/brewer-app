@@ -16,49 +16,24 @@ export default class DetailsForm extends React.Component {
             density: '',
             alcohol: '',
             imageUrl: ''
-
         }
     }
 
+    // ustawiam w state wartości jakie są w props.batch, która przyszła z bazy
     componentWillMount() {
-        // let {name, style, ibu, alcohol, density, date, srm, volume, type} = this.props.batch.details;
+        let {name, style, ibu, alcohol, density, date, hasImage} = this.props.batch.details;
         this.setState({
-            name: this.props.batch.details.name,
-            style: this.props.batch.details.style,
-            date: this.props.batch.details.date,
-            volume: this.props.batch.details.volume,
-            ibu: this.props.batch.details.ibu,
-            srm: this.props.batch.details.srm,
-            density: this.props.batch.details.density,
-            alcohol: this.props.batch.details.alcohol,
-            type: this.props.batch.details.type,
-            isImageInBase: this.props.batch.details.hasImage,
+            isImageInBase: hasImage,
+            name: name,
+            style: style,
+            date: date,
+            ibu: ibu,
+            density: density,
+            alcohol: alcohol
         })
     }
 
-    // na początek - do podglądu - ustawiam w state wartości jakie są w props.batch, która przyszła z bazy
-    // componentWillMount() {
-    //     let { name, style, ibu, alcohol, density, date, srm, volume, type } = this.props.batch.details;
-    //     // let {fermenting_components : ingredients_ferm, yeast : ingredients_yeast, hops: ingredients_hop, addons : ingredients_addons } = this.props.batch.recipe;
-    //
-    //     this.setState({
-    //         name: name,
-    //         style: style,
-    //         date: date,
-    //         volume: volume,
-    //         ibu: ibu,
-    //         srm: srm,
-    //         density: density,
-    //         alcohol: alcohol,
-    //         type: type,
-    //         ingredients_ferm: ingredients_ferm,
-    //         ingredients_yeast: ingredients_yeast,
-    //         ingredients_hop: ingredients_hop,
-    //         ingredients_addons: ingredients_addons
-    //     })
-    // }
-
-    // jeśli user zmieni wartości inputów, zapisuję je w state i przekazuję do odpowiedniego renderowania w dziecku
+    // jeśli user zmieni wartości inputów i/lub zdjęcie, zapisuję je w state i przekazuję propsami do odpowiedniego renderowania BatchCard
     handleDetailsChange = (name, value) => {
         this.setState({
             [name]: value
@@ -78,13 +53,12 @@ export default class DetailsForm extends React.Component {
     };
 
     render() {
-        let { name, style, ibu, alcohol, density, date } = this.state;
+        let { name, style, ibu, alcohol, density, date, isImageInBase, imageUrl } = this.state;
         return (
             <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-around', height: '90%', width: '90%'}}>
-                <BatchCard name={name} style={style} ibu={ibu} alcohol={alcohol} density={density} date={date} batchKey={this.props.batch.key} isImageInBase={this.state.isImageInBase} imageUrl={this.state.imageUrl}/>
+                <BatchCard name={name} style={style} ibu={ibu} alcohol={alcohol} density={density} date={date} batchKey={this.props.batch.key} isImageInBase={isImageInBase} imageUrl={imageUrl}/>
                 <DetailsMenu onDetailsChange={this.handleDetailsChange} onImageChange={this.handleImageChange} batch={this.props.batch} onImageAddToBase={this.handleImageAddToBase} pathToGoBack={this.props.pathToGoBack} />
             </div>
-
         )
     }
 }
