@@ -14,6 +14,7 @@ export default class BatchDetailsView extends React.Component {
     }
 
     componentWillMount() {
+        console.log(this.props.batches);
         const batches = this.props.batches;
         if(batches) {
             const batchKey = this.props.match.params.batchKey;

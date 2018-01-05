@@ -75,7 +75,7 @@ export default class App extends React.Component {
                     </Switch>
                     <Route path='/newbatch'
                            render = {(routeProps) => (
-                               <AddBatchView {...routeProps} view="add" pathToGoBack={this.state.view} />
+                               <BatchDetailsView {...routeProps} view="add" pathToGoBack={this.state.view} />
                            )}
                     />
                     <Route path='/batchdetails/:batchKey'

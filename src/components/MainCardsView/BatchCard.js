@@ -1,5 +1,5 @@
-import React from 'react';
-import { Card, Icon, Image, Table, Header } from 'semantic-ui-react';
+import React from "react";
+import { Card, Icon, Image, Table, Header } from "semantic-ui-react";
 
 
 export default class BatchCard extends React.Component {
@@ -7,18 +7,16 @@ export default class BatchCard extends React.Component {
         super(props);
 
         this.state = {
-            imageUrlFromBase: '',
-            imageUrlFromInput: ''
+            imageUrlFromBase: "",
+            imageUrlFromInput: ""
         }
     }
 
     componentWillMount() {
-        if(this.props.isImageInBase === 'true'){
-            console.log('porównanie');
+        if(this.props.isImageInBase === "true") {
             const storage = firebase.storage();
             const imageRef = storage.ref(`images/${this.props.batchKey}`);
             let that = this;
-            console.log(imageRef);
 
             if(imageRef) {
                 imageRef.getDownloadURL().then( url => {
@@ -50,7 +48,7 @@ export default class BatchCard extends React.Component {
             })
         } else {
             this.setState({
-                imageUrlFromInput: ''
+                imageUrlFromInput: ""
             })
         }
     }
@@ -61,31 +59,31 @@ export default class BatchCard extends React.Component {
         { this.state.imageUrlFromInput ? imageUrl = this.state.imageUrlFromInput : imageUrl = this.state.imageUrlFromBase}
 
         return(
-            <Card color="green" style={{width: '14em'}}>
+            <Card color="green" style={{width: "14em"}}>
                 {imageUrl && <Image src={imageUrl} alt="Zdjęcie warki"/>}
                 <Card.Content>
                     <Card.Header textAlign="center">
                         {this.props.name}
                     </Card.Header>
-                    <Table basic='very'>
+                    <Table basic="very">
                         <Table.Body>
 
                             <Table.Row>
                                 <Table.Cell>
-                                    <Header as='h4'>
+                                    <Header as="h4">
                                         <Header.Content>
                                             Styl
                                         </Header.Content>
                                     </Header>
                                 </Table.Cell>
-                                <Table.Cell style={{fontWeight: 'bold'}}>
+                                <Table.Cell style={{fontWeight: "bold"}}>
                                     {this.props.style}
                                 </Table.Cell>
                             </Table.Row>
 
                             <Table.Row>
                                 <Table.Cell>
-                                    <Header as='h5'>
+                                    <Header as="h5">
                                         <Header.Content>
                                             IBU
                                         </Header.Content>
@@ -98,7 +96,7 @@ export default class BatchCard extends React.Component {
 
                             <Table.Row>
                                 <Table.Cell>
-                                    <Header as='h5'>
+                                    <Header as="h5">
                                         <Header.Content>
                                             Alkohol
                                         </Header.Content>
@@ -111,7 +109,7 @@ export default class BatchCard extends React.Component {
 
                             <Table.Row>
                                 <Table.Cell>
-                                    <Header as='h5'>
+                                    <Header as="h5">
                                         <Header.Content>
                                             Gęstość
                                         </Header.Content>
@@ -127,7 +125,7 @@ export default class BatchCard extends React.Component {
                 </Card.Content>
                 <Card.Content extra>
                     <span>
-                        <Icon name='calendar' />
+                        <Icon name="calendar" />
                         <span>{this.props.date}</span>
                     </span>
                 </Card.Content>

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card, Icon, Image, Table, Header } from 'semantic-ui-react'
 
-export default class BatchCard extends React.Component {
+export default class NewBatchCard extends React.Component {
     constructor(props) {
         super(props);
 

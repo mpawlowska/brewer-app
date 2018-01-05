@@ -10,7 +10,6 @@ import Recipe from "../../AddBatchView/MenuComponents/Recipe";
 import Rating_Comments from "../../AddBatchView/MenuComponents/Rating_Comments";
 import Files from "../../AddBatchView/MenuComponents/Files";
 
-
 export default class DetailsMenu extends React.Component {
     constructor(props) {
         super(props);
@@ -450,21 +449,25 @@ export default class DetailsMenu extends React.Component {
     /* --------------- RENDER ----------------------- */
 
     render() {
-        let { activeItem, name, style, date, ibu, srm, alcohol, volume, density, type, ingredients_ferm, ingredients_yeast, ingredients_hop, ingredients_addons, disabled, rateGeneral, rateAroma, rateBitterness, rateflavor, rateLook, rateStyle, commentAdditional, commentAroma, commentBitterness, commentFlavor, commentGeneral, commentLook, commentStyle }  = this.state;
 
-        const deleteBatchButton =
-            <Button type="text" color="blue" style={{position: "relative", left: "45em", marginTop: "1em"}} onClick={this.togglePopup}>Usuń warkę</Button>;
+        let { activeItem, name, style, date, ibu, srm, alcohol, volume, density, type, ingredients_ferm, ingredients_yeast, ingredients_hop, ingredients_addons, disabled, rateGeneral, rateAroma, rateBitterness, rateflavor, rateLook, rateStyle, commentAdditional, commentAroma, commentBitterness, commentFlavor, commentGeneral, commentLook, commentStyle, buttonText, isPopupOpen }  = this.state;
 
-        const view = this.props;
-        let buttons;
+        const { view } = this.props;
+        let link, path, buttons;
 
         if(view === "add") {
+            link = "/newbatch";
+            path = "/newbatch";
             buttons = (
                 <Link to={this.props.pathToGoBack}>
                     <Button type="submit" onClick={this.onCloseClick} color="blue" style={{position: "relative", left: "42em", marginTop: "0.5em"}}>Zakończ dodawanie warki</Button>
                 </Link>
             )
         } else {
+            link = `/batchdetails/${this.props.batch.key}`;
+            path = "/batchdetails/:batchKey";
+            const deleteBatchButton =
+                <Button type="text" color="blue" style={{position: "relative", left: "45em", marginTop: "1em"}} onClick={this.togglePopup}>Usuń warkę</Button>;
             buttons = (
                 <div>
                     <Link to={this.props.pathToGoBack}>
@@ -476,7 +479,7 @@ export default class DetailsMenu extends React.Component {
                         position="top right"
                         flowing
                         open={this.state.isPopupOpen}
-                        >
+                    >
                         <Popup.Header>
                             Czy na pewno chcesz usunąć warkę?
                         </Popup.Header>
@@ -491,26 +494,25 @@ export default class DetailsMenu extends React.Component {
             )
         }
 
-
         return (
             <div style={{height: "100%", width: "75%"}}>
                 <Menu attached="top" pointing secondary>
-                    <Link to= {`/batchdetails/${this.props.batch.key}`}>
+                    <Link to= {`${link}`}>
                         <Menu.Item name="details" active={activeItem === "details"} onClick={this.handleItemClick}>
                             Podsumowanie
                         </Menu.Item>
                     </Link>
-                    <Link to= {`/batchdetails/${this.props.batch.key}/recipe`}>
+                    <Link to= {`${link}/recipe`}>
                         <Menu.Item name="recipe" active={activeItem === "recipe"} onClick={this.handleItemClick}>
                             Receptura
                         </Menu.Item>
                     </Link>
-                    <Link to={`/batchdetails/${this.props.batch.key}/rating-comments`}>
+                    <Link to={`${link}/rating-comments`}>
                         <Menu.Item name="rating-comments" active={activeItem === "rating-comments"} onClick={this.handleItemClick}>
                             Ocena i uwagi
                         </Menu.Item>
                     </Link>
-                    <Link to={`/batchdetails/${this.props.batch.key}/files`}>
+                    <Link to={`${link}/files`}>
                         <Menu.Item name="files" active={activeItem === "files"} onClick={this.handleItemClick}>
                             Załączniki
                         </Menu.Item>
@@ -523,7 +525,7 @@ export default class DetailsMenu extends React.Component {
                             /* -------- widok Podsumowania -------- */
 
                             <Route
-                                exact path="/batchdetails/:batchKey"
+                                exact path={path}
                                 render={(routeProps) => (
                                     <Details {...routeProps} disabled={this.state.disabled} componentUpdate = {this.handleDetailsComponentUpdate} name={name} style={style} ibu={ibu} alcohol={alcohol} volume={volume} date={date} srm={srm} density={density} type={type}/>
                                 )}
@@ -532,7 +534,7 @@ export default class DetailsMenu extends React.Component {
                             /* -------- widok Receptury -------- */
 
                             <Route
-                                exact path="/batchdetails/:batchKey/recipe"
+                                exact path={`${path}/recipe`}
                                 render={(routeProps) => (
                                     <Recipe {...routeProps} disabled={this.state.disabled} componentUpdate = {this.handleRecipeComponentUpdate} ingredients_ferm={ingredients_ferm} ingredients_yeast={ingredients_yeast} ingredients_hop={ingredients_hop} ingredients_addons={ingredients_addons} componentAdd = {this.handleRecipeComponentAddIngr} componentDelete={this.handleRecipeComponentDeleteIngr}/>
                                 )}
@@ -541,7 +543,7 @@ export default class DetailsMenu extends React.Component {
                             /* -------- widok Oceny i Komentarzy -------- */
 
                             <Route
-                                exact path="/batchdetails/:batchKey/rating-comments"
+                                exact path={`${path}/rating-comments`}
                                 render={(routeProps) => (
                                     <Rating_Comments {...routeProps} disabled={disabled} handleRate={this.handleRateChange} rateGeneral={rateGeneral} rateAroma={rateAroma} rateBitterness={rateBitterness} rateflavor={rateflavor} rateLook={rateLook} rateStyle={rateStyle} commentBitterness={commentBitterness} commentAdditional={commentAdditional} commentFlavor={commentFlavor} commentLook={commentLook} commentStyle={commentStyle} commentAroma={commentAroma} commentGeneral={commentGeneral} handleCommentChange={this.handleCommentChange}/>
                                 )}
@@ -550,7 +552,7 @@ export default class DetailsMenu extends React.Component {
                             /* -------- widok Załączników -------- */
 
                             <Route
-                                exact path="/batchdetails/:batchKey/files"
+                                exact path={`${path}/files`}
                                 render={(routeProps) => (
                                     <Files {...routeProps} disabled={disabled} onFileUpload={this.onFileUpload} imagePreviewUrl={this.state.imagePreviewUrl}/>
                                     )}
@@ -566,4 +568,4 @@ export default class DetailsMenu extends React.Component {
 };
 
 
-//Ponieważ button submit w formularzu jest "owinięty" routerowym Linkiem, nie działa zdarzenie onSubmit ustawione dla Form. Aby warki zapisały się w bazie musiałam użyć zdarzenia onClick na tym buttonie - do poprawy
+// Ponieważ button submit w formularzu jest "owinięty" routerowym Linkiem, nie działa zdarzenie onSubmit ustawione dla Form. Aby warki zapisały się w bazie musiałam użyć zdarzenia onClick na tym buttonie - do poprawy
