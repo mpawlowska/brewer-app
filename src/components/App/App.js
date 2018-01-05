@@ -5,8 +5,7 @@ import Header from '../Header/Header.js';
 import MainActionButtons from '../MainActionButtons/MainActionButtons.js'
 import MainCardsView from '../MainCardsView/MainCardsView';
 import MainListView from '../MainListView/MainListView';
-import AddBatchView from '../AddBatchView/AddBatchView';
-import BatchDetailsView from '../BatchDetailsView/BatchDetailsView';
+import DetailsView from '../BatchDetailsView/DetailsView';
 
 
 export default class App extends React.Component {
@@ -75,12 +74,12 @@ export default class App extends React.Component {
                     </Switch>
                     <Route path='/newbatch'
                            render = {(routeProps) => (
-                               <BatchDetailsView {...routeProps} view="add" pathToGoBack={this.state.view} />
+                               <DetailsView {...routeProps} view="add" pathToGoBack={this.state.view} />
                            )}
                     />
                     <Route path='/batchdetails/:batchKey'
                            render = {(routeProps) => (
-                               <BatchDetailsView {...routeProps} view="preview" batches={this.state.batches} pathToGoBack={this.state.view} disabled={true} />
+                               <DetailsView {...routeProps} batches={this.state.batches} view="preview"  pathToGoBack={this.state.view} disabled={true} />
                            )}
                     />
                 </main>

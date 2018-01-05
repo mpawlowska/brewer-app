@@ -10,7 +10,7 @@ import Recipe from "../../AddBatchView/MenuComponents/Recipe";
 import Rating_Comments from "../../AddBatchView/MenuComponents/Rating_Comments";
 import Files from "../../AddBatchView/MenuComponents/Files";
 
-export default class DetailsMenu extends React.Component {
+export default class BatchForm extends React.Component {
     constructor(props) {
         super(props);
 
@@ -52,17 +52,16 @@ export default class DetailsMenu extends React.Component {
         };
     }
 
+    /* -------------- TYLKO DO PODGLĄDU - PREVIEW ------------- */
 
-    /* ------------------------------------------------ */
-    //  // na początek - do podglądu - ustawiam w state wartości jakie są w props.batch, która przyszła z bazy
+    /* ustawiam w state dane warki, która przyszła z bazy */
+
     componentWillMount() {
-        if(this.props.batch) {
-
-            let {fermenting_components : ingredients_ferm, yeast : ingredients_yeast, hop: ingredients_hop, addons : ingredients_addons} = this.props.batch.recipe;
+        if(this.props.view === "preview") {
             const {name, style, date, ibu, srm, alcohol, volume, density, type } = this.props.batch.details;
+            let {fermenting_components : ingredients_ferm, yeast : ingredients_yeast, hop: ingredients_hop, addons : ingredients_addons} = this.props.batch.recipe;
             const {rateGeneral, rateStyle, rateAroma, rateLook, rateFlavor, rateBitterness} = this.props.batch.rating;
             const {commentGeneral, commentStyle, commentAroma, commentLook, commentFlavor, commentBitterness,commentAdditional} = this.props.batch.comments;
-            const {disabled} = this.props;
 
             // jeśli pobrane z bazy składniki są pustymi stringami, to zamieniam je na tablice, aby można je było wyświetlić poprzez metodę map
             if (!ingredients_ferm) {
@@ -79,7 +78,7 @@ export default class DetailsMenu extends React.Component {
             }
 
             this.setState({
-                disabled: disabled,
+                disabled: true,
                 name: name,
                 style: style,
                 date: date,
@@ -109,18 +108,17 @@ export default class DetailsMenu extends React.Component {
             });
         }
     }
-    /* ------------------------------------------------ */
 
-    // do zmiany aktywnej zakładki w Menu
+    /* ---------------- zmiana aktywnej zakładki ----------------- */
+
     handleItemClick = (e, {name}) => {
         this.setState({
             activeItem: name
         })
     };
 
-    /* ------------------------------------------------ */
+    /* ------------- obsługa Popup przy usuwaniu warki ------------ */
 
-    // do zamykania Popup usuwającego warkę
     togglePopup = () => {
         const currentPopupState = this.state.isPopupOpen;
         this.setState({
@@ -128,20 +126,19 @@ export default class DetailsMenu extends React.Component {
         })
     };
 
-    /* ---------------------OBSŁUGA DETAILS/PODSUMOWANIE--------------------------- */
+    /* --------------------- OBSŁUGA ZAKŁADKI DETAILS / PODSUMOWANIE -------------------------- */
 
-    // do przechwytywania danych z inputów w Podsumowaniu
     handleDetailsComponentUpdate = (name, value) => {
         this.setState({
             [name]: value,
         });
-        // przekazuję jeszcze wyżej bo potrzebuję do nowej batchCard - można to jakoś ograniczyć, aby wywoływało się tylko przy zmianie kilku określonych kluczy
+        // przekazuję zmianę danych wyżej, bo potrzebuję ich do bieżącego wyświetlania w BatchCard
         this.props.onDetailsChange(name, value);
     };
 
-    /* ---------------------OBSŁUGA FILES/ZDJĘCIE--------------------------- */
+    /* ---------------------- OBSŁUGA ZAKŁADKI FILES / ZDJĘCIE ---------------------------------- */
 
-    // zapisanie w state pliku
+    // zapisanie w state wybranego pliku
     onFileUpload = (image, imagePreviewUrl, hasImage) => {
         // najpierw przekazuję wyżej url, aby image mógł sie wyświetlić w BatchCard
         this.props.onImageChange(imagePreviewUrl);
@@ -153,7 +150,23 @@ export default class DetailsMenu extends React.Component {
         });
     };
 
-    /* --------------------OBSŁUGA RECIPE/RECEPTURA---------------------------- */
+    /* -------------------- OBSŁUGA ZAKŁADKI RATING_COMMENTS / OCENA I UWAGI --------------------- */
+
+    // ocena gwiazdkowa
+    handleRateChange = (name, rate) => {
+        this.setState({
+            [name]: rate
+        })
+    };
+
+    // komentarze
+    handleCommentChange = (name, value) => {
+        this.setState({
+            [name]: value
+        })
+    };
+
+    /* ------------------------- OBSŁUGA ZAKŁADKI RECIPE / RECEPTURA ---------------------------- */
 
     // do przechwytywania danych z inputów w Recepturze - najpierw tworzę funkcje uniwersalne, które będą określały, który rodzaj składnika powinien być poddany zmianie
     chooseIngredients = (category) => {
@@ -214,6 +227,14 @@ export default class DetailsMenu extends React.Component {
         this.updateIngredients(category, ingredients);
     };
 
+    handleRecipeComponentDeleteIngr = (ingredientIndex, category) => {
+        const ingredients = this.chooseIngredients(category);
+
+        ingredients.splice(ingredientIndex, 1);
+
+        this.updateIngredients(category, ingredients);
+    };
+
     handleRecipeComponentUpdate = (e, ingredientIndex, category) => {
         let name = e.target.name;
         let value = e.target.value;
@@ -225,32 +246,17 @@ export default class DetailsMenu extends React.Component {
         this.updateIngredients(category, ingredients);
     };
 
-    handleRecipeComponentDeleteIngr = (ingredientIndex, category) => {
-        const ingredients = this.chooseIngredients(category);
 
-        ingredients.splice(ingredientIndex, 1);
+    /* ------------------- DLA WIDOKU PREVIEW ----------------- */
 
-        this.updateIngredients(category, ingredients);
+    /* ---------------- obsługa buttona "Usuń warkę" ---------------------------- */
+
+    onDeleteBatchClick = (batchToDelete) => {
+        const batchRef = firebase.database().ref(batchToDelete);
+        batchRef.remove();
     };
 
-    /* --------------------OBSŁUGA RATING_COMMENTS/Ocena i uwagi ---------------------------- */
-
-    // do przechwytywania danych z inputów w Ocenie
-    // ocena gwiazdkowa
-    handleRateChange = (name, rate) => {
-        this.setState({
-            [name]: rate
-        })
-    };
-
-    // komentarze
-    handleCommentChange = (name, value) => {
-        this.setState({
-            [name]: value
-        })
-    };
-
-    /* ------- OBSŁUGA BUTTONA "Zapisz i zakończ edycję" - dodanie nowej warki do bazy i pliku do storage ------ */
+    /* ------- obsługa buttona "Zapisz i zakończ edycję" - dodanie nowej warki do bazy i pliku do storage ------ */
 
     onEditClick = (e) => {
         if (this.state.disabled) {
@@ -287,6 +293,7 @@ export default class DetailsMenu extends React.Component {
             } else {
                 ingredients_addons = this.state.ingredients_addons;
             }
+
             // tworzę nowe dane na podstawie state
             const newBatch = {
                 "details": {
@@ -331,37 +338,32 @@ export default class DetailsMenu extends React.Component {
 
             /* ----------- dodanie pliku do storage -------------- */
 
-            if(this.state.inputFile) {
+            const file = this.state.inputFile;
+
+            if(file) {
                 // tworzę storage reference
                 const storageRef = firebase.storage().ref();
 
-                // pobieram plik zapisany wcześniej w state
-                let file = this.state.inputFile;
-
                 // zapisuję plik w storage --> nazwa pliku to key warki
-                file && storageRef.child(`images/${batchKey}`).put(file).then(function(snapshot) {
+                storageRef.child(`images/${batchKey}`).put(file).then(function(snapshot) {
                     console.log("Uploaded file!");
                 });
 
+                // przekazuję wyżej informację, że warka ma zdjęcie, aby tylko w tej sytuacji BatchCard odpytywało bazę
                 this.props.onImageAddToBase();
             }
         }
     };
 
-    /* ------------------------------------------------ */
 
-    onDeleteBatchClick = (batchToDelete) => {
-        const batchRef = firebase.database().ref(batchToDelete);
-        batchRef.remove();
-    };
+    /* ------------------- DLA WIDOKU ADD ----------------- */
 
-    /* ----------- OBSŁUGA BUTTONA 'ZAKOŃCZ DODAWANIE WARKI' - dodanie nowej warki do bazy i pliku do storage -------------- */
+    /* ----------- obsługa buttona 'Zakończ dodawnie warki' - dodanie nowej warki do bazy i pliku do storage -------------- */
 
     onCloseClick = () => {
-
         // tworzę referencję do bazy i potrzebne mi zmienne
         const batchesRef = firebase.database().ref();
-        let {hasImage, name, style, date, ibu, srm, alcohol, volume, density, type, rateBitterness, rateStyle, rateAroma, rateLook, rateGeneral, rateFlavor, commentAroma, commentStyle, commentLook, commentGeneral, commentFlavor, commentAdditional, commentBitterness} = this.state;
+        const {hasImage, name, style, date, ibu, srm, alcohol, volume, density, type, rateBitterness, rateStyle, rateAroma, rateLook, rateGeneral, rateFlavor, commentAroma, commentStyle, commentLook, commentGeneral, commentFlavor, commentAdditional, commentBitterness} = this.state;
         let ingredients_ferm, ingredients_yeast, ingredients_hop, ingredients_addons;
 
         // Ponieważ w Firebase nie zapisują się puste tablice, to w wypadku kiedy nia ma któryś składników dodanych w Recipe, to zamieniam pustą tablicę na pustego stringa, który zapisze się w Firebase.
@@ -424,29 +426,29 @@ export default class DetailsMenu extends React.Component {
             }
 
         };
-        let newBatchKey = batchesRef.push(newBatch).key;
 
         // wrzucam warkę do bazy, ale też zapisuję klucz, bo będzie mi potrzebny do zapisania w storage zdjęcia pod odpowiednią nazwą
-
+        const newBatchKey = batchesRef.push(newBatch).key;
 
         /* ----------- dodanie pliku do storage -------------- */
 
-        if (this.state.inputFile) {
+        const file = this.state.inputFile;
+
+        if (file) {
             // tworzę storage reference
             const storageRef = firebase.storage().ref();
 
-            // pobieram plik zapisany wcześniej w state
-            let file = this.state.inputFile;
-
-            // zapisuję plik w storage --> nazwa pliku to key warki
+            // zapisuję plik w storage --> nazwa pliku to key warki, który przed chwilą utworzył się przy wrzucaniu warki do bazy
             file && storageRef.child(`images/${newBatchKey}`).put(file).then(function (snapshot) {
                 console.log('Uploaded file!');
             });
+
+            // przekazuję wyżej informację, że warka ma zdjęcie, aby tylko w tej sytuacji BatchCard odpytywało bazę
             this.props.onImageAddToBase()
         }
     };
 
-    /* --------------- RENDER ----------------------- */
+    /* -------------------- RENDER --------------------------- */
 
     render() {
 
@@ -540,7 +542,7 @@ export default class DetailsMenu extends React.Component {
                                 )}
                             />
 
-                            /* -------- widok Oceny i Komentarzy -------- */
+                            /* -------- widok Oceny i uwag -------- */
 
                             <Route
                                 exact path={`${path}/rating-comments`}

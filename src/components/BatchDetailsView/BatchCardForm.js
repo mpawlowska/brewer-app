@@ -1,12 +1,13 @@
 import React from "react";
 import BatchCard from "../MainCardsView/BatchCard";
-import DetailsMenu from "./DetailsComponents/DetailsMenu";
+import BatchForm from "./DetailsComponents/BatchForm";
 
-export default class DetailsForm extends React.Component {
+export default class BatchCardForm extends React.Component {
 
     constructor(props) {
         super(props);
 
+        // w state dane potrzebne do wyświetlania BatchCard
         this.state = {
             batchKey: "",
             isImageInBase: "",
@@ -22,10 +23,9 @@ export default class DetailsForm extends React.Component {
 
     // ustawiam w state wartości jakie są w props.batch, która przyszła z bazy
     componentWillMount() {
-        const batch = this.props.batch;
-        const batchKey = this.props.batch.key;
-        if(batch) {
-            const {name, style, ibu, alcohol, density, date, hasImage} = batch.details;
+        if(this.props.view === "preview") {
+            const batchKey = this.props.batch.key;
+            const { name, style, ibu, alcohol, density, date, hasImage } = this.props.batch.details;
             this.setState({
                 batchKey,
                 isImageInBase: hasImage,
@@ -60,10 +60,12 @@ export default class DetailsForm extends React.Component {
 
     render() {
         const { batchKey, name, style, ibu, alcohol, density, date, isImageInBase, imageUrl } = this.state;
+        const { view, pathToGoBack, batch } = this.props;
+
         return (
             <div style={{display: "flex", alignItems: "center", justifyContent: "space-around", height: "90%", width: "90%"}}>
                 <BatchCard batchKey={batchKey} name={name} style={style} ibu={ibu} alcohol={alcohol} density={density} date={date}  isImageInBase={isImageInBase} imageUrl={imageUrl} />
-                <DetailsMenu batch={this.props.batch} onDetailsChange={this.handleDetailsChange} onImageChange={this.handleImageChange} onImageAddToBase={this.handleImageAddToBase} pathToGoBack={this.props.pathToGoBack} disabled={this.props.disabled} view={this.props.view}/>
+                <BatchForm batch={batch} pathToGoBack={pathToGoBack} view={view} onDetailsChange={this.handleDetailsChange} onImageChange={this.handleImageChange} onImageAddToBase={this.handleImageAddToBase} />
             </div>
         )
     }
