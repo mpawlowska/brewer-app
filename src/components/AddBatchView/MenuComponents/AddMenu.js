@@ -35,8 +35,15 @@ export default class AddMenu extends React.Component {
             rateStyle: '',
             rateAroma: '',
             rateLook: '',
-            rateFlavour : '',
+            rateFlavor : '',
             rateBitterness: '',
+            commentGeneral: '',
+            commentStyle: '',
+            commentAroma: '',
+            commentLook: '',
+            commentFlavor : '',
+            commentBitterness: '',
+            commentAdditional: '',
             inputFile: '',
             imagePreviewUrl: ''
         }
@@ -57,9 +64,17 @@ export default class AddMenu extends React.Component {
     };
 
     // do przechwytywania danych z inputów w Ocenie
+        // ocena gwiazdkowa
     handleRateChange = (name, rate) => {
         this.setState({
             [name]: rate
+        })
+    };
+
+        // komentarze
+    handleCommentChange = (name, value) => {
+        this.setState({
+            [name]: value
         })
     };
 
@@ -176,7 +191,7 @@ export default class AddMenu extends React.Component {
 
         // tworzę referencję do bazy i potrzebne mi zmienne
         const batchesRef = firebase.database().ref();
-        let { hasImage, name, style, date, ibu, srm, alcohol, volume, density, type } = this.state;
+        let { hasImage, name, style, date, ibu, srm, alcohol, volume, density, type, rateBitterness, rateStyle, rateAroma, rateLook, rateGeneral, rateFlavor, commentAroma, commentStyle, commentLook, commentGeneral, commentFlavor, commentAdditional, commentBitterness } = this.state;
         let ingredients_ferm, ingredients_yeast, ingredients_hop, ingredients_addons;
 
         // Ponieważ w Firebase nie zapisują się puste tablice, to w wypadku kiedy nia ma któryś składników dodanych w Recipe, to zamieniam pustą tablicę na pustego stringa, który zapisze się w Firebase.
@@ -220,6 +235,24 @@ export default class AddMenu extends React.Component {
                 "yeast": ingredients_yeast,
                 "addons": ingredients_addons
             },
+            "rating": {
+                "rateGeneral": rateGeneral,
+                "rateStyle": rateStyle,
+                "rateAroma": rateAroma,
+                "rateLook": rateLook,
+                "rateFlavor": rateFlavor,
+                "rateBitterness": rateBitterness
+            },
+            "comments": {
+                "commentGeneral": commentGeneral,
+                "commentStyle": commentStyle,
+                "commentAroma": commentAroma,
+                "commentLook": commentLook,
+                "commentFlavor": commentFlavor,
+                "commentBitterness": commentBitterness,
+                "commentAdditional": commentAdditional
+            }
+            
         };
         let newBatchKey = batchesRef.push(newBatch).key;
 
@@ -249,7 +282,7 @@ export default class AddMenu extends React.Component {
     /* --------------- RENDER ----------------------- */
 
     render() {
-        let { activeItem, name, style, date, ibu, srm, alcohol, volume, density, type, ingredients_ferm, ingredients_yeast, ingredients_hop, ingredients_addons, disabled, rateGeneral, rateAroma, rateBitterness, rateFlavour, rateLook, rateStyle }  = this.state;
+        let { activeItem, name, style, date, ibu, srm, alcohol, volume, density, type, ingredients_ferm, ingredients_yeast, ingredients_hop, ingredients_addons, disabled, rateGeneral, rateAroma, rateBitterness, rateflavor, rateLook, rateStyle, commentAdditional, commentAroma, commentBitterness, commentFlavor, commentGeneral, commentLook, commentStyle }  = this.state;
 
         return (
             <div style={{height: '100%', width: '75%'}}>
@@ -294,7 +327,7 @@ export default class AddMenu extends React.Component {
                             <Route
                                 exact path="/newBatch/rating_comments"
                                 render={(routeProps) => (
-                                    <Rating_Comments {...routeProps} disabled={this.state.disabled} handleRate={this.handleRateChange} rateGeneral={rateGeneral} rateAroma={rateAroma} rateBitterness={rateBitterness} rateFlavour={rateFlavour} rateLook={rateLook} rateStyle={rateStyle}/>
+                                    <Rating_Comments {...routeProps} disabled={this.state.disabled} handleRate={this.handleRateChange} rateGeneral={rateGeneral} rateAroma={rateAroma} rateBitterness={rateBitterness} rateflavor={rateflavor} rateLook={rateLook} rateStyle={rateStyle} commentBitterness={commentBitterness} commentAdditional={commentAdditional} commentFlavor={commentFlavor} commentLook={commentLook} commentStyle={commentStyle} commentAroma={commentAroma} commentGeneral={commentGeneral} handleCommentChange={this.handleCommentChange}/>
                                 )}
                             />
                             <Route
