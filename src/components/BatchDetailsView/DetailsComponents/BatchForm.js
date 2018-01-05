@@ -117,6 +117,13 @@ export default class BatchForm extends React.Component {
         })
     };
 
+    /* ---------------- obsługa buttona "Usuń warkę" ---------------------------- */
+
+    onDeleteBatchClick = (batchToDelete) => {
+        const batchRef = firebase.database().ref(batchToDelete);
+        batchRef.remove();
+    };
+
     /* ------------- obsługa Popup przy usuwaniu warki ------------ */
 
     togglePopup = () => {
@@ -125,6 +132,8 @@ export default class BatchForm extends React.Component {
             isPopupOpen: !currentPopupState
         })
     };
+
+
 
     /* --------------------- OBSŁUGA ZAKŁADKI DETAILS / PODSUMOWANIE -------------------------- */
 
@@ -246,148 +255,38 @@ export default class BatchForm extends React.Component {
         this.updateIngredients(category, ingredients);
     };
 
+    
+    /* ---------------- FUNKCJE POMOCNICZE do obsługi buttonów dodających warkę do bazy / zmieniających dane --------------- */
+    
+    /* -------- stworzenie nowej warki na podstawie state ---------- */
+    
+    createNewBatch = () => {
 
-    /* ------------------- DLA WIDOKU PREVIEW ----------------- */
-
-    /* ---------------- obsługa buttona "Usuń warkę" ---------------------------- */
-
-    onDeleteBatchClick = (batchToDelete) => {
-        const batchRef = firebase.database().ref(batchToDelete);
-        batchRef.remove();
-    };
-
-    /* ------- obsługa buttona "Zapisz i zakończ edycję" - dodanie nowej warki do bazy i pliku do storage ------ */
-
-    onEditClick = (e) => {
-        if (this.state.disabled) {
-            e.preventDefault();  // to zapobiega uaktywnieniu Link z routera i przejściu na inną path
-            this.setState({
-                disabled: false,
-                buttonText: "Zapisz i zakończ edycję"
-            });
-        } else {
-            // tworzę referencję do konkretnej warki w bazie i nadpisuję jej dane
-            const batchKey = this.props.batch.key;
-            const batchRef = firebase.database().ref(batchKey);
-            const { hasImage, name, style, date, ibu, srm, alcohol, volume, density, type, rateBitterness, rateStyle, rateAroma, rateLook, rateGeneral, rateFlavor, commentAroma, commentStyle, commentLook, commentGeneral, commentFlavor, commentAdditional, commentBitterness } = this.state;
-            let ingredients_ferm, ingredients_yeast, ingredients_hop, ingredients_addons;
-
-            // Ponieważ w Firebase nie zapisują się puste tablice, to w wypadku kiedy nia ma którychś składników dodanych w Recipe, to zamieniam pustą tablicę na pustego stringa, który zapisze się w Firebase.
-            if (this.state.ingredients_ferm == false) {
-                ingredients_ferm = "";
-            } else {
-                ingredients_ferm = this.state.ingredients_ferm;
-            }
-            if (this.state.ingredients_yeast == false) {
-                ingredients_yeast = "";
-            } else {
-                ingredients_yeast = this.state.ingredients_yeast;
-            }
-            if (this.state.ingredients_hop == false) {
-                ingredients_hop = "";
-            } else {
-                ingredients_hop = this.state.ingredients_hop;
-            }
-            if (this.state.ingredients_addons == false) {
-                ingredients_addons = "";
-            } else {
-                ingredients_addons = this.state.ingredients_addons;
-            }
-
-            // tworzę nowe dane na podstawie state
-            const newBatch = {
-                "details": {
-                    "hasImage": hasImage,
-                    "name": name,
-                    "style": style,
-                    "date": date,
-                    "volume": volume,
-                    "ibu": ibu,
-                    "srm": srm,
-                    "density": density,
-                    "alcohol": alcohol,
-                    "type": type
-                },
-                "recipe": {
-                    "fermenting_components": ingredients_ferm,
-                    "hop": ingredients_hop,
-                    "yeast": ingredients_yeast,
-                    "addons": ingredients_addons
-                },
-                "rating": {
-                    "rateGeneral": rateGeneral,
-                    "rateStyle": rateStyle,
-                    "rateAroma": rateAroma,
-                    "rateLook": rateLook,
-                    "rateFlavor": rateFlavor,
-                    "rateBitterness": rateBitterness
-                },
-                "comments": {
-                    "commentGeneral": commentGeneral,
-                    "commentStyle": commentStyle,
-                    "commentAroma": commentAroma,
-                    "commentLook": commentLook,
-                    "commentFlavor": commentFlavor,
-                    "commentBitterness": commentBitterness,
-                    "commentAdditional": commentAdditional
-                }
-            };
-
-            // zapisuję do bazy
-            batchRef.set(newBatch);
-
-            /* ----------- dodanie pliku do storage -------------- */
-
-            const file = this.state.inputFile;
-
-            if(file) {
-                // tworzę storage reference
-                const storageRef = firebase.storage().ref();
-
-                // zapisuję plik w storage --> nazwa pliku to key warki
-                storageRef.child(`images/${batchKey}`).put(file).then(function(snapshot) {
-                    console.log("Uploaded file!");
-                });
-
-                // przekazuję wyżej informację, że warka ma zdjęcie, aby tylko w tej sytuacji BatchCard odpytywało bazę
-                this.props.onImageAddToBase();
-            }
-        }
-    };
-
-
-    /* ------------------- DLA WIDOKU ADD ----------------- */
-
-    /* ----------- obsługa buttona 'Zakończ dodawnie warki' - dodanie nowej warki do bazy i pliku do storage -------------- */
-
-    onCloseClick = () => {
-        // tworzę referencję do bazy i potrzebne mi zmienne
-        const batchesRef = firebase.database().ref();
-        const {hasImage, name, style, date, ibu, srm, alcohol, volume, density, type, rateBitterness, rateStyle, rateAroma, rateLook, rateGeneral, rateFlavor, commentAroma, commentStyle, commentLook, commentGeneral, commentFlavor, commentAdditional, commentBitterness} = this.state;
+        const { hasImage, name, style, date, ibu, srm, alcohol, volume, density, type, rateBitterness, rateStyle, rateAroma, rateLook, rateGeneral, rateFlavor, commentAroma, commentStyle, commentLook, commentGeneral, commentFlavor, commentAdditional, commentBitterness, ingredients_ferm : ingredients_fermState, ingredients_yeast : ingredients_yeastState, ingredients_hop : ingredients_hopState, ingredients_addons : ingredients_addonsState} = this.state;
         let ingredients_ferm, ingredients_yeast, ingredients_hop, ingredients_addons;
 
-        // Ponieważ w Firebase nie zapisują się puste tablice, to w wypadku kiedy nia ma któryś składników dodanych w Recipe, to zamieniam pustą tablicę na pustego stringa, który zapisze się w Firebase.
-        if (this.state.ingredients_ferm == false) {
-            ingredients_ferm = '';
+        // Ponieważ w Firebase nie zapisują się puste tablice, to w wypadku kiedy nia ma którychś składników dodanych w Recipe, to zamieniam pustą tablicę na pustego stringa, który zapisze się w Firebase.
+        if (ingredients_fermState == false) {
+            ingredients_ferm = "";
         } else {
-            ingredients_ferm = this.state.ingredients_ferm;
+            ingredients_ferm = ingredients_fermState;
         }
-        if (this.state.ingredients_yeast == false) {
-            ingredients_yeast = '';
+        if (ingredients_yeastState == false) {
+            ingredients_yeast = "";
         } else {
-            ingredients_yeast = this.state.ingredients_yeast;
+            ingredients_yeast = ingredients_yeastState;
         }
-        if (this.state.ingredients_hop == false) {
-            ingredients_hop = '';
+        if (ingredients_hopState == false) {
+            ingredients_hop = "";
         } else {
-            ingredients_hop = this.state.ingredients_hop;
+            ingredients_hop = ingredients_hopState;
         }
-        if (this.state.ingredients_addons == false) {
-            ingredients_addons = '';
+        if (ingredients_addonsState == false) {
+            ingredients_addons = "";
         } else {
-            ingredients_addons = this.state.ingredients_addons;
+            ingredients_addons = ingredients_addonsState;
         }
-
+        
         const newBatch = {
             "details": {
                 "hasImage": hasImage,
@@ -424,35 +323,88 @@ export default class BatchForm extends React.Component {
                 "commentBitterness": commentBitterness,
                 "commentAdditional": commentAdditional
             }
-
         };
+        
+        return newBatch
+    };
 
+    /* -------- dodanie pliku do storage ---------- */
+    
+    addImageToStorage = (file, ref) => {
+        // tworzę storage reference
+        const storageRef = firebase.storage().ref();
+        storageRef.child(ref).put(file).then(function(snapshot) {
+            console.log("Uploaded file!");
+        });
+
+        // przekazuję wyżej informację, że warka ma zdjęcie, aby tylko w tej sytuacji BatchCard odpytywało bazę
+        this.props.onImageAddToBase();
+    };
+    
+    /* ---------- KONIEC funkcji pomocniczych do dodania warki do bazy --------- */
+
+
+    /* ------------------- DLA WIDOKU PREVIEW ----------------- */
+    /* ------- obsługa buttona "Zapisz i zakończ edycję" - dodanie nowej warki do bazy i pliku do storage ------ */
+
+    onEditClick = (e) => {
+        if (this.state.disabled) {
+            e.preventDefault();  // to zapobiega uaktywnieniu Link z routera i przejściu na inną path
+            this.setState({
+                disabled: false,
+                buttonText: "Zapisz i zakończ edycję"
+            });
+        } else {
+            // tworzę referencję do konkretnej warki w bazie i nadpisuję jej dane
+            const batchKey = this.props.batch.key;
+            const batchRef = firebase.database().ref(batchKey);
+            // tworzę dane do bazy
+            const newBatch = this.createNewBatch();
+
+            // zapisuję do bazy
+            batchRef.set(newBatch);
+
+            /* ----------- dodanie pliku do storage -------------- */
+
+            const file = this.state.inputFile;
+            // nazwa pliku to key warki
+            const ref = `images/${batchKey}`;
+            
+            if(file) {
+                this.addImageToStorage(file, ref);
+            }
+        }
+    };
+
+    /* ------------------- DLA WIDOKU ADD ----------------- */
+    /* ----------- obsługa buttona "Zakończ dodawnie warki" - dodanie nowej warki do bazy i pliku do storage -------------- */
+
+    onCloseClick = () => {
+        // tworzę dane do bazy
+        const newBatch = this.createNewBatch();
+        
+        // tworzę referencję do bazy
+        const batchesRef = firebase.database().ref();
+        
         // wrzucam warkę do bazy, ale też zapisuję klucz, bo będzie mi potrzebny do zapisania w storage zdjęcia pod odpowiednią nazwą
         const newBatchKey = batchesRef.push(newBatch).key;
 
         /* ----------- dodanie pliku do storage -------------- */
 
         const file = this.state.inputFile;
+        // nazwa pliku to key warki, który przed chwilą utworzył się przy wrzucaniu warki do bazy
+        const ref = `images/${newBatchKey}`;
 
-        if (file) {
-            // tworzę storage reference
-            const storageRef = firebase.storage().ref();
-
-            // zapisuję plik w storage --> nazwa pliku to key warki, który przed chwilą utworzył się przy wrzucaniu warki do bazy
-            file && storageRef.child(`images/${newBatchKey}`).put(file).then(function (snapshot) {
-                console.log('Uploaded file!');
-            });
-
-            // przekazuję wyżej informację, że warka ma zdjęcie, aby tylko w tej sytuacji BatchCard odpytywało bazę
-            this.props.onImageAddToBase()
+        if(file) {
+            this.addImageToStorage(file, ref);
         }
     };
 
-    /* -------------------- RENDER --------------------------- */
+    /* -------------------------------- RENDER ------------------------------------ */
 
     render() {
 
-        let { activeItem, name, style, date, ibu, srm, alcohol, volume, density, type, ingredients_ferm, ingredients_yeast, ingredients_hop, ingredients_addons, disabled, rateGeneral, rateAroma, rateBitterness, rateflavor, rateLook, rateStyle, commentAdditional, commentAroma, commentBitterness, commentFlavor, commentGeneral, commentLook, commentStyle, buttonText, isPopupOpen }  = this.state;
+        let { activeItem, name, style, date, ibu, srm, alcohol, volume, density, type, ingredients_ferm, ingredients_yeast, ingredients_hop, ingredients_addons, disabled, rateGeneral, rateAroma, rateBitterness, rateflavor, rateLook, rateStyle, commentAdditional, commentAroma, commentBitterness, commentFlavor, commentGeneral, commentLook, commentStyle, buttonText, isPopupOpen, imagePreviewUrl }  = this.state;
 
         const { view } = this.props;
         let link, path, buttons;
@@ -473,14 +425,14 @@ export default class BatchForm extends React.Component {
             buttons = (
                 <div>
                     <Link to={this.props.pathToGoBack}>
-                        <Button type="text" color="blue" style={{position: "relative", left: "42em", marginTop: "1em"}} onClick={this.onEditClick}>{this.state.buttonText}</Button>
+                        <Button type="text" color="blue" style={{position: "relative", left: "42em", marginTop: "1em"}} onClick={this.onEditClick}>{buttonText}</Button>
                     </Link>
                     <Popup
                         trigger={deleteBatchButton}
                         on="click"
                         position="top right"
                         flowing
-                        open={this.state.isPopupOpen}
+                        open={isPopupOpen}
                     >
                         <Popup.Header>
                             Czy na pewno chcesz usunąć warkę?
@@ -501,7 +453,7 @@ export default class BatchForm extends React.Component {
                 <Menu attached="top" pointing secondary>
                     <Link to= {`${link}`}>
                         <Menu.Item name="details" active={activeItem === "details"} onClick={this.handleItemClick}>
-                            Podsumowanie
+                            Szczegóły
                         </Menu.Item>
                     </Link>
                     <Link to= {`${link}/recipe`}>
@@ -516,7 +468,7 @@ export default class BatchForm extends React.Component {
                     </Link>
                     <Link to={`${link}/files`}>
                         <Menu.Item name="files" active={activeItem === "files"} onClick={this.handleItemClick}>
-                            Załączniki
+                            Zdjęcie
                         </Menu.Item>
                     </Link>
                 </Menu>
@@ -529,7 +481,7 @@ export default class BatchForm extends React.Component {
                             <Route
                                 exact path={path}
                                 render={(routeProps) => (
-                                    <Details {...routeProps} disabled={this.state.disabled} componentUpdate = {this.handleDetailsComponentUpdate} name={name} style={style} ibu={ibu} alcohol={alcohol} volume={volume} date={date} srm={srm} density={density} type={type}/>
+                                    <Details {...routeProps} disabled={disabled} componentUpdate = {this.handleDetailsComponentUpdate} name={name} style={style} ibu={ibu} alcohol={alcohol} volume={volume} date={date} srm={srm} density={density} type={type}/>
                                 )}
                             />
 
@@ -538,7 +490,7 @@ export default class BatchForm extends React.Component {
                             <Route
                                 exact path={`${path}/recipe`}
                                 render={(routeProps) => (
-                                    <Recipe {...routeProps} disabled={this.state.disabled} componentUpdate = {this.handleRecipeComponentUpdate} ingredients_ferm={ingredients_ferm} ingredients_yeast={ingredients_yeast} ingredients_hop={ingredients_hop} ingredients_addons={ingredients_addons} componentAdd = {this.handleRecipeComponentAddIngr} componentDelete={this.handleRecipeComponentDeleteIngr}/>
+                                    <Recipe {...routeProps} disabled={disabled} componentUpdate = {this.handleRecipeComponentUpdate} ingredients_ferm={ingredients_ferm} ingredients_yeast={ingredients_yeast} ingredients_hop={ingredients_hop} ingredients_addons={ingredients_addons} componentAdd = {this.handleRecipeComponentAddIngr} componentDelete={this.handleRecipeComponentDeleteIngr}/>
                                 )}
                             />
 
@@ -551,12 +503,12 @@ export default class BatchForm extends React.Component {
                                 )}
                             />
 
-                            /* -------- widok Załączników -------- */
+                            /* -------- widok Zdjęcia -------- */
 
                             <Route
                                 exact path={`${path}/files`}
                                 render={(routeProps) => (
-                                    <Files {...routeProps} disabled={disabled} onFileUpload={this.onFileUpload} imagePreviewUrl={this.state.imagePreviewUrl}/>
+                                    <Files {...routeProps} disabled={disabled} onFileUpload={this.onFileUpload} imagePreviewUrl={imagePreviewUrl}/>
                                     )}
                             />
                         </Switch>

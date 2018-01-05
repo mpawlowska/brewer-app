@@ -33,7 +33,7 @@ export default class Files extends React.Component {
         this.setState({
             buttonText: 'Wybierz zdjęcie'
         });
-        this.props.onFileUpload(null, null, "false");
+        this.props.onFileUpload(null, null);
     };
 
     render() {
