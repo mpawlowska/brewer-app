@@ -5,7 +5,7 @@ import Header from '../Header/Header.js';
 import MainActionButtons from '../MainActionButtons/MainActionButtons.js'
 import MainCardsView from '../MainCardsView/MainCardsView';
 import MainListView from '../MainListView/MainListView';
-import DetailsView from '../BatchDetailsView/DetailsView';
+import DetailsView from '../DetailsView/DetailsView';
 
 
 export default class App extends React.Component {

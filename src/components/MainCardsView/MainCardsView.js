@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Grid, Container, Button, Popup } from 'semantic-ui-react';
-import BatchCard from './BatchCard';
+import BatchCard from '../DetailsView/BatchCard';
 
 class DeletePopup extends React.Component {
     constructor(props) {
