@@ -17,7 +17,7 @@ export default class AddMenu extends React.Component {
         this.state = {
             activeItem: 'details',
             disabled: false,
-            hasImage: "false",
+
             name: '',
             style: '',
             date: '',
@@ -45,7 +45,8 @@ export default class AddMenu extends React.Component {
             commentBitterness: '',
             commentAdditional: '',
             inputFile: '',
-            imagePreviewUrl: ''
+            imagePreviewUrl: '',
+            hasImage: "false"
         }
     }
 
@@ -61,6 +62,19 @@ export default class AddMenu extends React.Component {
         });
     // przekazuję jeszcze wyżej bo potrzebuję do nowej batchCard - można to jakoś ograniczyć, aby wywoływało się tylko przy zmianie kilku określonych kluczy
         this.props.onDetailsChange(name, value);
+    };
+
+    /* ---------------------OBSŁUGA FILES/ZDJĘCIE--------------------------- */
+
+    onFileUpload = (inputFile, imagePreviewUrl, boolean) => {
+        // najpierw przekazuję wyżej url, aby image mógł sie wyświetlić w BatchCard
+        this.props.onImageChange(imagePreviewUrl);
+
+        this.setState({
+            inputFile: inputFile,
+            imagePreviewUrl: imagePreviewUrl,
+            hasImage: boolean
+        })
     };
 
     // do przechwytywania danych z inputów w Ocenie
@@ -94,7 +108,7 @@ export default class AddMenu extends React.Component {
             case 'ingredients_addons': {
                 return ingredients = this.state.ingredients_addons;
             }
-            default: console.log('nie znaleziono odpowiednich ingredients');
+            default: console.log('Nie znaleziono odpowiednich ingredients');
         }
     };
 
@@ -170,19 +184,6 @@ export default class AddMenu extends React.Component {
         ingredients.splice(ingredientIndex, 1);
 
         this.updateIngredients(category, ingredients);
-    };
-
-    /* ---------------------OBSŁUGA FILES/ZDJĘCIE--------------------------- */
-
-    onFileUpload = (inputFile, imagePreviewUrl, boolean) => {
-        // najpierw przekazuję wyżej url, aby image mógł sie wyświetlić w BatchCard
-        this.props.onImageChange(imagePreviewUrl);
-
-        this.setState({
-            inputFile: inputFile,
-            imagePreviewUrl: imagePreviewUrl,
-            hasImage: boolean
-        })
     };
 
     /* ----------- OBSŁUGA BUTTONA 'ZAKOŃCZ DODAWANIE WARKI' - dodanie nowej warki do bazy i pliku do storage -------------- */
@@ -272,7 +273,6 @@ export default class AddMenu extends React.Component {
             file && storageRef.child(`images/${newBatchKey}`).put(file).then(function (snapshot) {
                 console.log('Uploaded file!');
             });
-
             this.props.onImageAddToBase()
         }
 
@@ -325,7 +325,7 @@ export default class AddMenu extends React.Component {
                                 )}
                             />
                             <Route
-                                exact path="/newBatch/rating_comments"
+                                exact path="/newbatch/rating_comments"
                                 render={(routeProps) => (
                                     <Rating_Comments {...routeProps} disabled={this.state.disabled} handleRate={this.handleRateChange} rateGeneral={rateGeneral} rateAroma={rateAroma} rateBitterness={rateBitterness} rateflavor={rateflavor} rateLook={rateLook} rateStyle={rateStyle} commentBitterness={commentBitterness} commentAdditional={commentAdditional} commentFlavor={commentFlavor} commentLook={commentLook} commentStyle={commentStyle} commentAroma={commentAroma} commentGeneral={commentGeneral} handleCommentChange={this.handleCommentChange}/>
                                 )}
@@ -350,6 +350,6 @@ export default class AddMenu extends React.Component {
     }
 }
 
-//Ponieważ button submit w formularzu jest 'owinięty' routerowym Linkiem, nie działa zdarzenie onSubmit ustawione dla Form. Aby warki zapisały się w bazie musiałam użyć zdarzenia onClick na tym buttonie - do poprawy
+
 
 

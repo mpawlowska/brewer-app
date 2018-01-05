@@ -42,7 +42,7 @@ export default class Details extends React.Component {
                     <Details_Input disabled={this.props.disabled} label="Gęstość" name="density" onChange={this.handleInputChange} value={this.props.density}/>
                     <Details_Input disabled={this.props.disabled} label="Alkohol" name="alcohol" onChange={this.handleInputChange} value={this.props.alcohol}/>
                 </Form.Group>
-                <Details_Input disabled={this.props.disabled} label="Typ" name="type"/>
+                <Details_Input disabled={this.props.disabled} label="Typ" name="type" onChange={this.handleInputChange} value={this.props.type} />
             </Container>
         )
     }

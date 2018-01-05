@@ -50,7 +50,7 @@ export default class App extends React.Component {
     render() {
         return (
             <div className='container'>
-                <Header pathToGoBack={this.state.view}/>
+                <Header pathToGoBack={this.state.view} />
                 <main style={{marginTop: '6em'}}>
                     <MainActionButtons />
                     <Switch>
@@ -75,22 +75,14 @@ export default class App extends React.Component {
                     </Switch>
                     <Route path='/newbatch'
                            render = {(routeProps) => (
-                               <AddBatchView {...routeProps} pathToGoBack={this.state.view}/>
+                               <AddBatchView {...routeProps} view="add" pathToGoBack={this.state.view} />
                            )}
                     />
                     <Route path='/batchdetails/:batchKey'
                            render = {(routeProps) => (
-                               <BatchDetailsView {...routeProps} batches={this.state.batches} pathToGoBack={this.state.view}/>
+                               <BatchDetailsView {...routeProps} view="preview" batches={this.state.batches} pathToGoBack={this.state.view} disabled={true} />
                            )}
                     />
-
-                    {/*<Switch>*/}
-                        {/*<Route exact path="/" component={ MyWarkiContent }></Route>*/}
-                        {/*<Route exact path="/recipe" component={ CalculatorsContent }></Route>*/}
-                        {/*<Route path='*' render={*/}
-                            {/*() => <div>Nie znaleziono strony.</div>*/}
-                        {/*}></Route>*/}
-                    {/*</Switch>*/}
                 </main>
             </div>
         )
