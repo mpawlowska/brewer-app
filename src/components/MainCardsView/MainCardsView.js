@@ -68,7 +68,6 @@ export default class MainCardsView extends React.Component {
             <Container>
                 <Grid columns={5} stackable>
                     {this.props.batches.map((batch, index) => {
-                        console.log('HAS', batch.details.hasImage);
                         return (
                             <Grid.Column key={index}>
                                 <Link to = {`batchdetails/${batch.key}`}>

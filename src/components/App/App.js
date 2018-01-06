@@ -1,11 +1,11 @@
-import React from 'react';
-import { Route, Switch } from 'react-router-dom';
-import 'normalize.css';
-import Header from '../Header/Header.js';
-import MainActionButtons from '../MainActionButtons/MainActionButtons.js'
-import MainCardsView from '../MainCardsView/MainCardsView';
-import MainListView from '../MainListView/MainListView';
-import DetailsView from '../DetailsView/DetailsView';
+import React from "react";
+import { Route, Switch } from "react-router-dom";
+import "normalize.css";
+import Header from "../Header/Header.js";
+import MainActionButtons from "../MainActionButtons/MainActionButtons.js"
+import MainCardsView from "../MainCardsView/MainCardsView";
+import MainListView from "../MainListView/MainListView";
+import DetailsView from "../DetailsView/DetailsView";
 
 
 export default class App extends React.Component {
@@ -14,14 +14,14 @@ export default class App extends React.Component {
 
         this.state = {
             batches: [],
-            view: '/cards'
+            view: "/cards"
         }
     }
 
     componentWillMount() {
         const batchesRef = firebase.database().ref();
 
-        batchesRef.on('value', snap => {
+        batchesRef.on("value", snap => {
             let batches = [];
             snap.forEach(childSnapshot => {
                 let batch = childSnapshot.val();
@@ -47,39 +47,42 @@ export default class App extends React.Component {
     };
 
     render() {
+        
+        const { batches, view } = this.state;
+        
         return (
-            <div className='container'>
-                <Header pathToGoBack={this.state.view} />
-                <main style={{marginTop: '6em'}}>
+            <div className="container">
+                <Header pathToGoBack={view} />
+                <main style={{marginTop: "6em"}}>
                     <MainActionButtons />
                     <Switch>
                         <Route
                             exact path="/"
                             render={(routeProps) => (
-                                <MainCardsView {...routeProps} batches={this.state.batches} pathSave={this.onViewChange}/>
+                                <MainCardsView {...routeProps} batches={batches} pathSave={this.onViewChange} />
                             )}
                         />
                         <Route
                             exact path="/cards"
                             render={(routeProps) => (
-                                <MainCardsView {...routeProps} batches={this.state.batches} pathSave={this.onViewChange}/>
+                                <MainCardsView {...routeProps} batches={batches} pathSave={this.onViewChange} />
                             )}
                         />
                         <Route
                             exact path="/list"
                             render={(routeProps) => (
-                               <MainListView {...routeProps} batches={this.state.batches} pathSave={this.onViewChange}/>
+                               <MainListView {...routeProps} batches={batches} pathSave={this.onViewChange} />
                            )}
                         />
                     </Switch>
-                    <Route path='/newbatch'
+                    <Route path="/newbatch"
                            render = {(routeProps) => (
-                               <DetailsView {...routeProps} view="add" pathToGoBack={this.state.view} />
+                               <DetailsView {...routeProps} view="add" pathToGoBack={view} />
                            )}
                     />
-                    <Route path='/batchdetails/:batchKey'
+                    <Route path="/batchdetails/:batchKey"
                            render = {(routeProps) => (
-                               <DetailsView {...routeProps} batches={this.state.batches} view="preview"  pathToGoBack={this.state.view} disabled={true} />
+                               <DetailsView {...routeProps} batches={batches} view="preview" pathToGoBack={view} />
                            )}
                     />
                 </main>
