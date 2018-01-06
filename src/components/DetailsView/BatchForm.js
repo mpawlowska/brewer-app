@@ -330,14 +330,19 @@ export default class BatchForm extends React.Component {
     /* -------- dodanie pliku do storage ---------- */
     
     addImageToStorage = (file, ref) => {
+        const that = this;
         // tworzę storage reference
         const storageRef = firebase.storage().ref();
         storageRef.child(ref).put(file).then(function(snapshot) {
             console.log("Uploaded file!");
+
+            that.props.onImageAddToBase();
         });
 
+
+
         // przekazuję wyżej informację, że warka ma zdjęcie, aby tylko w tej sytuacji BatchCard odpytywało bazę
-        this.props.onImageAddToBase();
+        // that.props.onImageAddToBase();
     };
     
     /* ---------- KONIEC funkcji pomocniczych do dodania warki do bazy --------- */
@@ -354,6 +359,7 @@ export default class BatchForm extends React.Component {
                 buttonText: "Zapisz i zakończ edycję"
             });
         } else {
+
             // tworzę referencję do konkretnej warki w bazie i nadpisuję jej dane
             const batchKey = this.props.batch.key;
             const batchRef = firebase.database().ref(batchKey);
@@ -368,10 +374,11 @@ export default class BatchForm extends React.Component {
             const file = this.state.inputFile;
             // nazwa pliku to key warki
             const ref = `images/${batchKey}`;
-            
+
             if(file) {
                 this.addImageToStorage(file, ref);
             }
+
         }
     };
 
@@ -420,12 +427,9 @@ export default class BatchForm extends React.Component {
             link = `/batchdetails/${this.props.batch.key}`;
             path = "/batchdetails/:batchKey";
             const deleteBatchButton =
-                <Button type="text" color="blue" style={{position: "relative", left: "45em", marginTop: "1em"}} onClick={this.togglePopup}>Usuń warkę</Button>;
+                <Button type="text" color="blue" style={{position: "relative", left: "35em", marginTop: "1em"}} onClick={this.togglePopup}>Usuń warkę</Button>;
             buttons = (
                 <div>
-                    <Link to={this.props.pathToGoBack}>
-                        <Button type="text" color="blue" style={{position: "relative", left: "42em", marginTop: "1em"}} onClick={this.onEditClick}>{buttonText}</Button>
-                    </Link>
                     <Popup
                         trigger={deleteBatchButton}
                         on="click"
@@ -443,6 +447,9 @@ export default class BatchForm extends React.Component {
                             <Button color="green" content="Nie" onClick={this.togglePopup}/>
                         </Popup.Content>
                     </Popup>
+                    <Link to={this.props.pathToGoBack}>
+                        <Button type="text" color="blue" style={{position: "relative", left: "39em", marginTop: "1em"}} onClick={this.onEditClick}>{buttonText}</Button>
+                    </Link>
                 </div>
             )
         }
@@ -519,6 +526,5 @@ export default class BatchForm extends React.Component {
         )
     }
 };
-
 
 // Ponieważ button submit w formularzu jest "owinięty" routerowym Linkiem, nie działa zdarzenie onSubmit ustawione dla Form. Aby warki zapisały się w bazie musiałam użyć zdarzenia onClick na tym buttonie - do poprawy

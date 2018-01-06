@@ -28,7 +28,6 @@ export default class Files extends React.Component {
         reader.readAsDataURL(file);
     };
 
-
     onCancel = () => {
         this.setState({
             buttonText: 'Wybierz zdjęcie'

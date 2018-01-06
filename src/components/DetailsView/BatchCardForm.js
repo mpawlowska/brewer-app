@@ -54,7 +54,7 @@ export default class BatchCardForm extends React.Component {
 
     handleImageAddToBase = () => {
         this.setState({
-            isImageInBase: "true"
+            isImageInBase: "true",
         })
     };
 

@@ -18,23 +18,29 @@ export default class App extends React.Component {
         }
     }
 
-    componentWillMount() {
-        const batchesRef = firebase.database().ref();
+    getBatches = (batches) => {
+        this.setState({
+            batches: batches
+        })
+    };
 
-        batchesRef.on("value", snap => {
-            let batches = [];
-            snap.forEach(childSnapshot => {
-                let batch = childSnapshot.val();
-                batch.key = childSnapshot.key;
-
-                batches.push(batch);
-            });
-
-            this.setState({
-                batches: batches
-            })
-        });
-    }
+    // componentWillMount() {
+    //     const batchesRef = firebase.database().ref();
+    //
+    //     batchesRef.on("value", snap => {
+    //         let batches = [];
+    //         snap.forEach(childSnapshot => {
+    //             let batch = childSnapshot.val();
+    //             batch.key = childSnapshot.key;
+    //
+    //             batches.push(batch);
+    //         });
+    //
+    //         this.setState({
+    //             batches: batches
+    //         })
+    //     });
+    // }
 
     /* Dane z Firebase powyżej będą synchronizowały się po każdej zmienie w bazie. Value odpala się nie tylko kiedy za pierwszym razem złapie event listenera, ale też za każdym razem kiedy item jest dodawany do bazy lub usuwany
     */
@@ -59,13 +65,13 @@ export default class App extends React.Component {
                         <Route
                             exact path="/"
                             render={(routeProps) => (
-                                <MainCardsView {...routeProps} batches={batches} pathSave={this.onViewChange} />
+                                <MainCardsView {...routeProps} getBatches={this.getBatches} pathSave={this.onViewChange} />
                             )}
                         />
                         <Route
                             exact path="/cards"
                             render={(routeProps) => (
-                                <MainCardsView {...routeProps} batches={batches} pathSave={this.onViewChange} />
+                                <MainCardsView {...routeProps} getBatches={this.getBatches} pathSave={this.onViewChange} />
                             )}
                         />
                         <Route

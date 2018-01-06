@@ -57,6 +57,31 @@ class DeletePopup extends React.Component {
 export default class MainCardsView extends React.Component {
     constructor(props) {
         super(props);
+
+        this.state = {
+            batches: []
+        }
+    }
+
+    componentWillMount() {
+        console.log('Main mount');
+        const batchesRef = firebase.database().ref();
+
+        batchesRef.on("value", snap => {
+            let batches = [];
+            snap.forEach(childSnapshot => {
+                let batch = childSnapshot.val();
+                batch.key = childSnapshot.key;
+
+                batches.push(batch);
+            });
+
+            this.setState({
+                batches: batches
+            });
+
+            this.props.getBatches(batches);
+        });
     }
 
     componentDidMount() {
@@ -64,14 +89,15 @@ export default class MainCardsView extends React.Component {
     }
 
     render() {
+        const { batches } = this.state;
         return(
             <Container>
                 <Grid columns={5} stackable>
-                    {this.props.batches.map((batch, index) => {
+                    {batches.map((batch, index) => {
                         return (
                             <Grid.Column key={index}>
                                 <Link to = {`batchdetails/${batch.key}`}>
-                                    <BatchCard name={batch.details.name} style={batch.details.style} ibu={batch.details.ibu} alcohol={batch.details.alcohol} density={batch.details.density} date={batch.details.date} batchKey={batch.key} isImageInBase={batch.details.hasImage}/>
+                                    <BatchCard name={batch.details.name} style={batch.details.style} ibu={batch.details.ibu} alcohol={batch.details.alcohol} density={batch.details.density} date={batch.details.date} batchKey={batch.key} isImageInBase={batch.details.hasImage} />
                                 </Link>
                                 <DeletePopup batchKey={batch.key}/>
                             </Grid.Column>
