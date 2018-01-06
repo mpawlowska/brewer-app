@@ -4,7 +4,7 @@ Aplikacja dla piwowarów domowych do przechowywania danych na temat warek. Umoż
 * dodawanie nowych warek wraz ze zdjęciami i informacjami dotyczącymi wskaźników warki, receptury, oceny i uwag,
 * edytowanie i usuwanie danych oraz zmianę plików.
 
-### Aplikacja dostępna pod adresem: https://mpawlowska.github.io/brewer-app/
+## Aplikacja dostępna pod adresem: https://mpawlowska.github.io/brewer-app/
 
 Aplikacja zbudowana z wykorzystaniem: 
 * React,
