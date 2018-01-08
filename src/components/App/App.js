@@ -14,7 +14,7 @@ export default class App extends React.Component {
 
         this.state = {
             batches: [],
-            view: "/cards"
+            view: "/cards",
         }
     }
 
@@ -23,27 +23,6 @@ export default class App extends React.Component {
             batches: batches
         })
     };
-
-    // componentWillMount() {
-    //     const batchesRef = firebase.database().ref();
-    //
-    //     batchesRef.on("value", snap => {
-    //         let batches = [];
-    //         snap.forEach(childSnapshot => {
-    //             let batch = childSnapshot.val();
-    //             batch.key = childSnapshot.key;
-    //
-    //             batches.push(batch);
-    //         });
-    //
-    //         this.setState({
-    //             batches: batches
-    //         })
-    //     });
-    // }
-
-    /* Dane z Firebase powyżej będą synchronizowały się po każdej zmienie w bazie. Value odpala się nie tylko kiedy za pierwszym razem złapie event listenera, ale też za każdym razem kiedy item jest dodawany do bazy lub usuwany
-    */
 
     onViewChange = (view) => {
         this.state.view == view ||
@@ -65,13 +44,13 @@ export default class App extends React.Component {
                         <Route
                             exact path="/"
                             render={(routeProps) => (
-                                <MainCardsView {...routeProps} getBatches={this.getBatches} pathSave={this.onViewChange} />
+                                <MainCardsView {...routeProps} getBatches={this.getBatches} pathSave={this.onViewChange} addImageToStorageFromApp={this.addImageToStorageFromApp}/>
                             )}
                         />
                         <Route
                             exact path="/cards"
                             render={(routeProps) => (
-                                <MainCardsView {...routeProps} getBatches={this.getBatches} pathSave={this.onViewChange} />
+                                <MainCardsView {...routeProps} getBatches={this.getBatches} pathSave={this.onViewChange} addImageToStorageFromApp={this.addImageToStorageFromApp}/>
                             )}
                         />
                         <Route
@@ -83,12 +62,12 @@ export default class App extends React.Component {
                     </Switch>
                     <Route path="/newbatch"
                            render = {(routeProps) => (
-                               <DetailsView {...routeProps} view="add" pathToGoBack={view} />
+                               <DetailsView {...routeProps} view="add" pathToGoBack={view} addImageToStorageFromApp={this.addImageToStorageFromApp}/>
                            )}
                     />
                     <Route path="/batchdetails/:batchKey"
                            render = {(routeProps) => (
-                               <DetailsView {...routeProps} batches={batches} view="preview" pathToGoBack={view} />
+                               <DetailsView {...routeProps} batches={batches} view="preview" pathToGoBack={view} addImageToStorageFromApp={this.addImageToStorageFromApp}/>
                            )}
                     />
                 </main>

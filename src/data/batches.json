@@ -1,12 +1,13 @@
 {
     "batch1": {
         "details": {
+            "hasImage": "false",
             "name": "McDusia",
             "style": "lager",
             "date": "04.06.2016",
             "volume": "20l",
-            "IBU": "35",
-            "SRM": "5",
+            "ibu": "35",
+            "srm": "5",
             "density": "24 BLG",
             "alcohol": "5%",
             "type": "zacieranie"
@@ -37,19 +38,30 @@
                     "name": "fermentum_mobile",
                     "quantity": "23ml"
                 }
+            ],
+            "addons": [
+                {
+                    "name": "dynia",
+                    "quantity": "20g"
+                }
             ]
         },
         "rating": {
-            "general_rating": "4.5",
-            "costam1": "4.5",
-            "costam2": "3"
+            "rateGeneral": "5",
+            "rateStyle": "4",
+            "rateAroma": "4",
+            "rateLook": "5",
+            "rateFlavor": "3",
+            "rateBitterness": "6"
         },
         "comments": {
-            "date1": "blabla",
-            "date2": "blablabla"
-        },
-        "files": {
-            "main_image": "http://blog.muscle-zone.pl/wp-content/uploads/2017/05/piwooo-e1494607581502.jpg"
+            "commentGeneral": "Całkiem dobre",
+            "commentStyle": "Do zgodności ze stylem troce brakuje",
+            "commentAroma": "",
+            "commentLook": "Bardzo ładna piana",
+            "commentFlavor": "W smaku za mocno czuć dodatek dyni",
+            "commentBitterness": "Goryczka nie zalegająca",
+            "commentAdditional": "Nastepnym razem - mniej dyni"
         }
     },
     "batch2": {
@@ -58,8 +70,8 @@
             "style": "IPA",
             "date": "03.06.2016",
             "volume": "40l",
-            "IBU": "35",
-            "SRM": "6",
+            "ibu": "35",
+            "srm": "6",
             "density": "24 BLG",
             "alcohol": "5%",
             "type": "zacieranie"
@@ -93,16 +105,21 @@
             ]
         },
         "rating": {
-            "general_rating": "4.5",
-            "costam1": "4.5",
-            "costam2": "3"
+            "rateGeneral": "5",
+            "rateStyle": "4",
+            "rateAroma": "4",
+            "rateLook": "5",
+            "rateFlavor": "3",
+            "rateBitterness": "6"
         },
         "comments": {
-            "date1": "tiruriru",
-            "date2": "tatata"
-        },
-        "files": {
-            "main_image": "http://cdn13.se.smcloud.net/t/photos/253702/uwaga-piwo-podrozeje.jpg"
+            "commentGeneral": "Całkiem dobre",
+            "commentStyle": "Do zgodności ze stylem troce brakuje",
+            "commentAroma": "",
+            "commentLook": "Bardzo ładna piana",
+            "commentFlavor": "W smaku za mocno czuć dodatek dyni",
+            "commentBitterness": "Goryczka nie zalegająca",
+            "commentAdditional": "Nastepnym razem - mniej dyni"
         }
     },
    "batch3": {
@@ -111,8 +128,8 @@
             "style": "IPA",
             "date": "04.06.2016",
             "volume": "20l",
-            "IBU": "35",
-            "SRM": "5",
+            "ibu": "35",
+            "srm": "5",
             "density": "24 BLG",
             "alcohol": "5%",
             "type": "zacieranie"
@@ -146,17 +163,22 @@
             ]
         },
         "rating": {
-            "general_rating":"4.5",
-            "costam1": "4.5",
-            "costam2": "3"
-        },
-        "comments": {
-            "date1": "blabla",
-            "date2": "blablabla"
-        },
-        "files": {
-            "main_image": "http://gfx.chillizet.pl/var/zetchilli/storage/images/food/newsy/dlaczego-piwo-koncernowe-nie-smakuje-to-zadna-tajemnica-1351/19972-1-pol-PL/Dlaczego-piwo-koncernowe-nie-smakuje-To-zadna-tajemnica_article.jpg"
-        }
+            "rateGeneral": "5",
+            "rateStyle": "4",
+            "rateAroma": "4",
+            "rateLook": "5",
+            "rateFlavor": "3",
+            "rateBitterness": "6"
+            },
+       "comments": {
+           "commentGeneral": "Całkiem dobre",
+           "commentStyle": "Do zgodności ze stylem troce brakuje",
+           "commentAroma": "",
+           "commentLook": "Bardzo ładna piana",
+           "commentFlavor": "W smaku za mocno czuć dodatek dyni",
+           "commentBitterness": "Goryczka nie zalegająca",
+           "commentAdditional": "Nastepnym razem - mniej dyni"
+       }
     },
    "batch4": {
         "details": {
@@ -164,8 +186,8 @@
             "style": "lager",
             "date": "04.06.2016",
             "volume": "20l",
-            "IBU": "35",
-            "SRM": "5",
+            "ibu": "35",
+            "srm": "5",
             "density": "24 BLG",
             "alcohol": "5%",
             "type": "zacieranie"
@@ -199,17 +221,22 @@
             ]
         },
         "rating": {
-            "general_rating": "4.5",
-            "costam1": "4.5",
-            "costam2": "3"
+            "rateGeneral": "5",
+            "rateStyle": "4",
+            "rateAroma": "4",
+            "rateLook": "5",
+            "rateFlavor": "3",
+            "rateBitterness": "6"
         },
-        "comments": {
-            "date1": "blabla",
-            "date2": "blablabla"
-        },
-        "files": {
-            "main_image": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Dark_beer_and_light_beer.jpg/220px-Dark_beer_and_light_beer.jpg"
-        }
+       "comments": {
+           "commentGeneral": "Całkiem dobre",
+           "commentStyle": "Do zgodności ze stylem troce brakuje",
+           "commentAroma": "",
+           "commentLook": "Bardzo ładna piana",
+           "commentFlavor": "W smaku za mocno czuć dodatek dyni",
+           "commentBitterness": "Goryczka nie zalegająca",
+           "commentAdditional": "Nastepnym razem - mniej dyni"
+       }
     },
    "batch5": {
         "details": {
@@ -217,8 +244,8 @@
             "style": "lager",
             "date": "04.06.2016",
             "volume": "20l",
-            "IBU": "35",
-            "SRM": "5",
+            "ibu": "35",
+            "srm": "5",
             "density": "24 BLG",
             "alcohol": "5%",
             "type": "zacieranie"
@@ -252,17 +279,22 @@
             ]
         },
         "rating": {
-            "general_rating": "4.5",
-            "costam1": "4.5",
-            "costam2": "3"
+            "rateGeneral": "5",
+            "rateStyle": "4",
+            "rateAroma": "4",
+            "rateLook": "5",
+            "rateFlavor": "3",
+            "rateBitterness": "6"
         },
-        "comments": {
-            "date1": "blabla",
-            "date2": "blablabla"
-        },
-        "files": {
-            "main_image": "http://gfx.chillizet.pl/var/zetchilli/storage/images/food/newsy/dlaczego-piwo-koncernowe-nie-smakuje-to-zadna-tajemnica-1351/19972-1-pol-PL/Dlaczego-piwo-koncernowe-nie-smakuje-To-zadna-tajemnica_article.jpg"
-        }
+       "comments": {
+           "commentGeneral": "Całkiem dobre",
+           "commentStyle": "Do zgodności ze stylem troce brakuje",
+           "commentAroma": "",
+           "commentLook": "Bardzo ładna piana",
+           "commentFlavor": "W smaku za mocno czuć dodatek dyni",
+           "commentBitterness": "Goryczka nie zalegająca",
+           "commentAdditional": "Nastepnym razem - mniej dyni"
+       }
     },
    "batch6": {
         "details": {
@@ -270,8 +302,8 @@
             "style": "lager",
             "date": "04.06.2016",
             "volume": "20l",
-            "IBU": "35",
-            "SRM": "5",
+            "ibu": "35",
+            "srm": "5",
             "density": "24 BLG",
             "alcohol": "5%",
             "type": "zacieranie"
@@ -305,17 +337,22 @@
             ]
         },
         "rating": {
-            "general_rating": "4.5",
-            "costam1": "4.5",
-            "costam2": "3"
+            "rateGeneral": "5",
+            "rateStyle": "4",
+            "rateAroma": "4",
+            "rateLook": "5",
+            "rateFlavor": "3",
+            "rateBitterness": "6"
         },
-        "comments": {
-            "date1": "blabla",
-            "date2": "blablabla"
-        },
-        "files": {
-            "main_image": "http://gfx.chillizet.pl/var/zetchilli/storage/images/food/newsy/dlaczego-piwo-koncernowe-nie-smakuje-to-zadna-tajemnica-1351/19972-1-pol-PL/Dlaczego-piwo-koncernowe-nie-smakuje-To-zadna-tajemnica_article.jpg"
-        }
+       "comments": {
+           "commentGeneral": "Całkiem dobre",
+           "commentStyle": "Do zgodności ze stylem troce brakuje",
+           "commentAroma": "",
+           "commentLook": "Bardzo ładna piana",
+           "commentFlavor": "W smaku za mocno czuć dodatek dyni",
+           "commentBitterness": "Goryczka nie zalegająca",
+           "commentAdditional": "Nastepnym razem - mniej dyni"
+       }
     },
    "batch7": {
         "details": {
@@ -323,8 +360,8 @@
             "style": "lager",
             "date": "04.06.2016",
             "volume": "20l",
-            "IBU": "35",
-            "SRM": "5",
+            "ibu": "35",
+            "srm": "5",
             "density": "24 BLG",
             "alcohol": "5%",
             "type": "zacieranie"
@@ -358,17 +395,22 @@
             ]
         },
         "rating": {
-            "general_rating":"4.5",
-            "costam1": "4.5",
-            "costam2": "3"
+            "rateGeneral": "5",
+            "rateStyle": "4",
+            "rateAroma": "4",
+            "rateLook": "5",
+            "rateFlavor": "3",
+            "rateBitterness": "6"
         },
-        "comments": {
-            "date1": "blabla",
-            "date2": "blablabla"
-        },
-        "files": {
-            "main_image": "http://gfx.chillizet.pl/var/zetchilli/storage/images/food/newsy/dlaczego-piwo-koncernowe-nie-smakuje-to-zadna-tajemnica-1351/19972-1-pol-PL/Dlaczego-piwo-koncernowe-nie-smakuje-To-zadna-tajemnica_article.jpg"
-        }
+       "comments": {
+           "commentGeneral": "Całkiem dobre",
+           "commentStyle": "Do zgodności ze stylem troce brakuje",
+           "commentAroma": "",
+           "commentLook": "Bardzo ładna piana",
+           "commentFlavor": "W smaku za mocno czuć dodatek dyni",
+           "commentBitterness": "Goryczka nie zalegająca",
+           "commentAdditional": "Nastepnym razem - mniej dyni"
+       }
     },
    "batch8": {
         "details": {
@@ -376,8 +418,8 @@
             "style": "IPA",
             "date": "04.06.2016",
             "volume": "20l",
-            "IBU": "35",
-            "SRM": "5",
+            "ibu": "35",
+            "srm": "5",
             "density": "24 BLG",
             "alcohol": "5%",
             "type": "zacieranie"
@@ -411,16 +453,21 @@
             ]
         },
         "rating": {
-            "general_rating": "4.5",
-            "costam1":"4.5",
-            "costam2": "3"
+            "rateGeneral": "5",
+            "rateStyle": "4",
+            "rateAroma": "4",
+            "rateLook": "5",
+            "rateFlavor": "3",
+            "rateBitterness": "6"
         },
-        "comments": {
-            "date1": "blabla",
-            "date2": "blablabla"
-        },
-        "files": {
-            "main_image": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Dark_beer_and_light_beer.jpg/220px-Dark_beer_and_light_beer.jpg"
-        }
+       "comments": {
+           "commentGeneral": "Całkiem dobre",
+           "commentStyle": "Do zgodności ze stylem troce brakuje",
+           "commentAroma": "",
+           "commentLook": "Bardzo ładna piana",
+           "commentFlavor": "W smaku za mocno czuć dodatek dyni",
+           "commentBitterness": "Goryczka nie zalegająca",
+           "commentAdditional": "Nastepnym razem - mniej dyni"
+       }
     }
 }

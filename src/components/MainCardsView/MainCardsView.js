@@ -64,7 +64,7 @@ export default class MainCardsView extends React.Component {
     }
 
     componentWillMount() {
-        console.log('Main mount');
+        // setTimeout(() => {
         const batchesRef = firebase.database().ref();
 
         batchesRef.on("value", snap => {
@@ -74,15 +74,20 @@ export default class MainCardsView extends React.Component {
                 batch.key = childSnapshot.key;
 
                 batches.push(batch);
+
+                this.setState({
+                    batches: batches
+                });
+
+                this.props.getBatches(batches);
             });
 
-            this.setState({
-                batches: batches
-            });
-
-            this.props.getBatches(batches);
         });
+        // }, 1000)
     }
+
+    /* Dane z Firebase powyżej będą synchronizowały się po każdej zmienie w bazie. Value odpala się nie tylko kiedy za pierwszym razem złapie event listenera, ale też za każdym razem kiedy item jest dodawany do bazy lub usuwany
+     */
 
     componentDidMount() {
         this.props.pathSave('/cards')

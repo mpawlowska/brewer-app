@@ -335,14 +335,11 @@ export default class BatchForm extends React.Component {
         const storageRef = firebase.storage().ref();
         storageRef.child(ref).put(file).then(function(snapshot) {
             console.log("Uploaded file!");
-
-            that.props.onImageAddToBase();
         });
-
-
 
         // przekazuję wyżej informację, że warka ma zdjęcie, aby tylko w tej sytuacji BatchCard odpytywało bazę
         // that.props.onImageAddToBase();
+        that.props.onImageAddToBase();
     };
     
     /* ---------- KONIEC funkcji pomocniczych do dodania warki do bazy --------- */
@@ -352,6 +349,8 @@ export default class BatchForm extends React.Component {
     /* ------- obsługa buttona "Zapisz i zakończ edycję" - dodanie nowej warki do bazy i pliku do storage ------ */
 
     onEditClick = (e) => {
+
+
         if (this.state.disabled) {
             e.preventDefault();  // to zapobiega uaktywnieniu Link z routera i przejściu na inną path
             this.setState({
@@ -388,10 +387,10 @@ export default class BatchForm extends React.Component {
     onCloseClick = () => {
         // tworzę dane do bazy
         const newBatch = this.createNewBatch();
-        
+
         // tworzę referencję do bazy
         const batchesRef = firebase.database().ref();
-        
+
         // wrzucam warkę do bazy, ale też zapisuję klucz, bo będzie mi potrzebny do zapisania w storage zdjęcia pod odpowiednią nazwą
         const newBatchKey = batchesRef.push(newBatch).key;
 
@@ -423,11 +422,14 @@ export default class BatchForm extends React.Component {
                     <Button type="submit" onClick={this.onCloseClick} color="blue" style={{position: "relative", left: "42em", marginTop: "0.5em"}}>Zakończ dodawanie warki</Button>
                 </Link>
             )
+
         } else {
             link = `/batchdetails/${this.props.batch.key}`;
             path = "/batchdetails/:batchKey";
+
             const deleteBatchButton =
-                <Button type="text" color="blue" style={{position: "relative", left: "35em", marginTop: "1em"}} onClick={this.togglePopup}>Usuń warkę</Button>;
+                <Button type="text" color="blue" style={{position: "relative", right: "-50em", marginTop: "1em"}} onClick={this.togglePopup}>Usuń warkę</Button>;
+
             buttons = (
                 <div>
                     <Popup
@@ -448,7 +450,7 @@ export default class BatchForm extends React.Component {
                         </Popup.Content>
                     </Popup>
                     <Link to={this.props.pathToGoBack}>
-                        <Button type="text" color="blue" style={{position: "relative", left: "39em", marginTop: "1em"}} onClick={this.onEditClick}>{buttonText}</Button>
+                        <Button type="text" color="green" style={{position: "relative", right: "-27em", marginTop: "1em"}} onClick={this.onEditClick}>{buttonText}</Button>
                     </Link>
                 </div>
             )
