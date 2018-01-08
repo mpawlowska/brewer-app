@@ -65,7 +65,7 @@ export default class BatchCardForm extends React.Component {
         return (
             <div style={{display: "flex", alignItems: "center", justifyContent: "space-around", height: "90%", width: "90%"}}>
                 <BatchCard batchKey={batchKey} name={name} style={style} ibu={ibu} alcohol={alcohol} density={density} date={date}  isImageInBase={isImageInBase} imageUrl={imageUrl} />
-                <BatchForm batch={batch} pathToGoBack={pathToGoBack} view={view} onDetailsChange={this.handleDetailsChange} onImageChange={this.handleImageChange} onImageAddToBase={this.handleImageAddToBase} addImageToStorageFromApp={this.props.addImageToStorageFromApp}/>
+                <BatchForm batch={batch} pathToGoBack={pathToGoBack} view={view} onDetailsChange={this.handleDetailsChange} onImageChange={this.handleImageChange} onImageAddToBase={this.handleImageAddToBase} />
             </div>
         )
     }

@@ -10,16 +10,17 @@ export default class MainListView extends React.Component {
     }
 
     componentDidMount() {
-        this.props.pathSave('/list')
+        this.props.pathSave('/mybatches/list');
     }
 
     render() {
+        const { batches } = this.props;
         return(
             <Container>
                 <List divided relaxed animated>
-                    {this.props.batches.map((batch, index) => {
+                    {batches.map((batch, index) => {
                         return (
-                            <Link to = {`batchdetails/${batch.key}`} key={index}>
+                            <Link to = {`mybatches/batchdetails/${batch.key}`} key={index}>
                                 <BatchListItem key={index} batch={batch} />
                             </Link>
                             )

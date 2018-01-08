@@ -57,51 +57,21 @@ class DeletePopup extends React.Component {
 export default class MainCardsView extends React.Component {
     constructor(props) {
         super(props);
-
-        this.state = {
-            batches: []
-        }
     }
-
-    componentWillMount() {
-        // setTimeout(() => {
-        const batchesRef = firebase.database().ref();
-
-        batchesRef.on("value", snap => {
-            let batches = [];
-            snap.forEach(childSnapshot => {
-                let batch = childSnapshot.val();
-                batch.key = childSnapshot.key;
-
-                batches.push(batch);
-
-                this.setState({
-                    batches: batches
-                });
-
-                this.props.getBatches(batches);
-            });
-
-        });
-        // }, 1000)
-    }
-
-    /* Dane z Firebase powyżej będą synchronizowały się po każdej zmienie w bazie. Value odpala się nie tylko kiedy za pierwszym razem złapie event listenera, ale też za każdym razem kiedy item jest dodawany do bazy lub usuwany
-     */
 
     componentDidMount() {
-        this.props.pathSave('/cards')
+        this.props.pathSave('/mybatches/cards');
     }
 
     render() {
-        const { batches } = this.state;
+        const { batches } = this.props;
         return(
             <Container>
                 <Grid columns={5} stackable>
                     {batches.map((batch, index) => {
                         return (
                             <Grid.Column key={index}>
-                                <Link to = {`batchdetails/${batch.key}`}>
+                                <Link to = {`mybatches/batchdetails/${batch.key}`}>
                                     <BatchCard name={batch.details.name} style={batch.details.style} ibu={batch.details.ibu} alcohol={batch.details.alcohol} density={batch.details.density} date={batch.details.date} batchKey={batch.key} isImageInBase={batch.details.hasImage} />
                                 </Link>
                                 <DeletePopup batchKey={batch.key}/>

@@ -24,12 +24,6 @@ export default class BatchCard extends React.Component {
                 })
             });
         }
-
-        if(this.props.downloadURL) {
-            this.setState({
-                downloadURL: this.props.downloadURL
-            })
-        }
     }
 
     /*

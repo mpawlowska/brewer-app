@@ -11,3 +11,5 @@ Aplikacja zbudowana z wykorzystaniem:
 * Firebase,
 * Semantic UI React,
 * Webpack.
+
+Projekt cały czas rozwijany.

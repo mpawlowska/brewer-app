@@ -33,13 +33,13 @@ export default class ChooseViewButton extends React.Component {
         return (
             <Dropdown text='Wybierz widok' open style={{float: 'right'}}>
                 <Dropdown.Menu>
-                    <Link to="/cards">
+                    <Link to="/mybatches/cards">
                         <Dropdown.Item style={{width: '100px', color: 'black'}}>
                         Karty
                         </Dropdown.Item>
                     </Link>
                     <Divider />
-                    <Link to="/list">
+                    <Link to="/mybatches/list">
                         <Dropdown.Item style={{width: '100px', color: 'black'}}>
                         Lista
                         </Dropdown.Item>

@@ -12,7 +12,7 @@ export default class AddBatchButton extends React.Component {
 
     render() {
         return (
-            <Link to= 'newbatch'>
+            <Link to='/mybatches/newbatch'>
             <Button
                 content='Dodaj warkę'
                 icon='add square'

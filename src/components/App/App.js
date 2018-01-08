@@ -1,28 +1,19 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
 import "normalize.css";
-import Header from "../Header/Header.js";
-import MainActionButtons from "../MainActionButtons/MainActionButtons.js"
-import MainCardsView from "../MainCardsView/MainCardsView";
-import MainListView from "../MainListView/MainListView";
-import DetailsView from "../DetailsView/DetailsView";
-
+import Header from "../MyBatches/Header/Header.js";
+import MyBatches from "../MyBatches/MyBatches";
+import Calculators from "../Calculators/Calculators";
 
 export default class App extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            batches: [],
-            view: "/cards",
+            view: "/mybatches",
+            windowHref: "mybatches"
         }
     }
-
-    getBatches = (batches) => {
-        this.setState({
-            batches: batches
-        })
-    };
 
     onViewChange = (view) => {
         this.state.view == view ||
@@ -31,45 +22,54 @@ export default class App extends React.Component {
         })
     };
 
+    // componentDidMount() {
+    //     const windowHref = window.location.href;
+    //     const myBatchesView = windowHref.indexOf("mybatches");
+    //
+    //     console.log('APP href', myBatchesView);
+    //
+    //     if (myBatchesView === -1) {
+    //         this.setState({
+    //             windowHref: "calculators"
+    //         });
+    //     } else {
+    //         this.setState({
+    //             windowHref: "mybatches"
+    //         });
+    //     }
+    // };
+
+
     render() {
+
+        console.log('App render');
         
-        const { batches, view } = this.state;
+        const { view, windowHref } = this.state;
         
         return (
             <div className="container">
-                <Header pathToGoBack={view} />
+                <Header pathToGoBack={view} windowHref={windowHref} />
                 <main style={{marginTop: "6em"}}>
-                    <MainActionButtons />
                     <Switch>
                         <Route
                             exact path="/"
                             render={(routeProps) => (
-                                <MainCardsView {...routeProps} getBatches={this.getBatches} pathSave={this.onViewChange} addImageToStorageFromApp={this.addImageToStorageFromApp}/>
-                            )}
+                                <MyBatches {...routeProps} pathSave={this.onViewChange} pathToGoBack={view} />
+                                )}
                         />
                         <Route
-                            exact path="/cards"
+                            path="/mybatches"
                             render={(routeProps) => (
-                                <MainCardsView {...routeProps} getBatches={this.getBatches} pathSave={this.onViewChange} addImageToStorageFromApp={this.addImageToStorageFromApp}/>
-                            )}
+                                <MyBatches {...routeProps} pathSave={this.onViewChange} pathToGoBack={view} />
+                                )}
                         />
                         <Route
-                            exact path="/list"
+                            exact path="/calculators"
                             render={(routeProps) => (
-                               <MainListView {...routeProps} batches={batches} pathSave={this.onViewChange} />
-                           )}
+                                <Calculators {...routeProps} />
+                                )}
                         />
                     </Switch>
-                    <Route path="/newbatch"
-                           render = {(routeProps) => (
-                               <DetailsView {...routeProps} view="add" pathToGoBack={view} addImageToStorageFromApp={this.addImageToStorageFromApp}/>
-                           )}
-                    />
-                    <Route path="/batchdetails/:batchKey"
-                           render = {(routeProps) => (
-                               <DetailsView {...routeProps} batches={batches} view="preview" pathToGoBack={view} addImageToStorageFromApp={this.addImageToStorageFromApp}/>
-                           )}
-                    />
                 </main>
             </div>
         )
