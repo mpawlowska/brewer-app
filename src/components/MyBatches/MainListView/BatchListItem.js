@@ -16,7 +16,7 @@ export default class BatchListItem extends React.Component {
         return (
             <List.Item>
                 <List.Content floated='right' verticalAlign="bottom" style={{position: 'relative', top: '3em'}}>
-                    <DeleteBatchPopup batchKey={batch.key} trigger={trigger}/>
+                    <DeleteBatchPopup batchKey={batch.key} trigger={trigger} />
                 </List.Content>
                 <List.Icon name='beer' size='large' verticalAlign='middle'/>
                 <Link to = {link}>

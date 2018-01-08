@@ -20,7 +20,7 @@ export default class MainListView extends React.Component {
                 <List divided relaxed animated>
                     {batches.map((batch, index) => {
                         return (
-                            <BatchListItem key={index} batch={batch} link={`/mybatches/batchdetails/${batch.key}`}/>
+                            <BatchListItem key={index} batch={batch} link={`/mybatches/batchdetails/${batch.key}`} />
                             )
                         })
                     }

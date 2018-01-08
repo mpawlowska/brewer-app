@@ -349,13 +349,15 @@ export default class BatchForm extends React.Component {
 
     onEditClick = (e) => {
 
-
         if (this.state.disabled) {
             e.preventDefault();  // to zapobiega uaktywnieniu Link z routera i przejściu na inną path
             this.setState({
                 disabled: false,
                 buttonText: "Zapisz i zakończ edycję"
             });
+            // przekazuję zmianę wyżej, do obsługi popup zamykającego kartę
+            this.props.handleDisabledChange(false);
+
         } else {
 
             // tworzę referencję do konkretnej warki w bazie i nadpisuję jej dane
