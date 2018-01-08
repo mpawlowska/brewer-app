@@ -1,46 +1,41 @@
-import React from 'react';
-import {
-    Route,
-    Link
-} from 'react-router-dom';
-import { Dropdown, Divider } from 'semantic-ui-react';
+import React from "react";
+import { Link } from "react-router-dom";
+import { Dropdown, Divider } from "semantic-ui-react";
 
 const options = [
-    { key: 1, text: 'Szczegóły', value: 'details' },
-    { key: 2, text: 'Lista', value: 'list' },
+    { key: 1, text: "Szczegóły", value: "details" },
+    { key: 2, text: "Lista", value: "list" },
 ];
 
 export default class ChooseViewButton extends React.Component {
     constructor(props) {
         super(props);
+
+        this.state = {
+            active: "cards"
+        }
     }
 
-    //     this.state = {
-    //         value: 'cards'
-    //     }
-    // }
-    //
-    // handleChange = (e, { value }) => {
-    //     if (this.state.value != value) {
-    //         this.setState({value});
-    //     }
-    // };
+    onClick = (e, { name }) => {
+        this.state.active == name || this.setState({
+            active: name
+        })
+    };
 
     render() {
-        // const {value} = this.state;
-        // console.log(this.state.value);
+        const { active } = this.state;
 
         return (
-            <Dropdown text='Wybierz widok' open style={{float: 'right'}}>
+            <Dropdown text="Wybierz widok" open style={{float: "right"}}>
                 <Dropdown.Menu>
                     <Link to="/mybatches/cards">
-                        <Dropdown.Item style={{width: '100px', color: 'black'}}>
+                        <Dropdown.Item style={{width: "100px", color: "black", textAlign: "center"}} active={active === "cards"} name="cards" onClick={this.onClick}>
                         Karty
                         </Dropdown.Item>
                     </Link>
                     <Divider />
                     <Link to="/mybatches/list">
-                        <Dropdown.Item style={{width: '100px', color: 'black'}}>
+                        <Dropdown.Item style={{width: "100px", color: "black", textAlign: "center"}} active={active === "list"} name="list" onClick={this.onClick}>
                         Lista
                         </Dropdown.Item>
                     </Link>
@@ -52,10 +47,10 @@ export default class ChooseViewButton extends React.Component {
 
 
 // Pierwsza wersja Dropdown:
-// <Dropdown text='Wybierz widok' options={options} open style={{float: 'right'}} onChange={this.handleChange} value={value}>
+// <Dropdown text="Wybierz widok" options={options} open style={{float: "right"}} onChange={this.handleChange} value={value}>
 
 // const ChooseViewButton = () => (
-//     <Button.Group size='mini'>
+//     <Button.Group size="mini">
 //         <Button>Szczegóły</Button>
 //         <Button.Or text="lub"/>
 //         <Button>Lista</Button>
