@@ -10,8 +10,7 @@ export default class App extends React.Component {
         super(props);
 
         this.state = {
-            view: "/mybatches",
-            windowHref: "mybatches"
+            view: "/mybatches"
         }
     }
 
@@ -22,33 +21,13 @@ export default class App extends React.Component {
         })
     };
 
-    // componentDidMount() {
-    //     const windowHref = window.location.href;
-    //     const myBatchesView = windowHref.indexOf("mybatches");
-    //
-    //     console.log('APP href', myBatchesView);
-    //
-    //     if (myBatchesView === -1) {
-    //         this.setState({
-    //             windowHref: "calculators"
-    //         });
-    //     } else {
-    //         this.setState({
-    //             windowHref: "mybatches"
-    //         });
-    //     }
-    // };
-
-
     render() {
 
-        console.log('App render');
-        
-        const { view, windowHref } = this.state;
+        const { view } = this.state;
         
         return (
             <div className="container">
-                <Header pathToGoBack={view} windowHref={windowHref} />
+                <Header pathToGoBack={view} />
                 <main style={{marginTop: "6em"}}>
                     <Switch>
                         <Route
@@ -64,10 +43,7 @@ export default class App extends React.Component {
                                 )}
                         />
                         <Route
-                            exact path="/calculators"
-                            render={(routeProps) => (
-                                <Calculators {...routeProps} />
-                                )}
+                            exact path="/calculators" component={Calculators}
                         />
                     </Switch>
                 </main>

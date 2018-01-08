@@ -71,7 +71,7 @@ export default class MainCardsView extends React.Component {
                     {batches.map((batch, index) => {
                         return (
                             <Grid.Column key={index}>
-                                <Link to = {`mybatches/batchdetails/${batch.key}`}>
+                                <Link to = {`/mybatches/batchdetails/${batch.key}`}>
                                     <BatchCard name={batch.details.name} style={batch.details.style} ibu={batch.details.ibu} alcohol={batch.details.alcohol} density={batch.details.density} date={batch.details.date} batchKey={batch.key} isImageInBase={batch.details.hasImage} />
                                 </Link>
                                 <DeletePopup batchKey={batch.key}/>

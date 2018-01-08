@@ -9,6 +9,7 @@ Aplikacja dla piwowarów domowych do przechowywania danych na temat warek. Umoż
 Aplikacja zbudowana z wykorzystaniem: 
 * React,
 * Firebase,
+* React-router,
 * Semantic UI React,
 * Webpack.
 

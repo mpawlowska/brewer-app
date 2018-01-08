@@ -42,7 +42,7 @@ export default class MyBatches extends React.Component {
     render() {
 
         const { batches } = this.state;
-        const { view } = this.props;
+        const { pathToGoBack } = this.props;
 
         return (
             <div>
@@ -75,12 +75,12 @@ export default class MyBatches extends React.Component {
                 </Switch>
                 <Route path="/mybatches/newbatch"
                        render = {(routeProps) => (
-                           <DetailsView {...routeProps} view="add" pathToGoBack={view} />
+                           <DetailsView {...routeProps} view="add" pathToGoBack={pathToGoBack} />
                        )}
                 />
                 <Route path="/mybatches/batchdetails/:batchKey"
                        render = {(routeProps) => (
-                           <DetailsView {...routeProps} batches={batches} view="preview" pathToGoBack={view} />
+                           <DetailsView {...routeProps} batches={batches} view="preview" pathToGoBack={pathToGoBack} />
                        )}
                 />
             </div>

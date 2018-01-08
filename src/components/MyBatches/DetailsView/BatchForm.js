@@ -338,7 +338,6 @@ export default class BatchForm extends React.Component {
         });
 
         // przekazuję wyżej informację, że warka ma zdjęcie, aby tylko w tej sytuacji BatchCard odpytywało bazę
-        // that.props.onImageAddToBase();
         that.props.onImageAddToBase();
     };
     
@@ -409,23 +408,23 @@ export default class BatchForm extends React.Component {
 
     render() {
 
-        let { activeItem, name, style, date, ibu, srm, alcohol, volume, density, type, ingredients_ferm, ingredients_yeast, ingredients_hop, ingredients_addons, disabled, rateGeneral, rateAroma, rateBitterness, rateflavor, rateLook, rateStyle, commentAdditional, commentAroma, commentBitterness, commentFlavor, commentGeneral, commentLook, commentStyle, buttonText, isPopupOpen, imagePreviewUrl }  = this.state;
+        let { activeItem, name, style, date, ibu, srm, alcohol, volume, density, type, ingredients_ferm, ingredients_yeast, ingredients_hop, ingredients_addons, disabled, rateGeneral, rateAroma, rateBitterness, rateFlavor, rateLook, rateStyle, commentAdditional, commentAroma, commentBitterness, commentFlavor, commentGeneral, commentLook, commentStyle, buttonText, isPopupOpen, imagePreviewUrl }  = this.state;
 
-        const { view } = this.props;
+        const { view, pathToGoBack } = this.props;
         let link, path, buttons;
 
         if(view === "add") {
-            link = "/newbatch";
-            path = "/newbatch";
+            link = "/mybatches/newbatch";
+            path = "/mybatches/newbatch";
             buttons = (
-                <Link to={this.props.pathToGoBack}>
+                <Link to={pathToGoBack}>
                     <Button type="submit" onClick={this.onCloseClick} color="blue" style={{position: "relative", left: "42em", marginTop: "0.5em"}}>Zakończ dodawanie warki</Button>
                 </Link>
             )
 
         } else {
-            link = `/batchdetails/${this.props.batch.key}`;
-            path = "/batchdetails/:batchKey";
+            link = `/mybatches/batchdetails/${this.props.batch.key}`;
+            path = "/mybatches/batchdetails/:batchKey";
 
             const deleteBatchButton =
                 <Button type="text" color="blue" style={{position: "relative", right: "-50em", marginTop: "1em"}} onClick={this.togglePopup}>Usuń warkę</Button>;
@@ -443,13 +442,13 @@ export default class BatchForm extends React.Component {
                             Czy na pewno chcesz usunąć warkę?
                         </Popup.Header>
                         <Popup.Content>
-                            <Link to={this.props.pathToGoBack}>
+                            <Link to={pathToGoBack}>
                                 <Button color="blue" content="Tak" onClick = {() => this.onDeleteBatchClick(this.props.batch.key)}/>
                             </Link>
                             <Button color="green" content="Nie" onClick={this.togglePopup}/>
                         </Popup.Content>
                     </Popup>
-                    <Link to={this.props.pathToGoBack}>
+                    <Link to={pathToGoBack}>
                         <Button type="text" color="green" style={{position: "relative", right: "-27em", marginTop: "1em"}} onClick={this.onEditClick}>{buttonText}</Button>
                     </Link>
                 </div>
@@ -507,7 +506,7 @@ export default class BatchForm extends React.Component {
                             <Route
                                 exact path={`${path}/rating-comments`}
                                 render={(routeProps) => (
-                                    <Rating_Comments {...routeProps} disabled={disabled} handleRate={this.handleRateChange} rateGeneral={rateGeneral} rateAroma={rateAroma} rateBitterness={rateBitterness} rateflavor={rateflavor} rateLook={rateLook} rateStyle={rateStyle} commentBitterness={commentBitterness} commentAdditional={commentAdditional} commentFlavor={commentFlavor} commentLook={commentLook} commentStyle={commentStyle} commentAroma={commentAroma} commentGeneral={commentGeneral} handleCommentChange={this.handleCommentChange}/>
+                                    <Rating_Comments {...routeProps} disabled={disabled} handleRate={this.handleRateChange} rateGeneral={rateGeneral} rateAroma={rateAroma} rateBitterness={rateBitterness} rateFlavor={rateFlavor} rateLook={rateLook} rateStyle={rateStyle} commentBitterness={commentBitterness} commentAdditional={commentAdditional} commentFlavor={commentFlavor} commentLook={commentLook} commentStyle={commentStyle} commentAroma={commentAroma} commentGeneral={commentGeneral} handleCommentChange={this.handleCommentChange}/>
                                 )}
                             />
 
