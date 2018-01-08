@@ -1,7 +1,7 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { List, Container } from 'semantic-ui-react';
-import BatchListItem from './BatchListItem'
+import React from "react";
+import { Link } from "react-router-dom";
+import { List, Container } from "semantic-ui-react";
+import BatchListItem from "./BatchListItem"
 
 
 export default class MainListView extends React.Component {
@@ -10,7 +10,7 @@ export default class MainListView extends React.Component {
     }
 
     componentDidMount() {
-        this.props.pathSave('/mybatches/list');
+        this.props.pathSave("/mybatches/list");
     }
 
     render() {
@@ -20,9 +20,7 @@ export default class MainListView extends React.Component {
                 <List divided relaxed animated>
                     {batches.map((batch, index) => {
                         return (
-                            <Link to = {`/mybatches/batchdetails/${batch.key}`} key={index}>
-                                <BatchListItem key={index} batch={batch} />
-                            </Link>
+                            <BatchListItem key={index} batch={batch} link={`/mybatches/batchdetails/${batch.key}`}/>
                             )
                         })
                     }
@@ -31,7 +29,3 @@ export default class MainListView extends React.Component {
         )
     }
 }
-
-/*
-POPRAWIĆ FORMATOWANIE PO WSTAWIENIU LINK TO!
- */
