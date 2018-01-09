@@ -3,7 +3,6 @@ import BatchCard from "./BatchCard";
 import BatchForm from "./BatchForm";
 
 export default class BatchCardForm extends React.Component {
-
     constructor(props) {
         super(props);
 
@@ -13,10 +12,10 @@ export default class BatchCardForm extends React.Component {
             isImageInBase: "",
             name: "",
             style: "",
-            date: "",
             ibu: "",
             density: "",
             alcohol: "",
+            date: "",
             imageUrl: ""
         }
     }
@@ -26,6 +25,7 @@ export default class BatchCardForm extends React.Component {
         if(this.props.view === "preview") {
             const batchKey = this.props.batch.key;
             const { name, style, ibu, alcohol, density, date, hasImage } = this.props.batch.details;
+
             this.setState({
                 batchKey,
                 isImageInBase: hasImage,
@@ -59,12 +59,11 @@ export default class BatchCardForm extends React.Component {
     };
 
     render() {
-        const { batchKey, name, style, ibu, alcohol, density, date, isImageInBase, imageUrl } = this.state;
         const { view, pathToGoBack, batch } = this.props;
 
         return (
             <div style={{display: "flex", alignItems: "center", justifyContent: "space-around", height: "90%", width: "90%"}}>
-                <BatchCard batchKey={batchKey} name={name} style={style} ibu={ibu} alcohol={alcohol} density={density} date={date}  isImageInBase={isImageInBase} imageUrl={imageUrl} />
+                <BatchCard { ...this.state }/>
                 <BatchForm batch={batch} pathToGoBack={pathToGoBack} view={view} onDetailsChange={this.handleDetailsChange} onImageChange={this.handleImageChange} onImageAddToBase={this.handleImageAddToBase} handleDisabledChange={this.props.handleDisabledChange}/>
             </div>
         )

@@ -1,74 +1,68 @@
-import React from 'react';
-import { Container, Form, Rating, Divider } from 'semantic-ui-react'
+import React from "react";
+import { Container, Form, Rating, Divider } from "semantic-ui-react"
 
-class RatingField extends React.Component {
-    constructor() {
-        super();
-    }
 
-    onRate = (e, {rating}) => {
-        let {nameRate} = this.props;
-        this.props.handleRate(nameRate, rating)
+export const Rating_Comments = (props) => {
+
+    const { disabled, commentGeneral, commentStyle, commentAroma, commentLook, commentFlavor, commentBitterness, commentAdditional, rateGeneral, rateStyle, rateAroma, rateLook, rateFlavor, rateBitterness } = props;
+
+    const onCommentChange = (e) => {
+        const text = e.target.value;
+        const nameComment = "commentAdditional";
+
+        props.handleCommentChange(nameComment, text)
     };
 
-    onCommentChange = (e) => {
+    return (
+        <Container style={{height: "100%"}}>
+
+            <Form.Field style={{marginTop: "1em"}}>
+                <RatingField label="Ocena ogólna" nameRate="rateGeneral" nameComment="commentGeneral" commentValue={commentGeneral} defaultRating={rateGeneral} handleRate={props.handleRate} handleCommentChange={props.handleCommentChange} disabled={disabled} />
+            </Form.Field>
+
+            <Form.Field style={{marginTop: "2em"}}>
+                <Divider horizontal style={{marginBottom: "2em"}}>Ocena szczegółowa</Divider>
+                <RatingField label="Zgodność ze stylem" nameRate="rateStyle" nameComment="commentStyle" commentValue={commentStyle} defaultRating={rateStyle} handleRate={props.handleRate} handleCommentChange={props.handleCommentChange} disabled={disabled} />
+                <RatingField label="Aromat" nameRate="rateAroma" nameComment="commentAroma" commentValue={commentAroma} defaultRating={rateAroma} handleRate={props.handleRate} handleCommentChange={props.handleCommentChange} disabled={disabled} />
+                <RatingField label="Wygląd" nameRate="rateLook" nameComment="commentLook" commentValue={commentLook} defaultRating={rateLook} handleRate={props.handleRate} handleCommentChange={props.handleCommentChange} disabled={disabled} />
+                <RatingField label="Smak" nameRate="rateFlavor" nameComment="commentFlavor" commentValue={commentFlavor} defaultRating={rateFlavor} handleRate={props.handleRate} handleCommentChange={props.handleCommentChange} disabled={disabled} />
+                <RatingField label="Goryczka" nameRate="rateBitterness" nameComment="commentBitterness" commentValue={commentBitterness} defaultRating={rateBitterness} handleRate={props.handleRate} handleCommentChange={props.handleCommentChange} disabled={disabled} />
+            </Form.Field>
+
+            <Form.Field style={{marginTop: "2em"}}>
+                <Divider horizontal>Uwagi dodatkowe</Divider>
+                <Form.TextArea rows = {2} style={{fontSize: "12px"}} onChange={onCommentChange} value={commentAdditional} disabled={disabled}/>
+            </Form.Field>
+
+        </Container>
+    )
+};
+
+
+const RatingField = (props) => {
+
+    const { disabled, label, defaultRating, commentValue, nameRate, nameComment } = props;
+
+    const onRate = (e, {rating}) => {
+        props.handleRate(nameRate, rating)
+    };
+
+    const onCommentChange = (e) => {
         let text = e.target.value;
-        let {nameComment} = this.props;
-        this.props.handleCommentChange(nameComment, text)
+        props.handleCommentChange(nameComment, text)
     };
 
-    render() {
-        const { disabled } = this.props;
-        return (
-            <Form.Group>
-                <Form.Field width={8} style={{textAlign: "center"}}>
-                    <label>{this.props.label}</label>
-                    <Rating onRate={this.onRate} icon='star' maxRating={7} defaultRating={this.props.defaultRating} disabled={disabled} clearable/>
-                </Form.Field>
+    return (
+        <Form.Group>
+            <Form.Field width={8} style={{textAlign: "center"}}>
+                <label>{label}</label>
+                <Rating icon="star" maxRating={7} defaultRating={defaultRating} disabled={disabled} clearable onRate={onRate}/>
+            </Form.Field>
 
-                <Form.Field width={8} >
-                    <Form.TextArea rows={2} placeholder="Komentarz..." style={{fontSize: '12px'}} value={this.props.commentValue} onChange={this.onCommentChange} disabled={disabled}/>
-                </Form.Field>
-            </Form.Group>
+            <Form.Field width={8} >
+                <Form.TextArea rows={2} placeholder="Komentarz..." style={{fontSize: "12px"}} value={commentValue} onChange={onCommentChange} disabled={disabled}/>
+            </Form.Field>
+        </Form.Group>
+    )
+};
 
-        )
-    }
-}
-
-export default class Rating_Comments extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
-    onCommentChange = (e) => {
-        let text = e.target.value;
-        let nameComment = "commentAdditional";
-        this.props.handleCommentChange(nameComment, text)
-    };
-
-    render() {
-        const { disabled } = this.props;
-        return(
-            <Container style={{height: "100%"}}>
-
-                <Form.Field style={{marginTop: '1em'}}>
-                    <RatingField label="Ocena ogólna" nameRate="rateGeneral" nameComment="commentGeneral" commentValue={this.props.commentGeneral} defaultRating={this.props.rateGeneral} handleRate={this.props.handleRate} handleCommentChange={this.props.handleCommentChange} disabled={disabled}/>
-                </Form.Field>
-                <Form.Field style={{marginTop: '2em'}}>
-                    <Divider horizontal style={{marginBottom: '2em'}}>Ocena szczegółowa</Divider>
-                    <RatingField label="Zgodność ze stylem" nameRate="rateStyle" nameComment="commentStyle" commentValue={this.props.commentStyle} defaultRating={this.props.rateStyle} handleRate={this.props.handleRate} handleCommentChange={this.props.handleCommentChange} disabled={disabled}/>
-                    <RatingField label="Aromat" nameRate="rateAroma" nameComment="commentAroma" commentValue={this.props.commentAroma} defaultRating={this.props.rateAroma} handleRate={this.props.handleRate} handleCommentChange={this.props.handleCommentChange} disabled={disabled}/>
-                    <RatingField label="Wygląd" nameRate="rateLook" nameComment="commentLook" commentValue={this.props.commentLook} defaultRating={this.props.rateLook} handleRate={this.props.handleRate} handleCommentChange={this.props.handleCommentChange} disabled={disabled}/>
-                    <RatingField label="Smak" nameRate="rateFlavor" nameComment="commentFlavor" commentValue={this.props.commentFlavor} defaultRating={this.props.rateFlavor} handleRate={this.props.handleRate} handleCommentChange={this.props.handleCommentChange} disabled={disabled}/>
-                    <RatingField label="Goryczka" nameRate="rateBitterness" nameComment="commentBitterness" commentValue={this.props.commentBitterness} defaultRating={this.props.rateBitterness} handleRate={this.props.handleRate} handleCommentChange={this.props.handleCommentChange} disabled={disabled}/>
-                </Form.Field>
-
-                <Form.Field style={{marginTop: '2em'}}>
-                    <Divider horizontal>Uwagi dodatkowe</Divider>
-                    <Form.TextArea rows = {2} style={{fontSize: '12px'}} onChange={this.onCommentChange} value={this.props.commentAdditional} disabled={this.props.disabled}/>
-                </Form.Field>
-
-            </Container>
-        )
-    }
-}

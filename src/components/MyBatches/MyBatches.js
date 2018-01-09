@@ -1,17 +1,18 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
 import "normalize.css";
-import MainActionButtons from "./MainActionButtons/MainActionButtons.js"
+import { MainActionButtons } from "./MainActionButtons/MainActionButtons.js";
 import MainCardsView from "./MainCardsView/MainCardsView";
 import MainListView from "./MainListView/MainListView";
 import DetailsView from "./DetailsView/DetailsView";
+
 
 export default class MyBatches extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            batches: [],
+            batches: []
         }
     }
 
@@ -21,17 +22,14 @@ export default class MyBatches extends React.Component {
 
         batchesRef.on("value", snap => {
             let batches = [];
-            snap.forEach(childSnapshot => {
+            snap.forEach((childSnapshot) => {
                 let batch = childSnapshot.val();
                 batch.key = childSnapshot.key;
 
                 batches.push(batch);
 
-                this.setState({
-                    batches: batches
-                });
+                this.setState({ batches });
             });
-
         });
         // }, 1000)
     }
@@ -47,6 +45,7 @@ export default class MyBatches extends React.Component {
         return (
             <div>
                 <MainActionButtons />
+
                 <Switch>
                     <Route
                         exact path="/"
@@ -73,11 +72,13 @@ export default class MyBatches extends React.Component {
                         )}
                     />
                 </Switch>
+
                 <Route path="/mybatches/newbatch"
                        render = {(routeProps) => (
                            <DetailsView {...routeProps} view="add" pathToGoBack={pathToGoBack} />
                        )}
                 />
+
                 <Route path="/mybatches/batchdetails/:batchKey"
                        render = {(routeProps) => (
                            <DetailsView {...routeProps} batches={batches} view="preview" pathToGoBack={pathToGoBack} />

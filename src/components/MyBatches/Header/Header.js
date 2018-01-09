@@ -1,11 +1,10 @@
 import React from "react";
-import { Menu, Container } from "semantic-ui-react";
 import { Link } from "react-router-dom";
+import { Menu, Container } from "semantic-ui-react";
 
 
 // z oknem logowania Header będzie przyjmowało propsy z nazwą browaru
 export default class Header extends React.Component {
-
     constructor(props) {
         super(props);
 
@@ -14,11 +13,16 @@ export default class Header extends React.Component {
         }
     }
 
-    handleItemClick = (e, { name }) => this.setState({ active: name });
+    onItemClick = (e, { name }) => {
+        this.setState({
+            active: name
+        });
+    };
 
     render() {
         const { active } = this.state;
-        const { pathToGoBack} = this.props;
+        const { pathToGoBack } = this.props;
+
         return (
             <div>
                 <Menu fixed="top" size="massive" borderless inverted>
@@ -30,10 +34,10 @@ export default class Header extends React.Component {
 
                         <Menu inverted secondary style={{marginTop: "1.5em"}}>
                             <Link to={`${pathToGoBack}`}>
-                                <Menu.Item name="Moje warki" active={active === "Moje warki"} onClick={this.handleItemClick} />
+                                <Menu.Item name="Moje warki" active={active === "Moje warki"} onClick={this.onItemClick} />
                             </Link>
                             <Link to="/calculators">
-                                <Menu.Item name="Kalkulatory" active={active === "Kalkulatory"} onClick={this.handleItemClick} />
+                                <Menu.Item name="Kalkulatory" active={active === "Kalkulatory"} onClick={this.onItemClick} />
                             </Link>
                         </Menu>
 

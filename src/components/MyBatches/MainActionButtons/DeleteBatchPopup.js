@@ -1,5 +1,5 @@
-import React from 'react';
-import { Button, Popup } from 'semantic-ui-react';
+import React from "react";
+import { Button, Popup } from "semantic-ui-react";
 
 
 export default class DeleteBatchPopup extends React.Component {
@@ -11,43 +11,45 @@ export default class DeleteBatchPopup extends React.Component {
         };
     }
 
-    handleOpen = () => {
+    onOpen = () => {
         this.setState({
             isOpen: true
         });
     };
 
-    handleClose = () => {
+    onClose = () => {
         this.setState({
             isOpen: false
         });
     };
 
-    handleDelete = (batchToDelete) => {
+    onDelete = (batchToDelete) => {
         const batchRef = firebase.database().ref(batchToDelete);
         batchRef.remove();
+
         this.handleClose();
     };
 
     render() {
         const { batchKey, trigger } = this.props;
+        const { isOpen } = this.state;
 
         return (
             <Popup
                 trigger={trigger}
-                on='click'
-                position='top right'
+                on="click"
+                position="top right"
                 flowing
-                open={this.state.isOpen}
-                onClose={this.handleClose}
-                onOpen={this.handleOpen}
+                open={isOpen}
+                onClose={this.onClose}
+                onOpen={this.onOpen}
             >
                 <Popup.Header>
                     Czy na pewno chcesz usunąć warkę?
                 </Popup.Header>
                 <Popup.Content>
-                    <Button color='red' content='Tak' onClick = {() => this.handleDelete(batchKey)}/>
-                    <Button color='green' content='Nie' onClick={this.handleClose}/>
+                    <Button color="red" content="Tak" onClick = {() => this.onDelete(batchKey)}/>
+                    <Button color="green" content="Nie" onClick={this.onClose}/>
                 </Popup.Content>
             </Popup>
         )

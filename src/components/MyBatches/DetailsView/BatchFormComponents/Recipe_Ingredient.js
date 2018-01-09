@@ -1,33 +1,29 @@
-import React from 'react';
-import { Menu, Segment, Form, Container, Button, Divider, Input, Icon } from 'semantic-ui-react'
+import React from "react";
+import { Button, Input } from "semantic-ui-react"
 
- export default class Recipe_Ingredient extends React.Component {
-     constructor(props) {
-         super(props);
-     }
+export const Recipe_Ingredient = (props) => {
 
-     onClick = () => {
-         this.props.onDeleteClick(this.props.index);
+    const { index, disabled, name, quantity } = props;
+
+    const onClick = () => {
+         props.onDeleteClick(index);
      };
 
-     onChange = (e) => {
-         this.props.onChange(e, this.props.index);
+    const onChange = (e) => {
+         props.onChange(e, index);
      };
 
-     // w value inputów przekazuję wartość z propsów, tak aby po usuwaniu okreslonych inputów, koklejny render powodował pokazywanie się odpowiednich elementów (z odpowiednimi wartościami) - wartości te sa brane z metody map tablicy, w której zapisuję wartości z tych inputów (w rodzicu: ingredients)
-
-     render() {
-          return (
-             <div style = {{marginBottom: '0.5em'}}>
-                 <Input disabled={this.props.disabled} type="text" style={{width: "70%"}} name='name' value={this.props.name} onChange={this.onChange}/>
-                 <Input disabled={this.props.disabled} type="text" placeholder="Ilość" style={{width: "15%"}} name="quantity" value={this.props.quantity} onChange={this.onChange}/>
-                 <Button size="mini"
-                         disabled={this.props.disabled}
-                         style={{marginLeft: '1em', padding: '0.5em'}}
-                         onClick={this.onClick}>
-                     Usuń
-                 </Button>
-             </div>
-          )
-     }
- }
+     // w value inputów przekazuję wartość z propsów, tak aby po usuwaniu okreslonych inputów, koklejny render powodował pokazywanie się odpowiednich elementów (z odpowiednimi wartościami) - wartości te sa brane z metody map tablicy, w której zapisuję wartości z tych inputów (w rodzicu: Ingredients)
+    return (
+         <div style = {{marginBottom: "0.5em"}}>
+             <Input disabled={disabled} type="text" name="name" style={{width: "70%"}}  value={name} onChange={onChange}/>
+             <Input disabled={disabled} type="text" name="quantity" placeholder="Ilość" style={{width: "15%"}}  value={quantity} onChange={onChange}/>
+             <Button size="mini"
+                     disabled={disabled}
+                     style={{marginLeft: "1em", padding: "0.5em"}}
+                     onClick={onClick}>
+                 Usuń
+             </Button>
+         </div>
+    )
+ };

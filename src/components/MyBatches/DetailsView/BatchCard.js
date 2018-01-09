@@ -8,7 +8,7 @@ export default class BatchCard extends React.Component {
 
         this.state = {
             imageUrlFromBase: "",
-            imageUrlFromInput: "",
+            imageUrlFromInput: ""
         }
     }
 
@@ -18,7 +18,7 @@ export default class BatchCard extends React.Component {
             const imageRef = storage.ref(`images/${this.props.batchKey}`);
             let that = this;
 
-            imageRef.getDownloadURL().then( url => {
+            imageRef.getDownloadURL().then((url) => {
                 that.setState({
                     imageUrlFromBase: url
                 })
@@ -40,9 +40,10 @@ export default class BatchCard extends React.Component {
      */
 
     componentWillReceiveProps(nextProps) {
-        if(nextProps.imageUrl) {
+        const { imageUrl } = nextProps;
+        if(imageUrl) {
             this.setState({
-                imageUrlFromInput: nextProps.imageUrl
+                imageUrlFromInput: imageUrl
             })
         } else {
             this.setState({
@@ -52,16 +53,17 @@ export default class BatchCard extends React.Component {
     }
 
     render() {
-
+        const { name, style, ibu, alcohol, density, date } = this.props;
+        const { imageUrlFromInput, imageUrlFromBase } = this.state;
         let imageUrl;
-        { this.state.imageUrlFromInput ? imageUrl = this.state.imageUrlFromInput : imageUrl = this.state.imageUrlFromBase}
+        {this.state.imageUrlFromInput ? imageUrl = imageUrlFromInput : imageUrl = imageUrlFromBase}
 
         return(
             <Card color="green" style={{width: "14em"}}>
                 {imageUrl && <Image src={imageUrl} alt="Zdjęcie warki"/>}
                 <Card.Content>
                     <Card.Header textAlign="center">
-                        {this.props.name}
+                        {name}
                     </Card.Header>
                     <Table basic="very">
                         <Table.Body>
@@ -75,7 +77,7 @@ export default class BatchCard extends React.Component {
                                     </Header>
                                 </Table.Cell>
                                 <Table.Cell style={{fontWeight: "bold"}}>
-                                    {this.props.style}
+                                    {style}
                                 </Table.Cell>
                             </Table.Row>
 
@@ -88,7 +90,7 @@ export default class BatchCard extends React.Component {
                                     </Header>
                                 </Table.Cell>
                                 <Table.Cell>
-                                    {this.props.ibu}
+                                    {ibu}
                                 </Table.Cell>
                             </Table.Row>
 
@@ -101,7 +103,7 @@ export default class BatchCard extends React.Component {
                                     </Header>
                                 </Table.Cell>
                                 <Table.Cell>
-                                    {this.props.alcohol}
+                                    {alcohol}
                                 </Table.Cell>
                             </Table.Row>
 
@@ -114,7 +116,7 @@ export default class BatchCard extends React.Component {
                                     </Header>
                                 </Table.Cell>
                                 <Table.Cell>
-                                    {this.props.density}
+                                    {density}
                                 </Table.Cell>
                             </Table.Row>
 
@@ -124,7 +126,7 @@ export default class BatchCard extends React.Component {
                 <Card.Content extra>
                     <span>
                         <Icon name="calendar" />
-                        <span>{this.props.date}</span>
+                        <span>{date}</span>
                     </span>
                 </Card.Content>
             </Card>

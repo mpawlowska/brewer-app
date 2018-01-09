@@ -1,20 +1,16 @@
 import React from "react";
-import {
-    Route,
-    Switch,
-    Link
-} from "react-router-dom";
+import { Route, Switch, Link } from "react-router-dom";
 import { Menu, Segment, Form, Button, Popup, Divider } from "semantic-ui-react"
-import Details from "./BatchFormComponents/Details";
-import Recipe from "./BatchFormComponents/Recipe";
-import Rating_Comments from "./BatchFormComponents/Rating_Comments";
+import { Details } from "./BatchFormComponents/Details";
+import { Recipe } from "./BatchFormComponents/Recipe";
+import { Rating_Comments } from "./BatchFormComponents/Rating_Comments";
 import Files from "./BatchFormComponents/Files";
+
 
 export default class BatchForm extends React.Component {
     constructor(props) {
         super(props);
 
-        // mimo, że jest to podgląd, potrzebuję przechowywać stan ze wszystkich inputów, bo user może je edytować, po kliknięciu w button Edytuj
         this.state = {
             activeItem: "details",
             disabled: false,
@@ -58,10 +54,10 @@ export default class BatchForm extends React.Component {
 
     componentWillMount() {
         if(this.props.view === "preview") {
-            const {name, style, date, ibu, srm, alcohol, volume, density, type } = this.props.batch.details;
-            let {fermenting_components : ingredients_ferm, yeast : ingredients_yeast, hop: ingredients_hop, addons : ingredients_addons} = this.props.batch.recipe;
-            const {rateGeneral, rateStyle, rateAroma, rateLook, rateFlavor, rateBitterness} = this.props.batch.rating;
-            const {commentGeneral, commentStyle, commentAroma, commentLook, commentFlavor, commentBitterness,commentAdditional} = this.props.batch.comments;
+            const { name, style, date, ibu, srm, alcohol, volume, density, type } = this.props.batch.details;
+            let { fermenting_components : ingredients_ferm, yeast : ingredients_yeast, hop: ingredients_hop, addons : ingredients_addons } = this.props.batch.recipe;
+            const { rateGeneral, rateStyle, rateAroma, rateLook, rateFlavor, rateBitterness } = this.props.batch.rating;
+            const { commentGeneral, commentStyle, commentAroma, commentLook, commentFlavor, commentBitterness,commentAdditional } = this.props.batch.comments;
 
             // jeśli pobrane z bazy składniki są pustymi stringami, to zamieniam je na tablice, aby można je było wyświetlić poprzez metodę map
             if (!ingredients_ferm) {
@@ -79,32 +75,32 @@ export default class BatchForm extends React.Component {
 
             this.setState({
                 disabled: true,
-                name: name,
-                style: style,
-                date: date,
-                volume: volume,
-                ibu: ibu,
-                srm: srm,
-                density: density,
-                alcohol: alcohol,
-                type: type,
-                ingredients_ferm: ingredients_ferm,
-                ingredients_yeast: ingredients_yeast,
-                ingredients_hop: ingredients_hop,
-                ingredients_addons: ingredients_addons,
-                rateGeneral: rateGeneral,
-                rateStyle: rateStyle,
-                rateAroma: rateAroma,
-                rateLook: rateLook,
-                rateFlavor: rateFlavor,
-                rateBitterness: rateBitterness,
-                commentGeneral: commentGeneral,
-                commentStyle: commentStyle,
-                commentAroma: commentAroma,
-                commentLook: commentLook,
-                commentFlavor: commentFlavor,
-                commentBitterness: commentBitterness,
-                commentAdditional: commentAdditional
+                name,
+                style,
+                date,
+                volume,
+                ibu,
+                srm,
+                density,
+                alcohol,
+                type,
+                ingredients_ferm,
+                ingredients_yeast,
+                ingredients_hop,
+                ingredients_addons,
+                rateGeneral,
+                rateStyle,
+                rateAroma,
+                rateLook,
+                rateFlavor,
+                rateBitterness,
+                commentGeneral,
+                commentStyle,
+                commentAroma,
+                commentLook,
+                commentFlavor,
+                commentBitterness,
+                commentAdditional
             });
         }
     }
@@ -127,10 +123,9 @@ export default class BatchForm extends React.Component {
     /* ------------- obsługa Popup przy usuwaniu warki ------------ */
 
     togglePopup = () => {
-        const currentPopupState = this.state.isPopupOpen;
-        this.setState({
-            isPopupOpen: !currentPopupState
-        })
+        this.setState((prevState) => {
+            return {isPopupOpen: !prevState.isPopupOpen}
+        });
     };
 
 
@@ -179,18 +174,19 @@ export default class BatchForm extends React.Component {
     // do przechwytywania danych z inputów w Recepturze - najpierw tworzę funkcje uniwersalne, które będą określały, który rodzaj składnika powinien być poddany zmianie
     chooseIngredients = (category) => {
         let ingredients;
+        const { ingredients_ferm, ingredients_yeast, ingredients_hop, ingredients_addons } = this.state;
         switch(category) {
             case "ingredients_ferm": {
-                return ingredients = this.state.ingredients_ferm;
+                return ingredients = ingredients_ferm;
             }
             case "ingredients_yeast": {
-                return ingredients = this.state.ingredients_yeast;
+                return ingredients = ingredients_yeast;
             }
             case "ingredients_hop": {
-                return ingredients = this.state.ingredients_hop;
+                return ingredients = ingredients_hop;
             }
             case "ingredients_addons": {
-                return ingredients = this.state.ingredients_addons;
+                return ingredients = ingredients_addons;
             }
             default: console.log("Nie znaleziono odpowiednich składników");
         }
@@ -244,8 +240,8 @@ export default class BatchForm extends React.Component {
     };
 
     handleRecipeComponentUpdate = (e, ingredientIndex, category) => {
-        let name = e.target.name;
-        let value = e.target.value;
+        const name = e.target.name;
+        const value = e.target.value;
 
         const ingredients = this.chooseIngredients(category);
 
@@ -265,26 +261,11 @@ export default class BatchForm extends React.Component {
         let ingredients_ferm, ingredients_yeast, ingredients_hop, ingredients_addons;
 
         // Ponieważ w Firebase nie zapisują się puste tablice, to w wypadku kiedy nia ma którychś składników dodanych w Recipe, to zamieniam pustą tablicę na pustego stringa, który zapisze się w Firebase.
-        if (ingredients_fermState == false) {
-            ingredients_ferm = "";
-        } else {
-            ingredients_ferm = ingredients_fermState;
-        }
-        if (ingredients_yeastState == false) {
-            ingredients_yeast = "";
-        } else {
-            ingredients_yeast = ingredients_yeastState;
-        }
-        if (ingredients_hopState == false) {
-            ingredients_hop = "";
-        } else {
-            ingredients_hop = ingredients_hopState;
-        }
-        if (ingredients_addonsState == false) {
-            ingredients_addons = "";
-        } else {
-            ingredients_addons = ingredients_addonsState;
-        }
+
+        ingredients_fermState == false ? ingredients_ferm = "" : ingredients_ferm = ingredients_fermState;
+        ingredients_yeastState == false ? ingredients_yeast = "" : ingredients_yeast = ingredients_yeastState;
+        ingredients_hopState == false ? ingredients_hop = "" : ingredients_hop = ingredients_hopState;
+        ingredients_addonsState == false ? ingredients_addons = "" : ingredients_addons = ingredients_addonsState;
         
         const newBatch = {
             "details": {
@@ -330,7 +311,6 @@ export default class BatchForm extends React.Component {
     /* -------- dodanie pliku do storage ---------- */
     
     addImageToStorage = (file, ref) => {
-        const that = this;
         // tworzę storage reference
         const storageRef = firebase.storage().ref();
         storageRef.child(ref).put(file).then(function(snapshot) {
@@ -338,7 +318,7 @@ export default class BatchForm extends React.Component {
         });
 
         // przekazuję wyżej informację, że warka ma zdjęcie, aby tylko w tej sytuacji BatchCard odpytywało bazę
-        that.props.onImageAddToBase();
+        this.props.onImageAddToBase();
     };
     
     /* ---------- KONIEC funkcji pomocniczych do dodania warki do bazy --------- */
@@ -359,7 +339,6 @@ export default class BatchForm extends React.Component {
             this.props.handleDisabledChange(false);
 
         } else {
-
             // tworzę referencję do konkretnej warki w bazie i nadpisuję jej dane
             const batchKey = this.props.batch.key;
             const batchRef = firebase.database().ref(batchKey);
@@ -378,7 +357,6 @@ export default class BatchForm extends React.Component {
             if(file) {
                 this.addImageToStorage(file, ref);
             }
-
         }
     };
 
@@ -410,8 +388,7 @@ export default class BatchForm extends React.Component {
 
     render() {
 
-        let { activeItem, name, style, date, ibu, srm, alcohol, volume, density, type, ingredients_ferm, ingredients_yeast, ingredients_hop, ingredients_addons, disabled, rateGeneral, rateAroma, rateBitterness, rateFlavor, rateLook, rateStyle, commentAdditional, commentAroma, commentBitterness, commentFlavor, commentGeneral, commentLook, commentStyle, buttonText, isPopupOpen, imagePreviewUrl }  = this.state;
-
+        const { activeItem, name, style, date, ibu, srm, alcohol, volume, density, type, ingredients_ferm, ingredients_yeast, ingredients_hop, ingredients_addons, disabled, rateGeneral, rateAroma, rateBitterness, rateFlavor, rateLook, rateStyle, commentAdditional, commentAroma, commentBitterness, commentFlavor, commentGeneral, commentLook, commentStyle, buttonText, isPopupOpen, imagePreviewUrl }  = this.state;
         const { view, pathToGoBack } = this.props;
         let link, path, buttons;
 
@@ -518,10 +495,10 @@ export default class BatchForm extends React.Component {
                                 exact path={`${path}/files`}
                                 render={(routeProps) => (
                                     <Files {...routeProps} disabled={disabled} onFileUpload={this.onFileUpload} imagePreviewUrl={imagePreviewUrl}/>
-                                    )}
+                                )}
                             />
                         </Switch>
-                        <Divider> </Divider>
+                        <Divider />
                         {buttons}
                     </Form>
                 </Segment>

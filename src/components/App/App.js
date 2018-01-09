@@ -3,7 +3,7 @@ import { Route, Switch } from "react-router-dom";
 import "normalize.css";
 import Header from "../MyBatches/Header/Header.js";
 import MyBatches from "../MyBatches/MyBatches";
-import Calculators from "../Calculators/Calculators";
+import { Calculators } from "../Calculators/Calculators";
 
 export default class App extends React.Component {
     constructor(props) {
@@ -14,11 +14,9 @@ export default class App extends React.Component {
         }
     }
 
-    onViewChange = (view) => {
-        this.state.view == view ||
-        this.setState({
-            view: view
-        })
+    handleViewChange = (view) => {
+        this.state.view === view ||
+        this.setState({ view })
     };
 
     render() {
@@ -27,19 +25,21 @@ export default class App extends React.Component {
         
         return (
             <div className="container">
+
                 <Header pathToGoBack={view} />
+
                 <main style={{marginTop: "6em"}}>
                     <Switch>
                         <Route
                             exact path="/"
                             render={(routeProps) => (
-                                <MyBatches {...routeProps} pathSave={this.onViewChange} pathToGoBack={view} />
+                                <MyBatches {...routeProps} pathSave={this.handleViewChange} pathToGoBack={view} />
                                 )}
                         />
                         <Route
                             path="/mybatches"
                             render={(routeProps) => (
-                                <MyBatches {...routeProps} pathSave={this.onViewChange} pathToGoBack={view} />
+                                <MyBatches {...routeProps} pathSave={this.handleViewChange} pathToGoBack={view} />
                                 )}
                         />
                         <Route
@@ -47,6 +47,7 @@ export default class App extends React.Component {
                         />
                     </Switch>
                 </main>
+
             </div>
         )
     }

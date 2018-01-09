@@ -1,26 +1,19 @@
 import React from "react";
-import {
-    Link
-} from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Button } from "semantic-ui-react";
 
 
-export default class AddBatchButton extends React.Component {
-    constructor(props) {
-        super(props);
-    }
+export const AddBatchButton = (props) => {
 
-    render() {
-        return (
-            <Link to="/mybatches/newbatch">
-                <Button
-                    content="Dodaj warkę"
-                    icon="add square"
-                    labelPosition="right"
-                    color="green"
-                />
-            </Link>
-        );
-    }
-}
+    return (
+        <Link to="/mybatches/newbatch">
+            <Button
+                content="Dodaj warkę"
+                icon="add square"
+                labelPosition="right"
+                color="green"
+            />
+        </Link>
+    )
+};
 

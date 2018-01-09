@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import BatchCardForm from "./BatchCardForm";
 import { Button, Icon, Popup } from "semantic-ui-react";
+import BatchCardForm from "./BatchCardForm";
 
 
 export default class DetailsView extends React.Component {
@@ -19,8 +19,9 @@ export default class DetailsView extends React.Component {
         if(this.props.view === "preview") {
             const batches = this.props.batches;
             const batchKey = this.props.match.params.batchKey;
-            const batch = batches.filter(batch => batch.key === batchKey);
+            const batch = batches.filter((batch) => batch.key === batchKey);
             const batchObj = batch[0];
+
             this.setState({
                 batch: batchObj,
                 disabled: true
@@ -28,14 +29,15 @@ export default class DetailsView extends React.Component {
         }
     }
 
-    handleOpen = () => {
+    onOpen = () => {
         this.setState({
             isOpen: true
         });
     };
 
-    handleClose = (e) => {
+    onClose = (e) => {
         e.preventDefault();
+
         this.setState({
             isOpen: false
         });
@@ -60,6 +62,7 @@ export default class DetailsView extends React.Component {
                 <div style={{height: "100vh", width:"100vw", backgroundColor: "#333333", opacity: "0.75", position: "fixed", left: "0", top: "0", zIndex: "998"}}>
                 </div>
                 <div style={{width:"90vw", backgroundColor: "white", zIndex: "999", opacity: "100", position: "absolute", top: "3em", display: "flex", alignItems: "center", justifyContent: "center", padding: "3em 0"}}>
+
                     <BatchCardForm view={view} batch={batch} pathToGoBack={pathToGoBack} handleDisabledChange={this.handleDisabledChange} />
 
                     {disabled ?
@@ -73,8 +76,8 @@ export default class DetailsView extends React.Component {
                             position="top right"
                             flowing
                             open={isOpen}
-                            onClose={this.handleClose}
-                            onOpen={this.handleOpen}
+                            onClose={this.onClose}
+                            onOpen={this.onOpen}
                         >
                             <Popup.Header>
                                 Czy chcesz wyjść bez zapisania zmian?
@@ -83,7 +86,7 @@ export default class DetailsView extends React.Component {
                                 <Link to={pathToGoBack}>
                                     <Button color="grey" content="Tak" />
                                 </Link>
-                                <Button color="green" content="Nie" onClick={this.handleClose}/>
+                                <Button color="green" content="Nie" onClick={this.onClose}/>
                             </Popup.Content>
                         </Popup>
                     }

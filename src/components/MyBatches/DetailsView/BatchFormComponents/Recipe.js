@@ -1,74 +1,53 @@
-import React from 'react';
-import { Menu, Segment, Form, Container, Button, Divider, Input, Icon } from 'semantic-ui-react'
-import Recipe_Ingredient from './Recipe_Ingredient';
+import React from "react";
+import { Form, Container, Button, Divider } from "semantic-ui-react"
+import { Recipe_Ingredient } from "./Recipe_Ingredient";
+
+// tu można jeszcze dodać rzeczy procesowe - chmielenie, zacieranie itp.
+
+export const Recipe = (props) => {
+
+    const { disabled, ingredients_ferm, ingredients_yeast, ingredients_hop, ingredients_addons } = props;
+    const widths = "equal";
+
+    return (
+        <Container style={{height: "100%"}}>
+            <Form.Group widths={widths}>
+                <RecipeIngredients disabled={disabled} label="Składniki fermentowalne" ingredients={ingredients_ferm} componentUpdate={props.componentUpdate} componentAdd={props.componentAdd} componentDelete={props.componentDelete} category="ingredients_ferm"/>
+                <RecipeIngredients disabled={disabled} label="Drożdże" ingredients={ingredients_yeast} componentUpdate={props.componentUpdate} componentAdd={props.componentAdd} componentDelete={props.componentDelete} category="ingredients_yeast"/>
+            </Form.Group>
+            <Form.Group widths={widths}>
+                <RecipeIngredients disabled={disabled} label="Chmiele" ingredients={ingredients_hop} componentUpdate={props.componentUpdate} componentAdd={props.componentAdd} componentDelete={props.componentDelete} category="ingredients_hop"/>
+                <RecipeIngredients disabled={disabled} label="Dodatki" ingredients={ingredients_addons} componentUpdate={props.componentUpdate} componentAdd={props.componentAdd} componentDelete={props.componentDelete} category="ingredients_addons"/>
+            </Form.Group>
+        </Container>
+    )
+};
 
 
-// cały stan dodanych / wpisanych inputów przechowuję w kompencie wyżej - w rodzicu: AddMenu lub DetailsMenu
+const RecipeIngredients = (props) => {
 
-class RecipeIngredients extends React.Component {
-    constructor(props) {
-        super(props);
-    }
+    const { category, label, ingredients, disabled } = props;
 
     // dodaję puste pole z inputami:
-    handleAddButtonClick = () => {
-        let category = this.props.category;
-
-        this.props.componentAdd(category);
+    const onAddButtonClick = () => {
+        props.componentAdd(category);
     };
 
     // usuwam dany obiekt z inputami z tablicy ingredients - identyfikuję go na podstawie index przekazanego w propsach przy tworzeniu za pomocą map, ten index otrzymuję dzięki wywołaniu metody w dziecku
-    handleDeleteButtonClick = (ingredientIndex) => {
-        let category = this.props.category;
-
-        this.props.componentDelete(ingredientIndex, category);
+    const handleDeleteButtonClick = (ingredientIndex) => {
+        props.componentDelete(ingredientIndex, category);
     };
 
-    handleInputChange = (e, ingredientIndex) => {
-        let category = this.props.category;
-
-        this.props.componentUpdate(e, ingredientIndex, category);
+    const handleInputChange = (e, ingredientIndex) => {
+        props.componentUpdate(e, ingredientIndex, category);
     };
 
-    // handleInputChange = (ingredientIndex, name, value) => {
-    //     let { ingredients } = this.state;
-    //     ingredients[ingredientIndex][name] = value;
-    //
-    //     this.setState({
-    //         ingredients: ingredients
-    //     });
-    // };
-
-    render() {
-        return (
-            <Form.Field>
-                <label>{this.props.label}</label>
-                <Divider/>
-                {this.props.ingredients.map((ingredient, index) => <Recipe_Ingredient key={index} index={index} disabled={this.props.disabled} onChange={this.handleInputChange} onDeleteClick={this.handleDeleteButtonClick} name={ingredient['name']} quantity={ingredient['quantity']}/>)}
-                <Button disabled={this.props.disabled} content='Dodaj składnik' icon='add' labelPosition='left' size="mini" onClick={this.handleAddButtonClick}/>
-            </Form.Field>
-        )
-    }
-}
-
-export default class Recipe extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
-// tu można jeszcze dodać rzeczy procesowe - chmielenie, zacieranie itp.
-    render() {
-        return (
-            <Container style={{height: "100%"}}>
-                <Form.Group widths="equal">
-                    <RecipeIngredients disabled={this.props.disabled} label="Składniki fermentowalne" ingredients={this.props.ingredients_ferm} componentUpdate={this.props.componentUpdate} componentAdd={this.props.componentAdd} componentDelete={this.props.componentDelete} category='ingredients_ferm'/>
-                    <RecipeIngredients disabled={this.props.disabled} label="Drożdże" ingredients={this.props.ingredients_yeast} componentUpdate={this.props.componentUpdate} componentAdd={this.props.componentAdd} componentDelete={this.props.componentDelete} category='ingredients_yeast'/>
-                </Form.Group>
-                <Form.Group widths="equal">
-                    <RecipeIngredients disabled={this.props.disabled} label="Chmiele" ingredients={this.props.ingredients_hop} componentUpdate={this.props.componentUpdate} componentAdd={this.props.componentAdd} componentDelete={this.props.componentDelete} category='ingredients_hop'/>
-                    <RecipeIngredients disabled={this.props.disabled} label="Dodatki" ingredients={this.props.ingredients_addons} componentUpdate={this.props.componentUpdate} componentAdd={this.props.componentAdd} componentDelete={this.props.componentDelete} category='ingredients_addons'/>
-                </Form.Group>
-            </Container>
-        )
-    }
-}
+    return (
+        <Form.Field>
+            <label>{label}</label>
+            <Divider/>
+            {ingredients.map((ingredient, index) => <Recipe_Ingredient key={index} index={index} disabled={disabled} onChange={handleInputChange} onDeleteClick={handleDeleteButtonClick} name={ingredient["name"]} quantity={ingredient["quantity"]}/>)}
+            <Button disabled={disabled} content="Dodaj składnik" icon="add" labelPosition="left" size="mini" onClick={onAddButtonClick}/>
+        </Form.Field>
+    )
+};
