@@ -1485,7 +1485,7 @@ module.exports = isObject;
 
 var arrayLikeKeys = __webpack_require__(254),
     baseKeys = __webpack_require__(107),
-    isArrayLike = __webpack_require__(29);
+    isArrayLike = __webpack_require__(28);
 
 /**
  * Creates an array of the own enumerable property names of `object`.
@@ -1600,6 +1600,97 @@ module.exports = get;
 
 /***/ }),
 /* 26 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var store = __webpack_require__(149)('wks');
+var uid = __webpack_require__(85);
+var Symbol = __webpack_require__(41).Symbol;
+var USE_SYMBOL = typeof Symbol == 'function';
+
+var $exports = module.exports = function (name) {
+  return store[name] || (store[name] =
+    USE_SYMBOL && Symbol[name] || (USE_SYMBOL ? Symbol : uid)('Symbol.' + name));
+};
+
+$exports.store = store;
+
+
+/***/ }),
+/* 27 */
+/***/ (function(module, exports) {
+
+/**
+ * Checks if `value` is object-like. A value is object-like if it's not `null`
+ * and has a `typeof` result of "object".
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is object-like, else `false`.
+ * @example
+ *
+ * _.isObjectLike({});
+ * // => true
+ *
+ * _.isObjectLike([1, 2, 3]);
+ * // => true
+ *
+ * _.isObjectLike(_.noop);
+ * // => false
+ *
+ * _.isObjectLike(null);
+ * // => false
+ */
+function isObjectLike(value) {
+  return value != null && typeof value == 'object';
+}
+
+module.exports = isObjectLike;
+
+
+/***/ }),
+/* 28 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var isFunction = __webpack_require__(52),
+    isLength = __webpack_require__(166);
+
+/**
+ * Checks if `value` is array-like. A value is considered array-like if it's
+ * not a function and has a `value.length` that's an integer greater than or
+ * equal to `0` and less than or equal to `Number.MAX_SAFE_INTEGER`.
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is array-like, else `false`.
+ * @example
+ *
+ * _.isArrayLike([1, 2, 3]);
+ * // => true
+ *
+ * _.isArrayLike(document.body.children);
+ * // => true
+ *
+ * _.isArrayLike('abc');
+ * // => true
+ *
+ * _.isArrayLike(_.noop);
+ * // => false
+ */
+function isArrayLike(value) {
+  return value != null && isLength(value.length) && !isFunction(value);
+}
+
+module.exports = isArrayLike;
+
+
+/***/ }),
+/* 29 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1655,97 +1746,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
-
-
-/***/ }),
-/* 27 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var store = __webpack_require__(149)('wks');
-var uid = __webpack_require__(85);
-var Symbol = __webpack_require__(41).Symbol;
-var USE_SYMBOL = typeof Symbol == 'function';
-
-var $exports = module.exports = function (name) {
-  return store[name] || (store[name] =
-    USE_SYMBOL && Symbol[name] || (USE_SYMBOL ? Symbol : uid)('Symbol.' + name));
-};
-
-$exports.store = store;
-
-
-/***/ }),
-/* 28 */
-/***/ (function(module, exports) {
-
-/**
- * Checks if `value` is object-like. A value is object-like if it's not `null`
- * and has a `typeof` result of "object".
- *
- * @static
- * @memberOf _
- * @since 4.0.0
- * @category Lang
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is object-like, else `false`.
- * @example
- *
- * _.isObjectLike({});
- * // => true
- *
- * _.isObjectLike([1, 2, 3]);
- * // => true
- *
- * _.isObjectLike(_.noop);
- * // => false
- *
- * _.isObjectLike(null);
- * // => false
- */
-function isObjectLike(value) {
-  return value != null && typeof value == 'object';
-}
-
-module.exports = isObjectLike;
-
-
-/***/ }),
-/* 29 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var isFunction = __webpack_require__(52),
-    isLength = __webpack_require__(166);
-
-/**
- * Checks if `value` is array-like. A value is considered array-like if it's
- * not a function and has a `value.length` that's an integer greater than or
- * equal to `0` and less than or equal to `Number.MAX_SAFE_INTEGER`.
- *
- * @static
- * @memberOf _
- * @since 4.0.0
- * @category Lang
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is array-like, else `false`.
- * @example
- *
- * _.isArrayLike([1, 2, 3]);
- * // => true
- *
- * _.isArrayLike(document.body.children);
- * // => true
- *
- * _.isArrayLike('abc');
- * // => true
- *
- * _.isArrayLike(_.noop);
- * // => false
- */
-function isArrayLike(value) {
-  return value != null && isLength(value.length) && !isFunction(value);
-}
-
-module.exports = isArrayLike;
 
 
 /***/ }),
@@ -1930,7 +1930,7 @@ module.exports = {
 /***/ (function(module, exports, __webpack_require__) {
 
 var baseIndexOf = __webpack_require__(98),
-    isArrayLike = __webpack_require__(29),
+    isArrayLike = __webpack_require__(28),
     isString = __webpack_require__(187),
     toInteger = __webpack_require__(33),
     values = __webpack_require__(78);
@@ -2484,7 +2484,7 @@ module.exports = function (it) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var baseGetTag = __webpack_require__(30),
-    isObjectLike = __webpack_require__(28);
+    isObjectLike = __webpack_require__(27);
 
 /** `Object#toString` result references. */
 var symbolTag = '[object Symbol]';
@@ -4177,7 +4177,7 @@ module.exports = baseFlatten;
 /***/ (function(module, exports, __webpack_require__) {
 
 var baseIsArguments = __webpack_require__(527),
-    isObjectLike = __webpack_require__(28);
+    isObjectLike = __webpack_require__(27);
 
 /** Used for built-in method references. */
 var objectProto = Object.prototype;
@@ -4218,8 +4218,8 @@ module.exports = isArguments;
 /* 103 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var isArrayLike = __webpack_require__(29),
-    isObjectLike = __webpack_require__(28);
+var isArrayLike = __webpack_require__(28),
+    isObjectLike = __webpack_require__(27);
 
 /**
  * This method is like `_.isArrayLike` except that it also checks if `value`
@@ -4518,7 +4518,7 @@ var baseKeys = __webpack_require__(107),
     getTag = __webpack_require__(109),
     isArguments = __webpack_require__(102),
     isArray = __webpack_require__(12),
-    isArrayLike = __webpack_require__(29),
+    isArrayLike = __webpack_require__(28),
     isBuffer = __webpack_require__(71),
     isPrototype = __webpack_require__(73),
     isTypedArray = __webpack_require__(106);
@@ -4629,7 +4629,7 @@ module.exports = baseAssignValue;
 /***/ (function(module, exports, __webpack_require__) {
 
 var eq = __webpack_require__(70),
-    isArrayLike = __webpack_require__(29),
+    isArrayLike = __webpack_require__(28),
     isIndex = __webpack_require__(72),
     isObject = __webpack_require__(22);
 
@@ -6524,7 +6524,7 @@ module.exports = Object.create || function create(O, Properties) {
 
 var def = __webpack_require__(42).f;
 var has = __webpack_require__(48);
-var TAG = __webpack_require__(27)('toStringTag');
+var TAG = __webpack_require__(26)('toStringTag');
 
 module.exports = function (it, tag, stat) {
   if (it && !has(it = stat ? it : it.prototype, TAG)) def(it, TAG, { configurable: true, value: tag });
@@ -6539,7 +6539,7 @@ __webpack_require__(472);
 var global = __webpack_require__(41);
 var hide = __webpack_require__(56);
 var Iterators = __webpack_require__(59);
-var TO_STRING_TAG = __webpack_require__(27)('toStringTag');
+var TO_STRING_TAG = __webpack_require__(26)('toStringTag');
 
 var DOMIterables = ('CSSRuleList,CSSStyleDeclaration,CSSValueList,ClientRectList,DOMRectList,DOMStringList,' +
   'DOMTokenList,DataTransferItemList,FileList,HTMLAllCollection,HTMLCollection,HTMLFormElement,HTMLSelectElement,' +
@@ -6560,7 +6560,7 @@ for (var i = 0; i < DOMIterables.length; i++) {
 /* 156 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports.f = __webpack_require__(27);
+exports.f = __webpack_require__(26);
 
 
 /***/ }),
@@ -6986,7 +6986,7 @@ module.exports = Stack;
 /***/ (function(module, exports, __webpack_require__) {
 
 var baseIsEqualDeep = __webpack_require__(543),
-    isObjectLike = __webpack_require__(28);
+    isObjectLike = __webpack_require__(27);
 
 /**
  * The base implementation of `_.isEqual` which supports partial comparisons
@@ -7390,7 +7390,7 @@ module.exports = pick;
 
 var baseGetTag = __webpack_require__(30),
     getPrototype = __webpack_require__(118),
-    isObjectLike = __webpack_require__(28);
+    isObjectLike = __webpack_require__(27);
 
 /** `Object#toString` result references. */
 var objectTag = '[object Object]';
@@ -7481,7 +7481,7 @@ var isBrowser = function isBrowser() {
 
 var baseGetTag = __webpack_require__(30),
     isArray = __webpack_require__(12),
-    isObjectLike = __webpack_require__(28);
+    isObjectLike = __webpack_require__(27);
 
 /** `Object#toString` result references. */
 var stringTag = '[object String]';
@@ -10581,7 +10581,7 @@ var Iterators = __webpack_require__(59);
 var $iterCreate = __webpack_require__(469);
 var setToStringTag = __webpack_require__(154);
 var getPrototypeOf = __webpack_require__(237);
-var ITERATOR = __webpack_require__(27)('iterator');
+var ITERATOR = __webpack_require__(26)('iterator');
 var BUGGY = !([].keys && 'next' in [].keys()); // Safari has buggy iterators w/o `next`
 var FF_ITERATOR = '@@iterator';
 var KEYS = 'keys';
@@ -11797,7 +11797,7 @@ module.exports = castFunction;
 
 // getting tag from 19.1.3.6 Object.prototype.toString()
 var cof = __webpack_require__(145);
-var TAG = __webpack_require__(27)('toStringTag');
+var TAG = __webpack_require__(26)('toStringTag');
 // ES3 wrong here
 var ARG = cof(function () { return arguments; }()) == 'Arguments';
 
@@ -11825,7 +11825,7 @@ module.exports = function (it) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var classof = __webpack_require__(272);
-var ITERATOR = __webpack_require__(27)('iterator');
+var ITERATOR = __webpack_require__(26)('iterator');
 var Iterators = __webpack_require__(59);
 module.exports = __webpack_require__(20).getIteratorMethod = function (it) {
   if (it != undefined) return it[ITERATOR]
@@ -12565,7 +12565,7 @@ module.exports = baseClone;
 
 var arrayLikeKeys = __webpack_require__(254),
     baseKeysIn = __webpack_require__(599),
-    isArrayLike = __webpack_require__(29);
+    isArrayLike = __webpack_require__(28);
 
 /**
  * Creates an array of the own and inherited enumerable property names of `object`.
@@ -12893,7 +12893,7 @@ module.exports = compact;
 /***/ (function(module, exports, __webpack_require__) {
 
 var baseEach = __webpack_require__(54),
-    isArrayLike = __webpack_require__(29);
+    isArrayLike = __webpack_require__(28);
 
 /**
  * The base implementation of `_.map` without support for iteratee shorthands.
@@ -13128,7 +13128,7 @@ module.exports = baseUniq;
 /***/ (function(module, exports, __webpack_require__) {
 
 var baseGetTag = __webpack_require__(30),
-    isObjectLike = __webpack_require__(28);
+    isObjectLike = __webpack_require__(27);
 
 /** `Object#toString` result references. */
 var numberTag = '[object Number]';
@@ -22295,9 +22295,11 @@ var BatchCard = function (_React$Component) {
     }, {
         key: "componentWillReceiveProps",
         value: function componentWillReceiveProps(nextProps) {
-            if (nextProps.imageUrl) {
+            var imageUrl = nextProps.imageUrl;
+
+            if (imageUrl) {
                 this.setState({
-                    imageUrlFromInput: nextProps.imageUrl
+                    imageUrlFromInput: imageUrl
                 });
             } else {
                 this.setState({
@@ -22308,10 +22310,20 @@ var BatchCard = function (_React$Component) {
     }, {
         key: "render",
         value: function render() {
+            var _props = this.props,
+                name = _props.name,
+                style = _props.style,
+                ibu = _props.ibu,
+                alcohol = _props.alcohol,
+                density = _props.density,
+                date = _props.date;
+            var _state = this.state,
+                imageUrlFromInput = _state.imageUrlFromInput,
+                imageUrlFromBase = _state.imageUrlFromBase;
 
             var imageUrl = void 0;
             {
-                this.state.imageUrlFromInput ? imageUrl = this.state.imageUrlFromInput : imageUrl = this.state.imageUrlFromBase;
+                this.state.imageUrlFromInput ? imageUrl = imageUrlFromInput : imageUrl = imageUrlFromBase;
             }
 
             return _react2.default.createElement(
@@ -22324,7 +22336,7 @@ var BatchCard = function (_React$Component) {
                     _react2.default.createElement(
                         _semanticUiReact.Card.Header,
                         { textAlign: "center" },
-                        this.props.name
+                        name
                     ),
                     _react2.default.createElement(
                         _semanticUiReact.Table,
@@ -22351,7 +22363,7 @@ var BatchCard = function (_React$Component) {
                                 _react2.default.createElement(
                                     _semanticUiReact.Table.Cell,
                                     { style: { fontWeight: "bold" } },
-                                    this.props.style
+                                    style
                                 )
                             ),
                             _react2.default.createElement(
@@ -22373,7 +22385,7 @@ var BatchCard = function (_React$Component) {
                                 _react2.default.createElement(
                                     _semanticUiReact.Table.Cell,
                                     null,
-                                    this.props.ibu
+                                    ibu
                                 )
                             ),
                             _react2.default.createElement(
@@ -22395,7 +22407,7 @@ var BatchCard = function (_React$Component) {
                                 _react2.default.createElement(
                                     _semanticUiReact.Table.Cell,
                                     null,
-                                    this.props.alcohol
+                                    alcohol
                                 )
                             ),
                             _react2.default.createElement(
@@ -22417,7 +22429,7 @@ var BatchCard = function (_React$Component) {
                                 _react2.default.createElement(
                                     _semanticUiReact.Table.Cell,
                                     null,
-                                    this.props.density
+                                    density
                                 )
                             )
                         )
@@ -22433,7 +22445,7 @@ var BatchCard = function (_React$Component) {
                         _react2.default.createElement(
                             "span",
                             null,
-                            this.props.date
+                            date
                         )
                     )
                 )
@@ -22481,21 +22493,22 @@ var DeleteBatchPopup = function (_React$Component) {
 
         var _this = _possibleConstructorReturn(this, (DeleteBatchPopup.__proto__ || Object.getPrototypeOf(DeleteBatchPopup)).call(this, props));
 
-        _this.handleOpen = function () {
+        _this.onOpen = function () {
             _this.setState({
                 isOpen: true
             });
         };
 
-        _this.handleClose = function () {
+        _this.onClose = function () {
             _this.setState({
                 isOpen: false
             });
         };
 
-        _this.handleDelete = function (batchToDelete) {
+        _this.onDelete = function (batchToDelete) {
             var batchRef = firebase.database().ref(batchToDelete);
             batchRef.remove();
+
             _this.handleClose();
         };
 
@@ -22506,38 +22519,39 @@ var DeleteBatchPopup = function (_React$Component) {
     }
 
     _createClass(DeleteBatchPopup, [{
-        key: 'render',
+        key: "render",
         value: function render() {
             var _this2 = this;
 
             var _props = this.props,
                 batchKey = _props.batchKey,
                 trigger = _props.trigger;
+            var isOpen = this.state.isOpen;
 
 
             return _react2.default.createElement(
                 _semanticUiReact.Popup,
                 {
                     trigger: trigger,
-                    on: 'click',
-                    position: 'top right',
+                    on: "click",
+                    position: "top right",
                     flowing: true,
-                    open: this.state.isOpen,
-                    onClose: this.handleClose,
-                    onOpen: this.handleOpen
+                    open: isOpen,
+                    onClose: this.onClose,
+                    onOpen: this.onOpen
                 },
                 _react2.default.createElement(
                     _semanticUiReact.Popup.Header,
                     null,
-                    'Czy na pewno chcesz usun\u0105\u0107 wark\u0119?'
+                    "Czy na pewno chcesz usun\u0105\u0107 wark\u0119?"
                 ),
                 _react2.default.createElement(
                     _semanticUiReact.Popup.Content,
                     null,
-                    _react2.default.createElement(_semanticUiReact.Button, { color: 'red', content: 'Tak', onClick: function onClick() {
-                            return _this2.handleDelete(batchKey);
+                    _react2.default.createElement(_semanticUiReact.Button, { color: "red", content: "Tak", onClick: function onClick() {
+                            return _this2.onDelete(batchKey);
                         } }),
-                    _react2.default.createElement(_semanticUiReact.Button, { color: 'green', content: 'Nie', onClick: this.handleClose })
+                    _react2.default.createElement(_semanticUiReact.Button, { color: "green", content: "Nie", onClick: this.onClose })
                 )
             );
         }
@@ -22563,7 +22577,7 @@ var _reactDom = __webpack_require__(132);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _reactRouterDom = __webpack_require__(26);
+var _reactRouterDom = __webpack_require__(29);
 
 var _App = __webpack_require__(449);
 
@@ -44314,7 +44328,7 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactRouterDom = __webpack_require__(26);
+var _reactRouterDom = __webpack_require__(29);
 
 __webpack_require__(228);
 
@@ -44327,8 +44341,6 @@ var _MyBatches = __webpack_require__(783);
 var _MyBatches2 = _interopRequireDefault(_MyBatches);
 
 var _Calculators = __webpack_require__(799);
-
-var _Calculators2 = _interopRequireDefault(_Calculators);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -44346,10 +44358,8 @@ var App = function (_React$Component) {
 
         var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
 
-        _this.onViewChange = function (view) {
-            _this.state.view == view || _this.setState({
-                view: view
-            });
+        _this.handleViewChange = function (view) {
+            _this.state.view === view || _this.setState({ view: view });
         };
 
         _this.state = {
@@ -44379,17 +44389,17 @@ var App = function (_React$Component) {
                         _react2.default.createElement(_reactRouterDom.Route, {
                             exact: true, path: "/",
                             render: function render(routeProps) {
-                                return _react2.default.createElement(_MyBatches2.default, _extends({}, routeProps, { pathSave: _this2.onViewChange, pathToGoBack: view }));
+                                return _react2.default.createElement(_MyBatches2.default, _extends({}, routeProps, { pathSave: _this2.handleViewChange, pathToGoBack: view }));
                             }
                         }),
                         _react2.default.createElement(_reactRouterDom.Route, {
                             path: "/mybatches",
                             render: function render(routeProps) {
-                                return _react2.default.createElement(_MyBatches2.default, _extends({}, routeProps, { pathSave: _this2.onViewChange, pathToGoBack: view }));
+                                return _react2.default.createElement(_MyBatches2.default, _extends({}, routeProps, { pathSave: _this2.handleViewChange, pathToGoBack: view }));
                             }
                         }),
                         _react2.default.createElement(_reactRouterDom.Route, {
-                            exact: true, path: "/calculators", component: _Calculators2.default
+                            exact: true, path: "/calculators", component: _Calculators.Calculators
                         })
                     )
                 )
@@ -44983,9 +44993,9 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _semanticUiReact = __webpack_require__(15);
+var _reactRouterDom = __webpack_require__(29);
 
-var _reactRouterDom = __webpack_require__(26);
+var _semanticUiReact = __webpack_require__(15);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -45004,9 +45014,12 @@ var Header = function (_React$Component) {
 
         var _this = _possibleConstructorReturn(this, (Header.__proto__ || Object.getPrototypeOf(Header)).call(this, props));
 
-        _this.handleItemClick = function (e, _ref) {
+        _this.onItemClick = function (e, _ref) {
             var name = _ref.name;
-            return _this.setState({ active: name });
+
+            _this.setState({
+                active: name
+            });
         };
 
         _this.state = {
@@ -45022,6 +45035,7 @@ var Header = function (_React$Component) {
 
             var active = this.state.active;
             var pathToGoBack = this.props.pathToGoBack;
+
 
             return _react2.default.createElement(
                 "div",
@@ -45049,12 +45063,12 @@ var Header = function (_React$Component) {
                             _react2.default.createElement(
                                 _reactRouterDom.Link,
                                 { to: "" + pathToGoBack },
-                                _react2.default.createElement(_semanticUiReact.Menu.Item, { name: "Moje warki", active: active === "Moje warki", onClick: this.handleItemClick })
+                                _react2.default.createElement(_semanticUiReact.Menu.Item, { name: "Moje warki", active: active === "Moje warki", onClick: this.onItemClick })
                             ),
                             _react2.default.createElement(
                                 _reactRouterDom.Link,
                                 { to: "/calculators" },
-                                _react2.default.createElement(_semanticUiReact.Menu.Item, { name: "Kalkulatory", active: active === "Kalkulatory", onClick: this.handleItemClick })
+                                _react2.default.createElement(_semanticUiReact.Menu.Item, { name: "Kalkulatory", active: active === "Kalkulatory", onClick: this.onItemClick })
                             )
                         ),
                         _react2.default.createElement(
@@ -45453,7 +45467,7 @@ var setToStringTag = __webpack_require__(154);
 var IteratorPrototype = {};
 
 // 25.1.2.1.1 %IteratorPrototype%[@@iterator]()
-__webpack_require__(56)(IteratorPrototype, __webpack_require__(27)('iterator'), function () { return this; });
+__webpack_require__(56)(IteratorPrototype, __webpack_require__(26)('iterator'), function () { return this; });
 
 module.exports = function (Constructor, NAME, next) {
   Constructor.prototype = create(IteratorPrototype, { next: descriptor(1, next) });
@@ -45579,7 +45593,7 @@ var $fails = __webpack_require__(57);
 var shared = __webpack_require__(149);
 var setToStringTag = __webpack_require__(154);
 var uid = __webpack_require__(85);
-var wks = __webpack_require__(27);
+var wks = __webpack_require__(26);
 var wksExt = __webpack_require__(156);
 var wksDefine = __webpack_require__(157);
 var enumKeys = __webpack_require__(479);
@@ -47255,7 +47269,7 @@ module.exports = isFlattenable;
 /***/ (function(module, exports, __webpack_require__) {
 
 var baseGetTag = __webpack_require__(30),
-    isObjectLike = __webpack_require__(28);
+    isObjectLike = __webpack_require__(27);
 
 /** `Object#toString` result references. */
 var argsTag = '[object Arguments]';
@@ -47384,7 +47398,7 @@ module.exports = stubFalse;
 
 var baseGetTag = __webpack_require__(30),
     isLength = __webpack_require__(166),
-    isObjectLike = __webpack_require__(28);
+    isObjectLike = __webpack_require__(27);
 
 /** `Object#toString` result references. */
 var argsTag = '[object Arguments]',
@@ -47489,7 +47503,7 @@ module.exports = nativeKeys;
 /* 535 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var isArrayLike = __webpack_require__(29);
+var isArrayLike = __webpack_require__(28);
 
 /**
  * Creates a `baseEach` or `baseEachRight` function.
@@ -48501,7 +48515,7 @@ module.exports = __webpack_require__(560);
 /***/ (function(module, exports, __webpack_require__) {
 
 var classof = __webpack_require__(272);
-var ITERATOR = __webpack_require__(27)('iterator');
+var ITERATOR = __webpack_require__(26)('iterator');
 var Iterators = __webpack_require__(59);
 module.exports = __webpack_require__(20).isIterable = function (it) {
   var O = Object(it);
@@ -48720,7 +48734,7 @@ var isNil = function isNil(children) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var baseIteratee = __webpack_require__(24),
-    isArrayLike = __webpack_require__(29),
+    isArrayLike = __webpack_require__(28),
     keys = __webpack_require__(23);
 
 /**
@@ -49415,7 +49429,7 @@ module.exports = function (iterator, fn, value, entries) {
 
 // check on default Array iterator
 var Iterators = __webpack_require__(59);
-var ITERATOR = __webpack_require__(27)('iterator');
+var ITERATOR = __webpack_require__(26)('iterator');
 var ArrayProto = Array.prototype;
 
 module.exports = function (it) {
@@ -49442,7 +49456,7 @@ module.exports = function (object, index, value) {
 /* 579 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var ITERATOR = __webpack_require__(27)('iterator');
+var ITERATOR = __webpack_require__(26)('iterator');
 var SAFE_CLOSING = false;
 
 try {
@@ -50611,7 +50625,7 @@ var LazyWrapper = __webpack_require__(176),
     LodashWrapper = __webpack_require__(179),
     baseLodash = __webpack_require__(177),
     isArray = __webpack_require__(12),
-    isObjectLike = __webpack_require__(28),
+    isObjectLike = __webpack_require__(27),
     wrapperClone = __webpack_require__(590);
 
 /** Used for built-in method references. */
@@ -53206,7 +53220,7 @@ var createHTMLParagraph = createShorthandFactory('p', function (val) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var baseGetTag = __webpack_require__(30),
-    isObjectLike = __webpack_require__(28);
+    isObjectLike = __webpack_require__(27);
 
 /** `Object#toString` result references. */
 var boolTag = '[object Boolean]';
@@ -57563,7 +57577,7 @@ module.exports = dropRight;
 
 var baseKeys = __webpack_require__(107),
     getTag = __webpack_require__(109),
-    isArrayLike = __webpack_require__(29),
+    isArrayLike = __webpack_require__(28),
     isString = __webpack_require__(187),
     stringSize = __webpack_require__(704);
 
@@ -61845,7 +61859,7 @@ Popup.propTypes = process.env.NODE_ENV !== "production" ? {
 var assignValue = __webpack_require__(117),
     copyObject = __webpack_require__(77),
     createAssigner = __webpack_require__(756),
-    isArrayLike = __webpack_require__(29),
+    isArrayLike = __webpack_require__(28),
     isPrototype = __webpack_require__(73),
     keys = __webpack_require__(23);
 
@@ -64485,13 +64499,11 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactRouterDom = __webpack_require__(26);
+var _reactRouterDom = __webpack_require__(29);
 
 __webpack_require__(228);
 
 var _MainActionButtons = __webpack_require__(784);
-
-var _MainActionButtons2 = _interopRequireDefault(_MainActionButtons);
 
 var _MainCardsView = __webpack_require__(788);
 
@@ -64543,9 +64555,7 @@ var MyBatches = function (_React$Component) {
 
                     batches.push(batch);
 
-                    _this2.setState({
-                        batches: batches
-                    });
+                    _this2.setState({ batches: batches });
                 });
             });
             // }, 1000)
@@ -64566,7 +64576,7 @@ var MyBatches = function (_React$Component) {
             return _react2.default.createElement(
                 "div",
                 null,
-                _react2.default.createElement(_MainActionButtons2.default, null),
+                _react2.default.createElement(_MainActionButtons.MainActionButtons, null),
                 _react2.default.createElement(
                     _reactRouterDom.Switch,
                     null,
@@ -64625,8 +64635,7 @@ exports.default = MyBatches;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+exports.MainActionButtons = undefined;
 
 var _react = __webpack_require__(0);
 
@@ -64640,46 +64649,22 @@ var _FilterButton2 = _interopRequireDefault(_FilterButton);
 
 var _AddBatchButton = __webpack_require__(786);
 
-var _AddBatchButton2 = _interopRequireDefault(_AddBatchButton);
-
 var _ChooseViewButton = __webpack_require__(787);
 
 var _ChooseViewButton2 = _interopRequireDefault(_ChooseViewButton);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+var MainActionButtons = exports.MainActionButtons = function MainActionButtons(props) {
 
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var MainActionButtons = function (_React$Component) {
-    _inherits(MainActionButtons, _React$Component);
-
-    function MainActionButtons() {
-        _classCallCheck(this, MainActionButtons);
-
-        return _possibleConstructorReturn(this, (MainActionButtons.__proto__ || Object.getPrototypeOf(MainActionButtons)).apply(this, arguments));
-    }
-
-    _createClass(MainActionButtons, [{
-        key: 'render',
-        value: function render() {
-            return _react2.default.createElement(
-                _semanticUiReact.Container,
-                { style: { paddingTop: '1.5em', marginBottom: '3em' } },
-                _react2.default.createElement(_AddBatchButton2.default, null),
-                _react2.default.createElement(_ChooseViewButton2.default, null),
-                _react2.default.createElement(_FilterButton2.default, null)
-            );
-        }
-    }]);
-
-    return MainActionButtons;
-}(_react2.default.Component);
-
-exports.default = MainActionButtons;
+    return _react2.default.createElement(
+        _semanticUiReact.Container,
+        { style: { paddingTop: "1.5em", marginBottom: "3em" } },
+        _react2.default.createElement(_AddBatchButton.AddBatchButton, null),
+        _react2.default.createElement(_ChooseViewButton2.default, null),
+        _react2.default.createElement(_FilterButton2.default, null)
+    );
+};
 
 /***/ }),
 /* 785 */
@@ -64708,8 +64693,8 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-// w propsach będzie dostawał liste stylów piwnych:
-var stateOptions = [{ key: '1', value: 'Lager', text: 'Lager' }, { key: '2', value: 'IPA', text: 'IPA' }];
+// w propsach będzie dostawał liste stylów piwnych, tymczasowo:
+var stateOptions = [{ key: "1", value: "Lager", text: "Lager" }, { key: "2", value: "IPA", text: "IPA" }];
 
 var FilterButton = function (_React$Component) {
     _inherits(FilterButton, _React$Component);
@@ -64719,38 +64704,41 @@ var FilterButton = function (_React$Component) {
 
         var _this = _possibleConstructorReturn(this, (FilterButton.__proto__ || Object.getPrototypeOf(FilterButton)).call(this, props));
 
-        _this.handleChange = function (e, _ref) {
+        _this.onChange = function (e, _ref) {
             var searchQuery = _ref.searchQuery,
                 value = _ref.value;
-            return _this.setState({ searchQuery: searchQuery, value: value });
+
+            _this.setState({ searchQuery: searchQuery, value: value });
         };
 
-        _this.handleSearchChange = function (e, _ref2) {
+        _this.onSearchChange = function (e, _ref2) {
             var searchQuery = _ref2.searchQuery;
-            return _this.setState({ searchQuery: searchQuery });
+
+            _this.setState({ searchQuery: searchQuery });
         };
 
         _this.state = {
-            searchQuery: '',
+            searchQuery: "",
             value: []
         };
         return _this;
     }
 
     _createClass(FilterButton, [{
-        key: 'render',
+        key: "render",
         value: function render() {
             var _state = this.state,
                 searchQuery = _state.searchQuery,
                 value = _state.value;
 
+
             return _react2.default.createElement(_semanticUiReact.Dropdown, {
-                style: { display: 'block', width: '15em', marginTop: '1.5em' },
+                style: { display: "block", width: "15em", marginTop: "1.5em" },
                 multiple: true,
-                onChange: this.handleChange,
-                onSearchChange: this.handleSearchChange,
+                onChange: this.onChange,
+                onSearchChange: this.onSearchChange,
                 options: stateOptions // to będzie do zmiany - będzie brało z listy stylów wpisanych przez użytkownika
-                , placeholder: 'Poka\u017C tylko wybrane style',
+                , placeholder: "Poka\u017C tylko wybrane style",
                 search: true,
                 searchQuery: searchQuery // wartość wpisywanych danych przez usera
                 , selection: true,
@@ -64774,54 +64762,31 @@ exports.default = FilterButton;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+exports.AddBatchButton = undefined;
 
 var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactRouterDom = __webpack_require__(26);
+var _reactRouterDom = __webpack_require__(29);
 
 var _semanticUiReact = __webpack_require__(15);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+var AddBatchButton = exports.AddBatchButton = function AddBatchButton(props) {
 
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var AddBatchButton = function (_React$Component) {
-    _inherits(AddBatchButton, _React$Component);
-
-    function AddBatchButton(props) {
-        _classCallCheck(this, AddBatchButton);
-
-        return _possibleConstructorReturn(this, (AddBatchButton.__proto__ || Object.getPrototypeOf(AddBatchButton)).call(this, props));
-    }
-
-    _createClass(AddBatchButton, [{
-        key: "render",
-        value: function render() {
-            return _react2.default.createElement(
-                _reactRouterDom.Link,
-                { to: "/mybatches/newbatch" },
-                _react2.default.createElement(_semanticUiReact.Button, {
-                    content: "Dodaj wark\u0119",
-                    icon: "add square",
-                    labelPosition: "right",
-                    color: "green"
-                })
-            );
-        }
-    }]);
-
-    return AddBatchButton;
-}(_react2.default.Component);
-
-exports.default = AddBatchButton;
+    return _react2.default.createElement(
+        _reactRouterDom.Link,
+        { to: "/mybatches/newbatch" },
+        _react2.default.createElement(_semanticUiReact.Button, {
+            content: "Dodaj wark\u0119",
+            icon: "add square",
+            labelPosition: "right",
+            color: "green"
+        })
+    );
+};
 
 /***/ }),
 /* 787 */
@@ -64840,7 +64805,7 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactRouterDom = __webpack_require__(26);
+var _reactRouterDom = __webpack_require__(29);
 
 var _semanticUiReact = __webpack_require__(15);
 
@@ -64851,8 +64816,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var options = [{ key: 1, text: "Szczegóły", value: "details" }, { key: 2, text: "Lista", value: "list" }];
 
 var ChooseViewButton = function (_React$Component) {
     _inherits(ChooseViewButton, _React$Component);
@@ -64881,6 +64844,7 @@ var ChooseViewButton = function (_React$Component) {
         value: function render() {
             var active = this.state.active;
 
+            var style = { width: "100px", color: "black", textAlign: "center" };
 
             return _react2.default.createElement(
                 _semanticUiReact.Dropdown,
@@ -64893,7 +64857,7 @@ var ChooseViewButton = function (_React$Component) {
                         { to: "/mybatches/cards" },
                         _react2.default.createElement(
                             _semanticUiReact.Dropdown.Item,
-                            { style: { width: "100px", color: "black", textAlign: "center" }, active: active === "cards", name: "cards", onClick: this.onClick },
+                            { style: style, active: active === "cards", name: "cards", onClick: this.onClick },
                             "Karty"
                         )
                     ),
@@ -64903,7 +64867,7 @@ var ChooseViewButton = function (_React$Component) {
                         { to: "/mybatches/list" },
                         _react2.default.createElement(
                             _semanticUiReact.Dropdown.Item,
-                            { style: { width: "100px", color: "black", textAlign: "center" }, active: active === "list", name: "list", onClick: this.onClick },
+                            { style: style, active: active === "list", name: "list", onClick: this.onClick },
                             "Lista"
                         )
                     )
@@ -64914,20 +64878,6 @@ var ChooseViewButton = function (_React$Component) {
 
     return ChooseViewButton;
 }(_react2.default.Component);
-
-// Pierwsza wersja Dropdown:
-// <Dropdown text="Wybierz widok" options={options} open style={{float: "right"}} onChange={this.handleChange} value={value}>
-
-// const ChooseViewButton = () => (
-//     <Button.Group size="mini">
-//         <Button>Szczegóły</Button>
-//         <Button.Or text="lub"/>
-//         <Button>Lista</Button>
-//     </Button.Group>
-// );
-//
-// export default ChooseViewButton;
-
 
 exports.default = ChooseViewButton;
 
@@ -64948,7 +64898,7 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactRouterDom = __webpack_require__(26);
+var _reactRouterDom = __webpack_require__(29);
 
 var _semanticUiReact = __webpack_require__(15);
 
@@ -64971,10 +64921,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var MainCardsView = function (_React$Component) {
     _inherits(MainCardsView, _React$Component);
 
-    function MainCardsView(props) {
+    function MainCardsView() {
         _classCallCheck(this, MainCardsView);
 
-        return _possibleConstructorReturn(this, (MainCardsView.__proto__ || Object.getPrototypeOf(MainCardsView)).call(this, props));
+        return _possibleConstructorReturn(this, (MainCardsView.__proto__ || Object.getPrototypeOf(MainCardsView)).apply(this, arguments));
     }
 
     _createClass(MainCardsView, [{
@@ -64998,7 +64948,7 @@ var MainCardsView = function (_React$Component) {
                     batches.map(function (batch, index) {
                         return _react2.default.createElement(
                             _semanticUiReact.Grid.Column,
-                            { key: index },
+                            { key: batch.key },
                             _react2.default.createElement(
                                 _reactRouterDom.Link,
                                 { to: "/mybatches/batchdetails/" + batch.key },
@@ -65034,13 +64984,9 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactRouterDom = __webpack_require__(26);
-
 var _semanticUiReact = __webpack_require__(15);
 
 var _BatchListItem = __webpack_require__(790);
-
-var _BatchListItem2 = _interopRequireDefault(_BatchListItem);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -65053,10 +64999,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var MainListView = function (_React$Component) {
     _inherits(MainListView, _React$Component);
 
-    function MainListView(props) {
+    function MainListView() {
         _classCallCheck(this, MainListView);
 
-        return _possibleConstructorReturn(this, (MainListView.__proto__ || Object.getPrototypeOf(MainListView)).call(this, props));
+        return _possibleConstructorReturn(this, (MainListView.__proto__ || Object.getPrototypeOf(MainListView)).apply(this, arguments));
     }
 
     _createClass(MainListView, [{
@@ -65069,6 +65015,7 @@ var MainListView = function (_React$Component) {
         value: function render() {
             var batches = this.props.batches;
 
+
             return _react2.default.createElement(
                 _semanticUiReact.Container,
                 null,
@@ -65076,7 +65023,7 @@ var MainListView = function (_React$Component) {
                     _semanticUiReact.List,
                     { divided: true, relaxed: true, animated: true },
                     batches.map(function (batch, index) {
-                        return _react2.default.createElement(_BatchListItem2.default, { key: index, batch: batch, link: "/mybatches/batchdetails/" + batch.key });
+                        return _react2.default.createElement(_BatchListItem.BatchListItem, { key: batch.key, batch: batch, link: "/mybatches/batchdetails/" + batch.key });
                     })
                 )
             );
@@ -65098,8 +65045,7 @@ exports.default = MainListView;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+exports.BatchListItem = undefined;
 
 var _react = __webpack_require__(0);
 
@@ -65107,7 +65053,7 @@ var _react2 = _interopRequireDefault(_react);
 
 var _semanticUiReact = __webpack_require__(15);
 
-var _reactRouterDom = __webpack_require__(26);
+var _reactRouterDom = __webpack_require__(29);
 
 var _DeleteBatchPopup = __webpack_require__(404);
 
@@ -65115,146 +65061,123 @@ var _DeleteBatchPopup2 = _interopRequireDefault(_DeleteBatchPopup);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+var BatchListItem = exports.BatchListItem = function BatchListItem(props) {
+    var link = props.link,
+        batch = props.batch;
+    var _props$batch$details = props.batch.details,
+        name = _props$batch$details.name,
+        style = _props$batch$details.style,
+        ibu = _props$batch$details.ibu,
+        alcohol = _props$batch$details.alcohol,
+        density = _props$batch$details.density;
 
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+    var trigger = _react2.default.createElement(_semanticUiReact.Button, { size: "tiny", content: "Usu\u0144" });
+    var textAlign = { textAlign: "center" };
 
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var BatchListItem = function (_React$Component) {
-    _inherits(BatchListItem, _React$Component);
-
-    function BatchListItem(props) {
-        _classCallCheck(this, BatchListItem);
-
-        return _possibleConstructorReturn(this, (BatchListItem.__proto__ || Object.getPrototypeOf(BatchListItem)).call(this, props));
-    }
-
-    _createClass(BatchListItem, [{
-        key: 'render',
-        value: function render() {
-            var _props = this.props,
-                link = _props.link,
-                batch = _props.batch;
-            var _props$batch$details = this.props.batch.details,
-                name = _props$batch$details.name,
-                style = _props$batch$details.style,
-                ibu = _props$batch$details.ibu,
-                alcohol = _props$batch$details.alcohol,
-                density = _props$batch$details.density;
-
-            var trigger = _react2.default.createElement(_semanticUiReact.Button, { size: 'tiny', content: 'Usu\u0144' });
-
-            return _react2.default.createElement(
-                _semanticUiReact.List.Item,
-                null,
+    return _react2.default.createElement(
+        _semanticUiReact.List.Item,
+        null,
+        _react2.default.createElement(
+            _semanticUiReact.List.Content,
+            { floated: "right", verticalAlign: "bottom", style: { position: "relative", top: "3em" } },
+            _react2.default.createElement(_DeleteBatchPopup2.default, { batchKey: batch.key, trigger: trigger })
+        ),
+        _react2.default.createElement(_semanticUiReact.List.Icon, { name: "beer", size: "large", verticalAlign: "middle" }),
+        _react2.default.createElement(
+            _reactRouterDom.Link,
+            { to: link },
+            _react2.default.createElement(
+                _semanticUiReact.List.Content,
+                { verticalAlign: "middle" },
                 _react2.default.createElement(
-                    _semanticUiReact.List.Content,
-                    { floated: 'right', verticalAlign: 'bottom', style: { position: 'relative', top: '3em' } },
-                    _react2.default.createElement(_DeleteBatchPopup2.default, { batchKey: batch.key, trigger: trigger })
+                    _semanticUiReact.List.Header,
+                    { style: { fontSize: "1.3em", paddingBottom: "1em" } },
+                    name
                 ),
-                _react2.default.createElement(_semanticUiReact.List.Icon, { name: 'beer', size: 'large', verticalAlign: 'middle' }),
                 _react2.default.createElement(
-                    _reactRouterDom.Link,
-                    { to: link },
+                    _semanticUiReact.List.Description,
+                    null,
                     _react2.default.createElement(
-                        _semanticUiReact.List.Content,
-                        { verticalAlign: 'middle' },
+                        _semanticUiReact.List,
+                        { divided: true, horizontal: true, relaxed: "very" },
                         _react2.default.createElement(
-                            _semanticUiReact.List.Header,
-                            { style: { fontSize: "1.3em", paddingBottom: "1em" } },
-                            name
-                        ),
-                        _react2.default.createElement(
-                            _semanticUiReact.List.Description,
+                            _semanticUiReact.List.Item,
                             null,
                             _react2.default.createElement(
-                                _semanticUiReact.List,
-                                { divided: true, horizontal: true, relaxed: 'very' },
+                                _semanticUiReact.List.Content,
+                                null,
                                 _react2.default.createElement(
-                                    _semanticUiReact.List.Item,
+                                    _semanticUiReact.List.Header,
                                     null,
-                                    _react2.default.createElement(
-                                        _semanticUiReact.List.Content,
-                                        null,
-                                        _react2.default.createElement(
-                                            _semanticUiReact.List.Header,
-                                            null,
-                                            'Styl'
-                                        ),
-                                        _react2.default.createElement(
-                                            _semanticUiReact.List.Description,
-                                            { style: { textAlign: "center" } },
-                                            style
-                                        )
-                                    )
+                                    "Styl"
                                 ),
                                 _react2.default.createElement(
-                                    _semanticUiReact.List.Item,
+                                    _semanticUiReact.List.Description,
+                                    { style: textAlign },
+                                    style
+                                )
+                            )
+                        ),
+                        _react2.default.createElement(
+                            _semanticUiReact.List.Item,
+                            null,
+                            _react2.default.createElement(
+                                _semanticUiReact.List.Content,
+                                null,
+                                _react2.default.createElement(
+                                    _semanticUiReact.List.Header,
                                     null,
-                                    _react2.default.createElement(
-                                        _semanticUiReact.List.Content,
-                                        null,
-                                        _react2.default.createElement(
-                                            _semanticUiReact.List.Header,
-                                            null,
-                                            'IBU'
-                                        ),
-                                        _react2.default.createElement(
-                                            _semanticUiReact.List.Description,
-                                            { style: { textAlign: "center" } },
-                                            ibu
-                                        )
-                                    )
+                                    "IBU"
                                 ),
                                 _react2.default.createElement(
-                                    _semanticUiReact.List.Item,
+                                    _semanticUiReact.List.Description,
+                                    { style: textAlign },
+                                    ibu
+                                )
+                            )
+                        ),
+                        _react2.default.createElement(
+                            _semanticUiReact.List.Item,
+                            null,
+                            _react2.default.createElement(
+                                _semanticUiReact.List.Content,
+                                null,
+                                _react2.default.createElement(
+                                    _semanticUiReact.List.Header,
                                     null,
-                                    _react2.default.createElement(
-                                        _semanticUiReact.List.Content,
-                                        null,
-                                        _react2.default.createElement(
-                                            _semanticUiReact.List.Header,
-                                            null,
-                                            'Alkohol'
-                                        ),
-                                        _react2.default.createElement(
-                                            _semanticUiReact.List.Description,
-                                            { style: { textAlign: "center" } },
-                                            alcohol
-                                        )
-                                    )
+                                    "Alkohol"
                                 ),
                                 _react2.default.createElement(
-                                    _semanticUiReact.List.Item,
+                                    _semanticUiReact.List.Description,
+                                    { style: textAlign },
+                                    alcohol
+                                )
+                            )
+                        ),
+                        _react2.default.createElement(
+                            _semanticUiReact.List.Item,
+                            null,
+                            _react2.default.createElement(
+                                _semanticUiReact.List.Content,
+                                null,
+                                _react2.default.createElement(
+                                    _semanticUiReact.List.Header,
                                     null,
-                                    _react2.default.createElement(
-                                        _semanticUiReact.List.Content,
-                                        null,
-                                        _react2.default.createElement(
-                                            _semanticUiReact.List.Header,
-                                            null,
-                                            'G\u0119sto\u015B\u0107'
-                                        ),
-                                        _react2.default.createElement(
-                                            _semanticUiReact.List.Description,
-                                            { style: { textAlign: "center" } },
-                                            density
-                                        )
-                                    )
+                                    "G\u0119sto\u015B\u0107"
+                                ),
+                                _react2.default.createElement(
+                                    _semanticUiReact.List.Description,
+                                    { style: textAlign },
+                                    density
                                 )
                             )
                         )
                     )
                 )
-            );
-        }
-    }]);
-
-    return BatchListItem;
-}(_react2.default.Component);
-
-exports.default = BatchListItem;
+            )
+        )
+    );
+};
 
 /***/ }),
 /* 791 */
@@ -65273,13 +65196,13 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactRouterDom = __webpack_require__(26);
+var _reactRouterDom = __webpack_require__(29);
+
+var _semanticUiReact = __webpack_require__(15);
 
 var _BatchCardForm = __webpack_require__(792);
 
 var _BatchCardForm2 = _interopRequireDefault(_BatchCardForm);
-
-var _semanticUiReact = __webpack_require__(15);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -65297,14 +65220,15 @@ var DetailsView = function (_React$Component) {
 
         var _this = _possibleConstructorReturn(this, (DetailsView.__proto__ || Object.getPrototypeOf(DetailsView)).call(this));
 
-        _this.handleOpen = function () {
+        _this.onOpen = function () {
             _this.setState({
                 isOpen: true
             });
         };
 
-        _this.handleClose = function (e) {
+        _this.onClose = function (e) {
             e.preventDefault();
+
             _this.setState({
                 isOpen: false
             });
@@ -65334,6 +65258,7 @@ var DetailsView = function (_React$Component) {
                     return batch.key === batchKey;
                 });
                 var batchObj = batch[0];
+
                 this.setState({
                     batch: batchObj,
                     disabled: true
@@ -65377,8 +65302,8 @@ var DetailsView = function (_React$Component) {
                             position: "top right",
                             flowing: true,
                             open: isOpen,
-                            onClose: this.handleClose,
-                            onOpen: this.handleOpen
+                            onClose: this.onClose,
+                            onOpen: this.onOpen
                         },
                         _react2.default.createElement(
                             _semanticUiReact.Popup.Header,
@@ -65393,7 +65318,7 @@ var DetailsView = function (_React$Component) {
                                 { to: pathToGoBack },
                                 _react2.default.createElement(_semanticUiReact.Button, { color: "grey", content: "Tak" })
                             ),
-                            _react2.default.createElement(_semanticUiReact.Button, { color: "green", content: "Nie", onClick: this.handleClose })
+                            _react2.default.createElement(_semanticUiReact.Button, { color: "green", content: "Nie", onClick: this.onClose })
                         )
                     )
                 )
@@ -65479,10 +65404,10 @@ var BatchCardForm = function (_React$Component) {
             isImageInBase: "",
             name: "",
             style: "",
-            date: "",
             ibu: "",
             density: "",
             alcohol: "",
+            date: "",
             imageUrl: ""
         };
         return _this;
@@ -65505,6 +65430,7 @@ var BatchCardForm = function (_React$Component) {
                     date = _props$batch$details.date,
                     hasImage = _props$batch$details.hasImage;
 
+
                 this.setState({
                     batchKey: batchKey,
                     isImageInBase: hasImage,
@@ -65523,16 +65449,6 @@ var BatchCardForm = function (_React$Component) {
     }, {
         key: "render",
         value: function render() {
-            var _state = this.state,
-                batchKey = _state.batchKey,
-                name = _state.name,
-                style = _state.style,
-                ibu = _state.ibu,
-                alcohol = _state.alcohol,
-                density = _state.density,
-                date = _state.date,
-                isImageInBase = _state.isImageInBase,
-                imageUrl = _state.imageUrl;
             var _props = this.props,
                 view = _props.view,
                 pathToGoBack = _props.pathToGoBack,
@@ -65542,7 +65458,7 @@ var BatchCardForm = function (_React$Component) {
             return _react2.default.createElement(
                 "div",
                 { style: { display: "flex", alignItems: "center", justifyContent: "space-around", height: "90%", width: "90%" } },
-                _react2.default.createElement(_BatchCard2.default, { batchKey: batchKey, name: name, style: style, ibu: ibu, alcohol: alcohol, density: density, date: date, isImageInBase: isImageInBase, imageUrl: imageUrl }),
+                _react2.default.createElement(_BatchCard2.default, this.state),
                 _react2.default.createElement(_BatchForm2.default, { batch: batch, pathToGoBack: pathToGoBack, view: view, onDetailsChange: this.handleDetailsChange, onImageChange: this.handleImageChange, onImageAddToBase: this.handleImageAddToBase, handleDisabledChange: this.props.handleDisabledChange })
             );
         }
@@ -65572,21 +65488,15 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactRouterDom = __webpack_require__(26);
+var _reactRouterDom = __webpack_require__(29);
 
 var _semanticUiReact = __webpack_require__(15);
 
 var _Details = __webpack_require__(794);
 
-var _Details2 = _interopRequireDefault(_Details);
-
 var _Recipe = __webpack_require__(795);
 
-var _Recipe2 = _interopRequireDefault(_Recipe);
-
 var _Rating_Comments = __webpack_require__(797);
-
-var _Rating_Comments2 = _interopRequireDefault(_Rating_Comments);
 
 var _Files = __webpack_require__(798);
 
@@ -65608,7 +65518,6 @@ var BatchForm = function (_React$Component) {
     function BatchForm(props) {
         _classCallCheck(this, BatchForm);
 
-        // mimo, że jest to podgląd, potrzebuję przechowywać stan ze wszystkich inputów, bo user może je edytować, po kliknięciu w button Edytuj
         var _this = _possibleConstructorReturn(this, (BatchForm.__proto__ || Object.getPrototypeOf(BatchForm)).call(this, props));
 
         _this.handleItemClick = function (e, _ref) {
@@ -65625,9 +65534,8 @@ var BatchForm = function (_React$Component) {
         };
 
         _this.togglePopup = function () {
-            var currentPopupState = _this.state.isPopupOpen;
-            _this.setState({
-                isPopupOpen: !currentPopupState
+            _this.setState(function (prevState) {
+                return { isPopupOpen: !prevState.isPopupOpen };
             });
         };
 
@@ -65658,22 +65566,28 @@ var BatchForm = function (_React$Component) {
 
         _this.chooseIngredients = function (category) {
             var ingredients = void 0;
+            var _this$state = _this.state,
+                ingredients_ferm = _this$state.ingredients_ferm,
+                ingredients_yeast = _this$state.ingredients_yeast,
+                ingredients_hop = _this$state.ingredients_hop,
+                ingredients_addons = _this$state.ingredients_addons;
+
             switch (category) {
                 case "ingredients_ferm":
                     {
-                        return ingredients = _this.state.ingredients_ferm;
+                        return ingredients = ingredients_ferm;
                     }
                 case "ingredients_yeast":
                     {
-                        return ingredients = _this.state.ingredients_yeast;
+                        return ingredients = ingredients_yeast;
                     }
                 case "ingredients_hop":
                     {
-                        return ingredients = _this.state.ingredients_hop;
+                        return ingredients = ingredients_hop;
                     }
                 case "ingredients_addons":
                     {
-                        return ingredients = _this.state.ingredients_addons;
+                        return ingredients = ingredients_addons;
                     }
                 default:
                     console.log("Nie znaleziono odpowiednich składników");
@@ -65744,34 +65658,34 @@ var BatchForm = function (_React$Component) {
         };
 
         _this.createNewBatch = function () {
-            var _this$state = _this.state,
-                hasImage = _this$state.hasImage,
-                name = _this$state.name,
-                style = _this$state.style,
-                date = _this$state.date,
-                ibu = _this$state.ibu,
-                srm = _this$state.srm,
-                alcohol = _this$state.alcohol,
-                volume = _this$state.volume,
-                density = _this$state.density,
-                type = _this$state.type,
-                rateBitterness = _this$state.rateBitterness,
-                rateStyle = _this$state.rateStyle,
-                rateAroma = _this$state.rateAroma,
-                rateLook = _this$state.rateLook,
-                rateGeneral = _this$state.rateGeneral,
-                rateFlavor = _this$state.rateFlavor,
-                commentAroma = _this$state.commentAroma,
-                commentStyle = _this$state.commentStyle,
-                commentLook = _this$state.commentLook,
-                commentGeneral = _this$state.commentGeneral,
-                commentFlavor = _this$state.commentFlavor,
-                commentAdditional = _this$state.commentAdditional,
-                commentBitterness = _this$state.commentBitterness,
-                ingredients_fermState = _this$state.ingredients_ferm,
-                ingredients_yeastState = _this$state.ingredients_yeast,
-                ingredients_hopState = _this$state.ingredients_hop,
-                ingredients_addonsState = _this$state.ingredients_addons;
+            var _this$state2 = _this.state,
+                hasImage = _this$state2.hasImage,
+                name = _this$state2.name,
+                style = _this$state2.style,
+                date = _this$state2.date,
+                ibu = _this$state2.ibu,
+                srm = _this$state2.srm,
+                alcohol = _this$state2.alcohol,
+                volume = _this$state2.volume,
+                density = _this$state2.density,
+                type = _this$state2.type,
+                rateBitterness = _this$state2.rateBitterness,
+                rateStyle = _this$state2.rateStyle,
+                rateAroma = _this$state2.rateAroma,
+                rateLook = _this$state2.rateLook,
+                rateGeneral = _this$state2.rateGeneral,
+                rateFlavor = _this$state2.rateFlavor,
+                commentAroma = _this$state2.commentAroma,
+                commentStyle = _this$state2.commentStyle,
+                commentLook = _this$state2.commentLook,
+                commentGeneral = _this$state2.commentGeneral,
+                commentFlavor = _this$state2.commentFlavor,
+                commentAdditional = _this$state2.commentAdditional,
+                commentBitterness = _this$state2.commentBitterness,
+                ingredients_fermState = _this$state2.ingredients_ferm,
+                ingredients_yeastState = _this$state2.ingredients_yeast,
+                ingredients_hopState = _this$state2.ingredients_hop,
+                ingredients_addonsState = _this$state2.ingredients_addons;
 
             var ingredients_ferm = void 0,
                 ingredients_yeast = void 0,
@@ -65779,26 +65693,11 @@ var BatchForm = function (_React$Component) {
                 ingredients_addons = void 0;
 
             // Ponieważ w Firebase nie zapisują się puste tablice, to w wypadku kiedy nia ma którychś składników dodanych w Recipe, to zamieniam pustą tablicę na pustego stringa, który zapisze się w Firebase.
-            if (ingredients_fermState == false) {
-                ingredients_ferm = "";
-            } else {
-                ingredients_ferm = ingredients_fermState;
-            }
-            if (ingredients_yeastState == false) {
-                ingredients_yeast = "";
-            } else {
-                ingredients_yeast = ingredients_yeastState;
-            }
-            if (ingredients_hopState == false) {
-                ingredients_hop = "";
-            } else {
-                ingredients_hop = ingredients_hopState;
-            }
-            if (ingredients_addonsState == false) {
-                ingredients_addons = "";
-            } else {
-                ingredients_addons = ingredients_addonsState;
-            }
+
+            ingredients_fermState == false ? ingredients_ferm = "" : ingredients_ferm = ingredients_fermState;
+            ingredients_yeastState == false ? ingredients_yeast = "" : ingredients_yeast = ingredients_yeastState;
+            ingredients_hopState == false ? ingredients_hop = "" : ingredients_hop = ingredients_hopState;
+            ingredients_addonsState == false ? ingredients_addons = "" : ingredients_addons = ingredients_addonsState;
 
             var newBatch = {
                 "details": {
@@ -65842,7 +65741,6 @@ var BatchForm = function (_React$Component) {
         };
 
         _this.addImageToStorage = function (file, ref) {
-            var that = _this;
             // tworzę storage reference
             var storageRef = firebase.storage().ref();
             storageRef.child(ref).put(file).then(function (snapshot) {
@@ -65850,7 +65748,7 @@ var BatchForm = function (_React$Component) {
             });
 
             // przekazuję wyżej informację, że warka ma zdjęcie, aby tylko w tej sytuacji BatchCard odpytywało bazę
-            that.props.onImageAddToBase();
+            _this.props.onImageAddToBase();
         };
 
         _this.onEditClick = function (e) {
@@ -65864,7 +65762,6 @@ var BatchForm = function (_React$Component) {
                 // przekazuję zmianę wyżej, do obsługi popup zamykającego kartę
                 _this.props.handleDisabledChange(false);
             } else {
-
                 // tworzę referencję do konkretnej warki w bazie i nadpisuję jej dane
                 var batchKey = _this.props.batch.key;
                 var batchRef = firebase.database().ref(batchKey);
@@ -66240,21 +66137,21 @@ var BatchForm = function (_React$Component) {
                             _react2.default.createElement(_reactRouterDom.Route, {
                                 exact: true, path: path,
                                 render: function render(routeProps) {
-                                    return _react2.default.createElement(_Details2.default, _extends({}, routeProps, { disabled: disabled, componentUpdate: _this2.handleDetailsComponentUpdate, name: name, style: style, ibu: ibu, alcohol: alcohol, volume: volume, date: date, srm: srm, density: density, type: type }));
+                                    return _react2.default.createElement(_Details.Details, _extends({}, routeProps, { disabled: disabled, componentUpdate: _this2.handleDetailsComponentUpdate, name: name, style: style, ibu: ibu, alcohol: alcohol, volume: volume, date: date, srm: srm, density: density, type: type }));
                                 }
                             }),
                             "/* -------- widok Receptury -------- */",
                             _react2.default.createElement(_reactRouterDom.Route, {
                                 exact: true, path: path + "/recipe",
                                 render: function render(routeProps) {
-                                    return _react2.default.createElement(_Recipe2.default, _extends({}, routeProps, { disabled: disabled, componentUpdate: _this2.handleRecipeComponentUpdate, ingredients_ferm: ingredients_ferm, ingredients_yeast: ingredients_yeast, ingredients_hop: ingredients_hop, ingredients_addons: ingredients_addons, componentAdd: _this2.handleRecipeComponentAddIngr, componentDelete: _this2.handleRecipeComponentDeleteIngr }));
+                                    return _react2.default.createElement(_Recipe.Recipe, _extends({}, routeProps, { disabled: disabled, componentUpdate: _this2.handleRecipeComponentUpdate, ingredients_ferm: ingredients_ferm, ingredients_yeast: ingredients_yeast, ingredients_hop: ingredients_hop, ingredients_addons: ingredients_addons, componentAdd: _this2.handleRecipeComponentAddIngr, componentDelete: _this2.handleRecipeComponentDeleteIngr }));
                                 }
                             }),
                             "/* -------- widok Oceny i uwag -------- */",
                             _react2.default.createElement(_reactRouterDom.Route, {
                                 exact: true, path: path + "/rating-comments",
                                 render: function render(routeProps) {
-                                    return _react2.default.createElement(_Rating_Comments2.default, _extends({}, routeProps, { disabled: disabled, handleRate: _this2.handleRateChange, rateGeneral: rateGeneral, rateAroma: rateAroma, rateBitterness: rateBitterness, rateFlavor: rateFlavor, rateLook: rateLook, rateStyle: rateStyle, commentBitterness: commentBitterness, commentAdditional: commentAdditional, commentFlavor: commentFlavor, commentLook: commentLook, commentStyle: commentStyle, commentAroma: commentAroma, commentGeneral: commentGeneral, handleCommentChange: _this2.handleCommentChange }));
+                                    return _react2.default.createElement(_Rating_Comments.Rating_Comments, _extends({}, routeProps, { disabled: disabled, handleRate: _this2.handleRateChange, rateGeneral: rateGeneral, rateAroma: rateAroma, rateBitterness: rateBitterness, rateFlavor: rateFlavor, rateLook: rateLook, rateStyle: rateStyle, commentBitterness: commentBitterness, commentAdditional: commentAdditional, commentFlavor: commentFlavor, commentLook: commentLook, commentStyle: commentStyle, commentAroma: commentAroma, commentGeneral: commentGeneral, handleCommentChange: _this2.handleCommentChange }));
                                 }
                             }),
                             "/* -------- widok Zdj\u0119cia -------- */",
@@ -66265,11 +66162,7 @@ var BatchForm = function (_React$Component) {
                                 }
                             })
                         ),
-                        _react2.default.createElement(
-                            _semanticUiReact.Divider,
-                            null,
-                            " "
-                        ),
+                        _react2.default.createElement(_semanticUiReact.Divider, null),
                         buttons
                     )
                 )
@@ -66295,8 +66188,7 @@ exports.default = BatchForm;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+exports.Details = undefined;
 
 var _react = __webpack_require__(0);
 
@@ -66306,82 +66198,75 @@ var _semanticUiReact = __webpack_require__(15);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
 var Details_Input = function Details_Input(props) {
+    var label = props.label,
+        disabled = props.disabled,
+        name = props.name,
+        value = props.value;
+
     return _react2.default.createElement(
         _semanticUiReact.Form.Field,
         null,
         _react2.default.createElement(
-            'label',
+            "label",
             null,
-            props.label
+            label
         ),
-        _react2.default.createElement(_semanticUiReact.Input, { disabled: props.disabled, type: 'text', name: props.name, onChange: props.onChange, value: props.value })
+        _react2.default.createElement(_semanticUiReact.Input, { disabled: disabled, type: "text", name: name, onChange: props.onChange, value: value })
     );
 };
 
-var Details = function (_React$Component) {
-    _inherits(Details, _React$Component);
+var Details = exports.Details = function Details(props) {
+    var disabled = props.disabled,
+        name = props.name,
+        style = props.style,
+        date = props.date,
+        volume = props.volume,
+        ibu = props.ibu,
+        srm = props.srm,
+        density = props.density,
+        alcohol = props.alcohol,
+        type = props.type;
 
-    function Details(props) {
-        _classCallCheck(this, Details);
+    var widths = "equal";
 
-        var _this = _possibleConstructorReturn(this, (Details.__proto__ || Object.getPrototypeOf(Details)).call(this, props));
+    var handleInputChange = function handleInputChange(e) {
+        var name = e.target.name;
+        var value = e.target.value;
 
-        _this.handleInputChange = function (e) {
-            var name = e.target.name;
-            var value = e.target.value;
+        props.componentUpdate(name, value);
+    };
 
-            _this.props.componentUpdate(name, value);
-        };
-
-        return _this;
-    }
-
-    _createClass(Details, [{
-        key: 'render',
-        value: function render() {
-            return _react2.default.createElement(
-                _semanticUiReact.Container,
-                { style: { height: "100%" } },
-                _react2.default.createElement(
-                    _semanticUiReact.Form.Group,
-                    { widths: 'equal' },
-                    _react2.default.createElement(Details_Input, { disabled: this.props.disabled, label: 'Nazwa', name: 'name', onChange: this.handleInputChange, value: this.props.name }),
-                    _react2.default.createElement(Details_Input, { disabled: this.props.disabled, label: 'Styl', name: 'style', onChange: this.handleInputChange, value: this.props.style })
-                ),
-                _react2.default.createElement(
-                    _semanticUiReact.Form.Group,
-                    { widths: 'equal' },
-                    _react2.default.createElement(Details_Input, { disabled: this.props.disabled, label: 'Data warzenia', name: 'date', onChange: this.handleInputChange, value: this.props.date }),
-                    _react2.default.createElement(Details_Input, { disabled: this.props.disabled, label: 'Wielko\u015B\u0107', name: 'volume', onChange: this.handleInputChange, value: this.props.volume })
-                ),
-                _react2.default.createElement(
-                    _semanticUiReact.Form.Group,
-                    { widths: 'equal' },
-                    _react2.default.createElement(Details_Input, { disabled: this.props.disabled, label: 'IBU', name: 'ibu', onChange: this.handleInputChange, value: this.props.ibu }),
-                    _react2.default.createElement(Details_Input, { disabled: this.props.disabled, label: 'SRM', name: 'srm', onChange: this.handleInputChange, value: this.props.srm })
-                ),
-                _react2.default.createElement(
-                    _semanticUiReact.Form.Group,
-                    { widths: 'equal' },
-                    _react2.default.createElement(Details_Input, { disabled: this.props.disabled, label: 'G\u0119sto\u015B\u0107', name: 'density', onChange: this.handleInputChange, value: this.props.density }),
-                    _react2.default.createElement(Details_Input, { disabled: this.props.disabled, label: 'Alkohol', name: 'alcohol', onChange: this.handleInputChange, value: this.props.alcohol })
-                ),
-                _react2.default.createElement(Details_Input, { disabled: this.props.disabled, label: 'Typ', name: 'type', onChange: this.handleInputChange, value: this.props.type })
-            );
-        }
-    }]);
-
-    return Details;
-}(_react2.default.Component);
-
-exports.default = Details;
+    return _react2.default.createElement(
+        _semanticUiReact.Container,
+        { style: { height: "100%" } },
+        _react2.default.createElement(
+            _semanticUiReact.Form.Group,
+            { widths: widths },
+            _react2.default.createElement(Details_Input, { disabled: disabled, label: "Nazwa", name: "name", onChange: handleInputChange, value: name }),
+            _react2.default.createElement(Details_Input, { disabled: disabled, label: "Styl", name: "style", onChange: handleInputChange, value: style })
+        ),
+        _react2.default.createElement(
+            _semanticUiReact.Form.Group,
+            { widths: widths },
+            _react2.default.createElement(Details_Input, { disabled: disabled, label: "Data warzenia", name: "date", onChange: handleInputChange, value: date }),
+            _react2.default.createElement(Details_Input, { disabled: disabled, label: "Wielko\u015B\u0107", name: "volume", onChange: handleInputChange, value: volume })
+        ),
+        _react2.default.createElement(
+            _semanticUiReact.Form.Group,
+            { widths: widths },
+            _react2.default.createElement(Details_Input, { disabled: disabled, label: "IBU", name: "ibu", onChange: handleInputChange, value: ibu }),
+            _react2.default.createElement(Details_Input, { disabled: disabled, label: "SRM", name: "srm", onChange: handleInputChange, value: srm })
+        ),
+        _react2.default.createElement(
+            _semanticUiReact.Form.Group,
+            { widths: widths },
+            _react2.default.createElement(Details_Input, { disabled: disabled, label: "G\u0119sto\u015B\u0107", name: "density", onChange: handleInputChange, value: density }),
+            _react2.default.createElement(Details_Input, { disabled: disabled, label: "Alkohol", name: "alcohol", onChange: handleInputChange, value: alcohol })
+        ),
+        _react2.default.createElement(Details_Input, { disabled: disabled, label: "Typ", name: "type", onChange: handleInputChange, value: type })
+    );
+};
 
 /***/ }),
 /* 795 */
@@ -66393,8 +66278,7 @@ exports.default = Details;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+exports.Recipe = undefined;
 
 var _react = __webpack_require__(0);
 
@@ -66404,127 +66288,73 @@ var _semanticUiReact = __webpack_require__(15);
 
 var _Recipe_Ingredient = __webpack_require__(796);
 
-var _Recipe_Ingredient2 = _interopRequireDefault(_Recipe_Ingredient);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+// tu można jeszcze dodać rzeczy procesowe - chmielenie, zacieranie itp.
 
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+var Recipe = exports.Recipe = function Recipe(props) {
+    var disabled = props.disabled,
+        ingredients_ferm = props.ingredients_ferm,
+        ingredients_yeast = props.ingredients_yeast,
+        ingredients_hop = props.ingredients_hop,
+        ingredients_addons = props.ingredients_addons;
 
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+    var widths = "equal";
 
-// cały stan dodanych / wpisanych inputów przechowuję w kompencie wyżej - w rodzicu: AddMenu lub DetailsMenu
+    return _react2.default.createElement(
+        _semanticUiReact.Container,
+        { style: { height: "100%" } },
+        _react2.default.createElement(
+            _semanticUiReact.Form.Group,
+            { widths: widths },
+            _react2.default.createElement(RecipeIngredients, { disabled: disabled, label: "Sk\u0142adniki fermentowalne", ingredients: ingredients_ferm, componentUpdate: props.componentUpdate, componentAdd: props.componentAdd, componentDelete: props.componentDelete, category: "ingredients_ferm" }),
+            _react2.default.createElement(RecipeIngredients, { disabled: disabled, label: "Dro\u017Cd\u017Ce", ingredients: ingredients_yeast, componentUpdate: props.componentUpdate, componentAdd: props.componentAdd, componentDelete: props.componentDelete, category: "ingredients_yeast" })
+        ),
+        _react2.default.createElement(
+            _semanticUiReact.Form.Group,
+            { widths: widths },
+            _react2.default.createElement(RecipeIngredients, { disabled: disabled, label: "Chmiele", ingredients: ingredients_hop, componentUpdate: props.componentUpdate, componentAdd: props.componentAdd, componentDelete: props.componentDelete, category: "ingredients_hop" }),
+            _react2.default.createElement(RecipeIngredients, { disabled: disabled, label: "Dodatki", ingredients: ingredients_addons, componentUpdate: props.componentUpdate, componentAdd: props.componentAdd, componentDelete: props.componentDelete, category: "ingredients_addons" })
+        )
+    );
+};
 
-var RecipeIngredients = function (_React$Component) {
-    _inherits(RecipeIngredients, _React$Component);
-
-    function RecipeIngredients(props) {
-        _classCallCheck(this, RecipeIngredients);
-
-        var _this = _possibleConstructorReturn(this, (RecipeIngredients.__proto__ || Object.getPrototypeOf(RecipeIngredients)).call(this, props));
-
-        _this.handleAddButtonClick = function () {
-            var category = _this.props.category;
-
-            _this.props.componentAdd(category);
-        };
-
-        _this.handleDeleteButtonClick = function (ingredientIndex) {
-            var category = _this.props.category;
-
-            _this.props.componentDelete(ingredientIndex, category);
-        };
-
-        _this.handleInputChange = function (e, ingredientIndex) {
-            var category = _this.props.category;
-
-            _this.props.componentUpdate(e, ingredientIndex, category);
-        };
-
-        return _this;
-    }
+var RecipeIngredients = function RecipeIngredients(props) {
+    var category = props.category,
+        label = props.label,
+        ingredients = props.ingredients,
+        disabled = props.disabled;
 
     // dodaję puste pole z inputami:
 
+    var onAddButtonClick = function onAddButtonClick() {
+        props.componentAdd(category);
+    };
 
     // usuwam dany obiekt z inputami z tablicy ingredients - identyfikuję go na podstawie index przekazanego w propsach przy tworzeniu za pomocą map, ten index otrzymuję dzięki wywołaniu metody w dziecku
+    var handleDeleteButtonClick = function handleDeleteButtonClick(ingredientIndex) {
+        props.componentDelete(ingredientIndex, category);
+    };
 
+    var handleInputChange = function handleInputChange(e, ingredientIndex) {
+        props.componentUpdate(e, ingredientIndex, category);
+    };
 
-    _createClass(RecipeIngredients, [{
-        key: 'render',
-
-
-        // handleInputChange = (ingredientIndex, name, value) => {
-        //     let { ingredients } = this.state;
-        //     ingredients[ingredientIndex][name] = value;
-        //
-        //     this.setState({
-        //         ingredients: ingredients
-        //     });
-        // };
-
-        value: function render() {
-            var _this2 = this;
-
-            return _react2.default.createElement(
-                _semanticUiReact.Form.Field,
-                null,
-                _react2.default.createElement(
-                    'label',
-                    null,
-                    this.props.label
-                ),
-                _react2.default.createElement(_semanticUiReact.Divider, null),
-                this.props.ingredients.map(function (ingredient, index) {
-                    return _react2.default.createElement(_Recipe_Ingredient2.default, { key: index, index: index, disabled: _this2.props.disabled, onChange: _this2.handleInputChange, onDeleteClick: _this2.handleDeleteButtonClick, name: ingredient['name'], quantity: ingredient['quantity'] });
-                }),
-                _react2.default.createElement(_semanticUiReact.Button, { disabled: this.props.disabled, content: 'Dodaj sk\u0142adnik', icon: 'add', labelPosition: 'left', size: 'mini', onClick: this.handleAddButtonClick })
-            );
-        }
-    }]);
-
-    return RecipeIngredients;
-}(_react2.default.Component);
-
-var Recipe = function (_React$Component2) {
-    _inherits(Recipe, _React$Component2);
-
-    function Recipe(props) {
-        _classCallCheck(this, Recipe);
-
-        return _possibleConstructorReturn(this, (Recipe.__proto__ || Object.getPrototypeOf(Recipe)).call(this, props));
-    }
-
-    // tu można jeszcze dodać rzeczy procesowe - chmielenie, zacieranie itp.
-
-
-    _createClass(Recipe, [{
-        key: 'render',
-        value: function render() {
-            return _react2.default.createElement(
-                _semanticUiReact.Container,
-                { style: { height: "100%" } },
-                _react2.default.createElement(
-                    _semanticUiReact.Form.Group,
-                    { widths: 'equal' },
-                    _react2.default.createElement(RecipeIngredients, { disabled: this.props.disabled, label: 'Sk\u0142adniki fermentowalne', ingredients: this.props.ingredients_ferm, componentUpdate: this.props.componentUpdate, componentAdd: this.props.componentAdd, componentDelete: this.props.componentDelete, category: 'ingredients_ferm' }),
-                    _react2.default.createElement(RecipeIngredients, { disabled: this.props.disabled, label: 'Dro\u017Cd\u017Ce', ingredients: this.props.ingredients_yeast, componentUpdate: this.props.componentUpdate, componentAdd: this.props.componentAdd, componentDelete: this.props.componentDelete, category: 'ingredients_yeast' })
-                ),
-                _react2.default.createElement(
-                    _semanticUiReact.Form.Group,
-                    { widths: 'equal' },
-                    _react2.default.createElement(RecipeIngredients, { disabled: this.props.disabled, label: 'Chmiele', ingredients: this.props.ingredients_hop, componentUpdate: this.props.componentUpdate, componentAdd: this.props.componentAdd, componentDelete: this.props.componentDelete, category: 'ingredients_hop' }),
-                    _react2.default.createElement(RecipeIngredients, { disabled: this.props.disabled, label: 'Dodatki', ingredients: this.props.ingredients_addons, componentUpdate: this.props.componentUpdate, componentAdd: this.props.componentAdd, componentDelete: this.props.componentDelete, category: 'ingredients_addons' })
-                )
-            );
-        }
-    }]);
-
-    return Recipe;
-}(_react2.default.Component);
-
-exports.default = Recipe;
+    return _react2.default.createElement(
+        _semanticUiReact.Form.Field,
+        null,
+        _react2.default.createElement(
+            "label",
+            null,
+            label
+        ),
+        _react2.default.createElement(_semanticUiReact.Divider, null),
+        ingredients.map(function (ingredient, index) {
+            return _react2.default.createElement(_Recipe_Ingredient.Recipe_Ingredient, { key: index, index: index, disabled: disabled, onChange: handleInputChange, onDeleteClick: handleDeleteButtonClick, name: ingredient["name"], quantity: ingredient["quantity"] });
+        }),
+        _react2.default.createElement(_semanticUiReact.Button, { disabled: disabled, content: "Dodaj sk\u0142adnik", icon: "add", labelPosition: "left", size: "mini", onClick: onAddButtonClick })
+    );
+};
 
 /***/ }),
 /* 796 */
@@ -66536,8 +66366,7 @@ exports.default = Recipe;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+exports.Recipe_Ingredient = undefined;
 
 var _react = __webpack_require__(0);
 
@@ -66547,59 +66376,37 @@ var _semanticUiReact = __webpack_require__(15);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var Recipe_Ingredient = function (_React$Component) {
-    _inherits(Recipe_Ingredient, _React$Component);
-
-    function Recipe_Ingredient(props) {
-        _classCallCheck(this, Recipe_Ingredient);
-
-        var _this = _possibleConstructorReturn(this, (Recipe_Ingredient.__proto__ || Object.getPrototypeOf(Recipe_Ingredient)).call(this, props));
-
-        _this.onClick = function () {
-            _this.props.onDeleteClick(_this.props.index);
-        };
-
-        _this.onChange = function (e) {
-            _this.props.onChange(e, _this.props.index);
-        };
-
-        return _this;
-    }
-
-    _createClass(Recipe_Ingredient, [{
-        key: 'render',
+var Recipe_Ingredient = exports.Recipe_Ingredient = function Recipe_Ingredient(props) {
+    var index = props.index,
+        disabled = props.disabled,
+        name = props.name,
+        quantity = props.quantity;
 
 
-        // w value inputów przekazuję wartość z propsów, tak aby po usuwaniu okreslonych inputów, koklejny render powodował pokazywanie się odpowiednich elementów (z odpowiednimi wartościami) - wartości te sa brane z metody map tablicy, w której zapisuję wartości z tych inputów (w rodzicu: ingredients)
+    var onClick = function onClick() {
+        props.onDeleteClick(index);
+    };
 
-        value: function render() {
-            return _react2.default.createElement(
-                'div',
-                { style: { marginBottom: '0.5em' } },
-                _react2.default.createElement(_semanticUiReact.Input, { disabled: this.props.disabled, type: 'text', style: { width: "70%" }, name: 'name', value: this.props.name, onChange: this.onChange }),
-                _react2.default.createElement(_semanticUiReact.Input, { disabled: this.props.disabled, type: 'text', placeholder: 'Ilo\u015B\u0107', style: { width: "15%" }, name: 'quantity', value: this.props.quantity, onChange: this.onChange }),
-                _react2.default.createElement(
-                    _semanticUiReact.Button,
-                    { size: 'mini',
-                        disabled: this.props.disabled,
-                        style: { marginLeft: '1em', padding: '0.5em' },
-                        onClick: this.onClick },
-                    'Usu\u0144'
-                )
-            );
-        }
-    }]);
+    var onChange = function onChange(e) {
+        props.onChange(e, index);
+    };
 
-    return Recipe_Ingredient;
-}(_react2.default.Component);
-
-exports.default = Recipe_Ingredient;
+    // w value inputów przekazuję wartość z propsów, tak aby po usuwaniu okreslonych inputów, koklejny render powodował pokazywanie się odpowiednich elementów (z odpowiednimi wartościami) - wartości te sa brane z metody map tablicy, w której zapisuję wartości z tych inputów (w rodzicu: Ingredients)
+    return _react2.default.createElement(
+        "div",
+        { style: { marginBottom: "0.5em" } },
+        _react2.default.createElement(_semanticUiReact.Input, { disabled: disabled, type: "text", name: "name", style: { width: "70%" }, value: name, onChange: onChange }),
+        _react2.default.createElement(_semanticUiReact.Input, { disabled: disabled, type: "text", name: "quantity", placeholder: "Ilo\u015B\u0107", style: { width: "15%" }, value: quantity, onChange: onChange }),
+        _react2.default.createElement(
+            _semanticUiReact.Button,
+            { size: "mini",
+                disabled: disabled,
+                style: { marginLeft: "1em", padding: "0.5em" },
+                onClick: onClick },
+            "Usu\u0144"
+        )
+    );
+};
 
 /***/ }),
 /* 797 */
@@ -66611,8 +66418,7 @@ exports.default = Recipe_Ingredient;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+exports.Rating_Comments = undefined;
 
 var _react = __webpack_require__(0);
 
@@ -66622,129 +66428,105 @@ var _semanticUiReact = __webpack_require__(15);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+var Rating_Comments = exports.Rating_Comments = function Rating_Comments(props) {
+    var disabled = props.disabled,
+        commentGeneral = props.commentGeneral,
+        commentStyle = props.commentStyle,
+        commentAroma = props.commentAroma,
+        commentLook = props.commentLook,
+        commentFlavor = props.commentFlavor,
+        commentBitterness = props.commentBitterness,
+        commentAdditional = props.commentAdditional,
+        rateGeneral = props.rateGeneral,
+        rateStyle = props.rateStyle,
+        rateAroma = props.rateAroma,
+        rateLook = props.rateLook,
+        rateFlavor = props.rateFlavor,
+        rateBitterness = props.rateBitterness;
 
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+    var onCommentChange = function onCommentChange(e) {
+        var text = e.target.value;
+        var nameComment = "commentAdditional";
 
-var RatingField = function (_React$Component) {
-    _inherits(RatingField, _React$Component);
+        props.handleCommentChange(nameComment, text);
+    };
 
-    function RatingField() {
-        _classCallCheck(this, RatingField);
+    return _react2.default.createElement(
+        _semanticUiReact.Container,
+        { style: { height: "100%" } },
+        _react2.default.createElement(
+            _semanticUiReact.Form.Field,
+            { style: { marginTop: "1em" } },
+            _react2.default.createElement(RatingField, { label: "Ocena og\xF3lna", nameRate: "rateGeneral", nameComment: "commentGeneral", commentValue: commentGeneral, defaultRating: rateGeneral, handleRate: props.handleRate, handleCommentChange: props.handleCommentChange, disabled: disabled })
+        ),
+        _react2.default.createElement(
+            _semanticUiReact.Form.Field,
+            { style: { marginTop: "2em" } },
+            _react2.default.createElement(
+                _semanticUiReact.Divider,
+                { horizontal: true, style: { marginBottom: "2em" } },
+                "Ocena szczeg\xF3\u0142owa"
+            ),
+            _react2.default.createElement(RatingField, { label: "Zgodno\u015B\u0107 ze stylem", nameRate: "rateStyle", nameComment: "commentStyle", commentValue: commentStyle, defaultRating: rateStyle, handleRate: props.handleRate, handleCommentChange: props.handleCommentChange, disabled: disabled }),
+            _react2.default.createElement(RatingField, { label: "Aromat", nameRate: "rateAroma", nameComment: "commentAroma", commentValue: commentAroma, defaultRating: rateAroma, handleRate: props.handleRate, handleCommentChange: props.handleCommentChange, disabled: disabled }),
+            _react2.default.createElement(RatingField, { label: "Wygl\u0105d", nameRate: "rateLook", nameComment: "commentLook", commentValue: commentLook, defaultRating: rateLook, handleRate: props.handleRate, handleCommentChange: props.handleCommentChange, disabled: disabled }),
+            _react2.default.createElement(RatingField, { label: "Smak", nameRate: "rateFlavor", nameComment: "commentFlavor", commentValue: commentFlavor, defaultRating: rateFlavor, handleRate: props.handleRate, handleCommentChange: props.handleCommentChange, disabled: disabled }),
+            _react2.default.createElement(RatingField, { label: "Goryczka", nameRate: "rateBitterness", nameComment: "commentBitterness", commentValue: commentBitterness, defaultRating: rateBitterness, handleRate: props.handleRate, handleCommentChange: props.handleCommentChange, disabled: disabled })
+        ),
+        _react2.default.createElement(
+            _semanticUiReact.Form.Field,
+            { style: { marginTop: "2em" } },
+            _react2.default.createElement(
+                _semanticUiReact.Divider,
+                { horizontal: true },
+                "Uwagi dodatkowe"
+            ),
+            _react2.default.createElement(_semanticUiReact.Form.TextArea, { rows: 2, style: { fontSize: "12px" }, onChange: onCommentChange, value: commentAdditional, disabled: disabled })
+        )
+    );
+};
 
-        var _this = _possibleConstructorReturn(this, (RatingField.__proto__ || Object.getPrototypeOf(RatingField)).call(this));
+var RatingField = function RatingField(props) {
+    var disabled = props.disabled,
+        label = props.label,
+        defaultRating = props.defaultRating,
+        commentValue = props.commentValue,
+        nameRate = props.nameRate,
+        nameComment = props.nameComment;
 
-        _this.onRate = function (e, _ref) {
-            var rating = _ref.rating;
-            var nameRate = _this.props.nameRate;
 
-            _this.props.handleRate(nameRate, rating);
-        };
+    var onRate = function onRate(e, _ref) {
+        var rating = _ref.rating;
 
-        _this.onCommentChange = function (e) {
-            var text = e.target.value;
-            var nameComment = _this.props.nameComment;
+        props.handleRate(nameRate, rating);
+    };
 
-            _this.props.handleCommentChange(nameComment, text);
-        };
+    var onCommentChange = function onCommentChange(e) {
+        var text = e.target.value;
+        props.handleCommentChange(nameComment, text);
+    };
 
-        return _this;
-    }
-
-    _createClass(RatingField, [{
-        key: 'render',
-        value: function render() {
-            var disabled = this.props.disabled;
-
-            return _react2.default.createElement(
-                _semanticUiReact.Form.Group,
+    return _react2.default.createElement(
+        _semanticUiReact.Form.Group,
+        null,
+        _react2.default.createElement(
+            _semanticUiReact.Form.Field,
+            { width: 8, style: { textAlign: "center" } },
+            _react2.default.createElement(
+                "label",
                 null,
-                _react2.default.createElement(
-                    _semanticUiReact.Form.Field,
-                    { width: 8, style: { textAlign: "center" } },
-                    _react2.default.createElement(
-                        'label',
-                        null,
-                        this.props.label
-                    ),
-                    _react2.default.createElement(_semanticUiReact.Rating, { onRate: this.onRate, icon: 'star', maxRating: 7, defaultRating: this.props.defaultRating, disabled: disabled, clearable: true })
-                ),
-                _react2.default.createElement(
-                    _semanticUiReact.Form.Field,
-                    { width: 8 },
-                    _react2.default.createElement(_semanticUiReact.Form.TextArea, { rows: 2, placeholder: 'Komentarz...', style: { fontSize: '12px' }, value: this.props.commentValue, onChange: this.onCommentChange, disabled: disabled })
-                )
-            );
-        }
-    }]);
-
-    return RatingField;
-}(_react2.default.Component);
-
-var Rating_Comments = function (_React$Component2) {
-    _inherits(Rating_Comments, _React$Component2);
-
-    function Rating_Comments(props) {
-        _classCallCheck(this, Rating_Comments);
-
-        var _this2 = _possibleConstructorReturn(this, (Rating_Comments.__proto__ || Object.getPrototypeOf(Rating_Comments)).call(this, props));
-
-        _this2.onCommentChange = function (e) {
-            var text = e.target.value;
-            var nameComment = "commentAdditional";
-            _this2.props.handleCommentChange(nameComment, text);
-        };
-
-        return _this2;
-    }
-
-    _createClass(Rating_Comments, [{
-        key: 'render',
-        value: function render() {
-            var disabled = this.props.disabled;
-
-            return _react2.default.createElement(
-                _semanticUiReact.Container,
-                { style: { height: "100%" } },
-                _react2.default.createElement(
-                    _semanticUiReact.Form.Field,
-                    { style: { marginTop: '1em' } },
-                    _react2.default.createElement(RatingField, { label: 'Ocena og\xF3lna', nameRate: 'rateGeneral', nameComment: 'commentGeneral', commentValue: this.props.commentGeneral, defaultRating: this.props.rateGeneral, handleRate: this.props.handleRate, handleCommentChange: this.props.handleCommentChange, disabled: disabled })
-                ),
-                _react2.default.createElement(
-                    _semanticUiReact.Form.Field,
-                    { style: { marginTop: '2em' } },
-                    _react2.default.createElement(
-                        _semanticUiReact.Divider,
-                        { horizontal: true, style: { marginBottom: '2em' } },
-                        'Ocena szczeg\xF3\u0142owa'
-                    ),
-                    _react2.default.createElement(RatingField, { label: 'Zgodno\u015B\u0107 ze stylem', nameRate: 'rateStyle', nameComment: 'commentStyle', commentValue: this.props.commentStyle, defaultRating: this.props.rateStyle, handleRate: this.props.handleRate, handleCommentChange: this.props.handleCommentChange, disabled: disabled }),
-                    _react2.default.createElement(RatingField, { label: 'Aromat', nameRate: 'rateAroma', nameComment: 'commentAroma', commentValue: this.props.commentAroma, defaultRating: this.props.rateAroma, handleRate: this.props.handleRate, handleCommentChange: this.props.handleCommentChange, disabled: disabled }),
-                    _react2.default.createElement(RatingField, { label: 'Wygl\u0105d', nameRate: 'rateLook', nameComment: 'commentLook', commentValue: this.props.commentLook, defaultRating: this.props.rateLook, handleRate: this.props.handleRate, handleCommentChange: this.props.handleCommentChange, disabled: disabled }),
-                    _react2.default.createElement(RatingField, { label: 'Smak', nameRate: 'rateFlavor', nameComment: 'commentFlavor', commentValue: this.props.commentFlavor, defaultRating: this.props.rateFlavor, handleRate: this.props.handleRate, handleCommentChange: this.props.handleCommentChange, disabled: disabled }),
-                    _react2.default.createElement(RatingField, { label: 'Goryczka', nameRate: 'rateBitterness', nameComment: 'commentBitterness', commentValue: this.props.commentBitterness, defaultRating: this.props.rateBitterness, handleRate: this.props.handleRate, handleCommentChange: this.props.handleCommentChange, disabled: disabled })
-                ),
-                _react2.default.createElement(
-                    _semanticUiReact.Form.Field,
-                    { style: { marginTop: '2em' } },
-                    _react2.default.createElement(
-                        _semanticUiReact.Divider,
-                        { horizontal: true },
-                        'Uwagi dodatkowe'
-                    ),
-                    _react2.default.createElement(_semanticUiReact.Form.TextArea, { rows: 2, style: { fontSize: '12px' }, onChange: this.onCommentChange, value: this.props.commentAdditional, disabled: this.props.disabled })
-                )
-            );
-        }
-    }]);
-
-    return Rating_Comments;
-}(_react2.default.Component);
-
-exports.default = Rating_Comments;
+                label
+            ),
+            _react2.default.createElement(_semanticUiReact.Rating, { icon: "star", maxRating: 7, defaultRating: defaultRating, disabled: disabled, clearable: true, onRate: onRate })
+        ),
+        _react2.default.createElement(
+            _semanticUiReact.Form.Field,
+            { width: 8 },
+            _react2.default.createElement(_semanticUiReact.Form.TextArea, { rows: 2, placeholder: "Komentarz...", style: { fontSize: "12px" }, value: commentValue, onChange: onCommentChange, disabled: disabled })
+        )
+    );
+};
 
 /***/ }),
 /* 798 */
@@ -66773,8 +66555,8 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-// wybrane przez usera zdjecie przekazywane jest metodami z Files do rodzica - DetailsMenu i tam trzymane w state
-// zdjęcie przekazywane jest do renderowania w Files w propsach od DetailsMenu;
+// wybrane przez usera zdjecie przekazywane jest metodami z Files do rodzica - BatchForm i tam trzymane w state
+// zdjęcie przekazywane jest do renderowania w Files w propsach od BatchForm;
 
 var Files = function (_React$Component) {
     _inherits(Files, _React$Component);
@@ -66784,87 +66566,95 @@ var Files = function (_React$Component) {
 
         var _this = _possibleConstructorReturn(this, (Files.__proto__ || Object.getPrototypeOf(Files)).call(this, props));
 
-        _this.handleUploadSuccess = function (e) {
+        _this.onUploadSuccess = function (e) {
             var reader = new FileReader();
             var file = e.target.files[0];
             var imageUrl = null;
 
             reader.onloadend = function () {
                 imageUrl = reader.result;
+
                 _this.setState({
-                    buttonText: 'Wybierz nowe zdjęcie'
+                    buttonText: "Wybierz nowe zdjęcie"
                 });
+
                 _this.props.onFileUpload(file, imageUrl, "true");
             };
+
             reader.readAsDataURL(file);
         };
 
         _this.onCancel = function () {
             _this.setState({
-                buttonText: 'Wybierz zdjęcie'
+                buttonText: "Wybierz zdjęcie"
             });
+
             _this.props.onFileUpload(null, null);
         };
 
         _this.state = {
-            buttonText: 'Wybierz zdjęcie'
+            buttonText: "Wybierz zdjęcie"
         };
         return _this;
     }
 
     _createClass(Files, [{
-        key: 'render',
+        key: "render",
         value: function render() {
             var _this2 = this;
 
-            var imagePreviewUrl = this.props.imagePreviewUrl;
+            var _props = this.props,
+                imagePreviewUrl = _props.imagePreviewUrl,
+                disabled = _props.disabled;
+            var buttonText = this.state.buttonText;
 
             var imagePreview = null;
             var cancelButton = null;
+
             if (imagePreviewUrl) {
                 imagePreview = _react2.default.createElement(
                     _semanticUiReact.Segment,
                     { compact: true },
                     _react2.default.createElement(
                         _semanticUiReact.Label,
-                        { attached: 'top' },
-                        'Podgl\u0105d'
+                        { attached: "top" },
+                        "Podgl\u0105d"
                     ),
-                    _react2.default.createElement(_semanticUiReact.Image, { src: imagePreviewUrl, size: 'small', style: { margin: '2em, 0' }, bordered: true, rounded: true, alt: 'Podgl\u0105d zdj\u0119cia' })
+                    _react2.default.createElement(_semanticUiReact.Image, { src: imagePreviewUrl, size: "small", style: { margin: "2em, 0" }, bordered: true, rounded: true, alt: "Podgl\u0105d zdj\u0119cia" })
                 );
                 cancelButton = _react2.default.createElement(
                     _semanticUiReact.Button,
                     { onClick: this.onCancel },
-                    'Anuluj'
+                    "Anuluj"
                 );
             }
 
             return _react2.default.createElement(
-                'div',
+                "div",
                 null,
                 imagePreview,
                 _react2.default.createElement(
-                    'span',
+                    "span",
                     null,
                     _react2.default.createElement(
-                        'label',
-                        { htmlFor: 'img', className: 'semantic ui button' },
+                        "label",
+                        { htmlFor: "img", className: "semantic ui button" },
                         _react2.default.createElement(
-                            'i',
-                            { className: 'upload icon' },
-                            ' '
+                            "i",
+                            { className: "upload icon" },
+                            " "
                         ),
-                        this.props.disabled ? 'Kliknij Edytuj, aby wybrać zdjęcie' : this.state.buttonText
+                        disabled ? "Kliknij Edytuj, aby wybrać zdjęcie" : buttonText
                     ),
-                    _react2.default.createElement('input', { type: 'file',
-                        id: 'img',
-                        accept: 'image/*',
-                        disabled: this.props.disabled,
+                    _react2.default.createElement("input", { type: "file",
+                        id: "img",
+                        accept: "image/*",
+                        disabled: disabled,
                         style: { display: "none" },
                         ref: function ref(input) {
                             _this2.fileInput = input;
                         },
-                        onChange: this.handleUploadSuccess
+                        onChange: this.onUploadSuccess
                     }),
                     cancelButton
                 )
@@ -66887,8 +66677,7 @@ exports.default = Files;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+exports.Calculators = undefined;
 
 var _react = __webpack_require__(0);
 
@@ -66898,40 +66687,17 @@ var _semanticUiReact = __webpack_require__(15);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var Calculators = function (_React$Component) {
-    _inherits(Calculators, _React$Component);
-
-    function Calculators(props) {
-        _classCallCheck(this, Calculators);
-
-        return _possibleConstructorReturn(this, (Calculators.__proto__ || Object.getPrototypeOf(Calculators)).call(this, props));
-    }
-
-    _createClass(Calculators, [{
-        key: "render",
-        value: function render() {
-            return _react2.default.createElement(
-                _semanticUiReact.Container,
-                null,
-                _react2.default.createElement(
-                    "p",
-                    null,
-                    "TBC"
-                )
-            );
-        }
-    }]);
-
-    return Calculators;
-}(_react2.default.Component);
-
-exports.default = Calculators;
+var Calculators = exports.Calculators = function Calculators(props) {
+    return _react2.default.createElement(
+        _semanticUiReact.Container,
+        null,
+        _react2.default.createElement(
+            "p",
+            null,
+            "TBC"
+        )
+    );
+};
 
 /***/ })
 /******/ ]);
